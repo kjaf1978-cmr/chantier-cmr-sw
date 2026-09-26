@@ -1,5 +1,5 @@
 /* Carnet de Dépenses Chantier — service worker (hors-ligne + réception de fichiers partagés) */
-const VERSION = 'cdc-v1.2.1';
+const VERSION = 'cdc-v1.3.0';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', e => {

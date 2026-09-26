@@ -113,6 +113,47 @@ details.grp>.tw{border:0;border-radius:0 0 10px 10px}
 .sign{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:40px}.sign div{border-top:1px solid var(--tx);padding-top:4px;font-size:13px}
 #fab{display:none;position:fixed;right:16px;bottom:18px;z-index:30;width:58px;height:58px;border-radius:50%;border:0;background:var(--ac);color:var(--act);font-size:30px;line-height:1;box-shadow:0 4px 14px rgba(0,0,0,.3);cursor:pointer}
 body.hasproj #fab{display:none}
+.viz,:root{--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--s5:#e87ba4;--s6:#008300;--s7:#4a3aa7;--sO:#a19d95;--grid:#ebe7df}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--sO:#6f6b64;--grid:#2e2b25}}
+:root[data-theme=dark]{--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--sO:#6f6b64;--grid:#2e2b25}
+.chart svg text{fill:var(--mu);font-size:11px;font-variant-numeric:tabular-nums}
+.lgd{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--mu);margin-top:6px}
+.lgd i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.lgd i.ln{height:0;border-top:2px solid;border-radius:0;width:14px;background:none!important;vertical-align:3px}
+.lgd i.ln.dash{border-top-style:dashed}
+#tipBox{position:fixed;z-index:300;display:none;pointer-events:none;background:var(--sf);color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:7px 10px;box-shadow:0 4px 16px rgba(0,0,0,.18);font-size:13px;max-width:280px}
+#tipBox .tt{color:var(--mu);font-size:12px;margin-bottom:3px}
+#tipBox .tr{display:flex;align-items:center;gap:7px;white-space:nowrap}
+#tipBox .tr i{width:12px;height:0;border-top:2px solid;border-color:inherit;display:inline-block}
+#tipBox .tr i{border-top-color:currentColor}
+#tipBox .tr span{color:var(--mu)}
+.hb .hbr{margin:8px 0}
+.hbl{display:flex;justify-content:space-between;gap:8px;font-size:13px}
+.hbl i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px}
+.hbl b{font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:600}
+.hbt{position:relative;height:10px;background:var(--sf2);border-radius:5px;margin-top:3px}
+.hbf{height:100%;border-radius:0 4px 4px 0;background:var(--s1)}
+.hbf.over{background:var(--er)}
+.hbm{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--tx);border-radius:1px}
+.sms{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.sm{border:1px solid var(--bd);border-radius:10px;padding:8px 10px;cursor:pointer;background:var(--sf)}
+.sm:hover{border-color:var(--mu)}
+.smh{display:flex;justify-content:space-between;gap:6px;font-size:13px;font-weight:600;min-height:2.6em}
+.sm svg{width:100%;height:56px;display:block;margin:4px 0}
+.smf{display:flex;justify-content:space-between;gap:6px;font-size:12px;font-variant-numeric:tabular-nums}
+table.heat td.hc{font-size:12px;min-width:44px}
+table.heat td,table.heat th{padding:5px 6px}
+.cols2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.cols2 .span-all{grid-column:1/-1}
+@media (max-width:900px){.cols2{grid-template-columns:minmax(0,1fr)}}
+details.tview{margin-top:6px;font-size:13px}details.tview summary{cursor:pointer;color:var(--in)}
+.figs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:10px 0}
+@media (max-width:760px){.figs{grid-template-columns:minmax(0,1fr)}}
+.fig{border:1px solid var(--bd);border-radius:10px;padding:10px 12px;margin:10px 0}
+.figs .fig{margin:0}
+.fig h3{font-size:14px;margin:0 0 6px}
+.rep h3{font-size:14px;margin:14px 0 6px}
+.rephead{border-bottom:3px solid var(--ac);padding-bottom:8px;margin-bottom:12px}
 @media (max-width:720px){
  body.hasproj #fab{display:block}
  main{padding:12px 12px 90px}
@@ -158,7 +199,17 @@ details.fpanel>summary::after{content:"▾";color:var(--mu)}details.fpanel[open]
 .shake{animation:shk .35s}@keyframes shk{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
 body.locked{overflow:hidden}
 @media print{
- header.top,.noprint,#toasts,#lockScr{display:none!important}
+ :root,:root:not([data-theme=light]),:root[data-theme=dark]{--bg:#fff;--sf:#fff;--sf2:#f2f0eb;--tx:#111;--mu:#555;--bd:#c9c4ba;--ac:#b8520b;--er:#b42318;--ok:#1f7a4d;--in:#2355a8;--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--s5:#e87ba4;--s6:#008300;--s7:#4a3aa7;--sO:#a19d95;--grid:#e3dfd7;color-scheme:light}
+ *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ header.top,.noprint,#toasts,#lockScr,#tipBox,#fab{display:none!important}
+ .rep.card{border:0;padding:0}
+ .rep .pb{break-before:page}
+ .fig,.kpi,.sm,.hbr,tr,.sign{break-inside:avoid}
+ h2,h3{break-after:avoid}
+ .figs{grid-template-columns:1fr 1fr}
+ .cols,.cols2{display:block}.cols>.card,.cols2>.card{margin-bottom:10px;break-inside:avoid}
+ .tw{overflow:visible}
+ table td.small,table th.small{font-size:inherit}
  body,main{background:#fff;color:#000;padding:0;max-width:none}
  .card,.tw,.kpi{box-shadow:none;border-color:#bbb}
  details.grp>summary{background:#eee}
@@ -195,8 +246,14 @@ body.locked{overflow:hidden}
    modification crée une nouvelle version. La fusion entre appareils
    est l'union des journaux ; les éditions concurrentes = conflits.
    ===================================================================== */
-const APPV = '1.2';
+const APPV = '1.3';
 const FORMAT = 'chantier-depenses';
+/* Compatibilité : FORMAT_V = version du format de fichier (inchangé depuis la v1.0 : journal d'événements).
+   Toute version 1.x lit les fichiers de toutes les autres 1.x. Les champs ou types inconnus sont
+   conservés tels quels (compatibilité ascendante) et ré-exportés sans perte. */
+const FORMAT_V = 1;
+const SCHEMA = 1;          // version du stockage local (IndexedDB)
+const MIGRATIONS = {};     // ex. MIGRATIONS[2] = async () => { … } — exécutées une seule fois à l'ouverture
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -431,7 +488,7 @@ async function viewFile(id) {
 
 /* ---------------- Sauvegarde / fusion ---------------- */
 async function buildBackup(withFiles = true) {
-  return { format: FORMAT, version: 1, app: APPV, pid: S.pid, projectName: S.P.name, exportedAt: Date.now(), by: USER ? USER.name : '?', dev: DEV, events: S.sorted, files: withFiles ? await IDB.all('files') : [] };
+  return { format: FORMAT, version: FORMAT_V, schema: SCHEMA, app: APPV, pid: S.pid, projectName: S.P.name, exportedAt: Date.now(), by: USER ? USER.name : '?', dev: DEV, events: S.sorted, files: withFiles ? await IDB.all('files') : [] };
 }
 const fname = () => 'chantier_' + (S.P.name || 'export').replace(/[^\p{L}\p{N}]+/gu, '_').slice(0, 40) + '_' + today() + '.json';
 function download(name, content, type) {
@@ -474,12 +531,21 @@ async function consumeSharedFile() {
     await importData(j);
   } catch (e) { toast('Import du fichier partagé impossible : ' + e.message, { err: 1, ms: 7000 }); }
 }
-function validEvent(e) { return e && typeof e.eid === 'string' && typeof e.rid === 'string' && COLLS.includes(e.coll) && ['put', 'del', 'restore'].includes(e.op) && typeof e.ts === 'number' && (e.op !== 'put' || (e.data && typeof e.data === 'object')); }
-async function importData(j) {
+function validEvent(e) { return e && typeof e.eid === 'string' && typeof e.rid === 'string' && typeof e.coll === 'string' && /^[a-z][a-z0-9_]{0,30}$/.test(e.coll) && typeof e.op === 'string' && /^[a-z]{1,20}$/.test(e.op) && typeof e.ts === 'number' && (e.op !== 'put' || (e.data && typeof e.data === 'object')); }
+async function importData(j, o = {}) {
+  if (j && j.format === FORMAT + '-bundle' && Array.isArray(j.projects)) {
+    const names = j.projects.map(p => '« ' + esc(p.projectName || '?') + ' »').join(', ');
+    if (!await ask(`Ce fichier contient <b>${j.projects.length} chantier(s)</b> : ${names}.<br>Les importer / fusionner sur cet appareil ? Rien n’est écrasé.`, { ok: 'Importer' })) return;
+    const cur = S && S.pid; let n = 0;
+    for (const p of j.projects) { try { await importData(p, { bundle: 1, quiet: 1 }); n++; } catch (e) { toast('Chantier ignoré : ' + e.message, { err: 1 }); } }
+    if (cur && projects().find(p => p.pid === cur)) await openProject(cur);
+    toast(`${n} chantier(s) importé(s) / fusionné(s)`, { ms: 6000 }); return;
+  }
   if (!j || j.format !== FORMAT || !Array.isArray(j.events)) throw new Error('Ce fichier n’est pas un fichier « Carnet de Chantier ».');
+  if ((j.version || 1) > FORMAT_V) toast('Fichier créé par une version plus récente de l’application : les données sont importées et conservées ; mettez l’application à jour pour tout afficher.', { ms: 9000 });
   if (!S || j.pid !== S.pid) {
     const known = projects().find(p => p.pid === j.pid);
-    if (S && !await ask(`Ce fichier concerne le chantier « <b>${esc(j.projectName)}</b> », différent du chantier ouvert (« ${esc(S.P.name)} »).<br>${known ? 'Il sera ouvert et le fichier y sera fusionné.' : 'Il sera ajouté comme nouveau chantier sur cet appareil.'}`, { ok: 'Continuer' })) return;
+    if (S && !o.bundle && !await ask(`Ce fichier concerne le chantier « <b>${esc(j.projectName)}</b> », différent du chantier ouvert (« ${esc(S.P.name)} »).<br>${known ? 'Il sera ouvert et le fichier y sera fusionné.' : 'Il sera ajouté comme nouveau chantier sur cet appareil.'}`, { ok: 'Continuer' })) return;
     regProject(j.pid, j.projectName); await openProject(j.pid);
   }
   const have = new Set(S.events.map(e => e.eid));
@@ -496,8 +562,22 @@ async function importData(j) {
   const nc = S.conf.length - confBefore;
   let msg = `Fusion terminée : ${nw.length} opération(s) nouvelle(s)` + (nf ? `, ${nf} justificatif(s)` : '') + (nw.length ? '' : ' — déjà à jour') + '.';
   if (bad) msg += ` ${bad} ligne(s) invalide(s) ignorée(s).`;
-  toast(msg, { ms: 6000 });
+  if (!o.quiet) toast(msg, { ms: 6000 });
   if (nc > 0) toast(`${nc} conflit(s) détecté(s) : voir Journal › Conflits`, { err: 1, ms: 8000 });
+}
+/* Export de TOUS les chantiers de l'appareil dans un seul fichier (transfert vers un autre appareil / une autre version) */
+async function dumpProject(pid) {
+  if (S && pid === S.pid) return buildBackup(true);
+  const db = await new Promise((res, rej) => { const r = indexedDB.open('cd_' + pid, 1); r.onupgradeneeded = () => { const d = r.result; for (const s in KP) if (!d.objectStoreNames.contains(s)) d.createObjectStore(s, { keyPath: KP[s] }); }; r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); });
+  const get = s => new Promise((res, rej) => { const q = db.transaction(s).objectStore(s).getAll(); q.onsuccess = () => res(q.result); q.onerror = () => rej(q.error); });
+  const events = (await get('events')).sort(evSort), files = await get('files'); db.close();
+  return { format: FORMAT, version: FORMAT_V, schema: SCHEMA, app: APPV, pid, projectName: (projects().find(p => p.pid === pid) || {}).name, exportedAt: Date.now(), by: USER ? USER.name : '?', dev: DEV, events, files };
+}
+async function exportAll() {
+  const ps = projects(); const out = { format: FORMAT + '-bundle', version: FORMAT_V, app: APPV, exportedAt: Date.now(), by: USER ? USER.name : '?', projects: [] };
+  for (const p of ps) { try { out.projects.push(await dumpProject(p.pid)); } catch (e) { toast('Chantier « ' + p.name + ' » non exporté : ' + e.message, { err: 1 }); } }
+  download('carnet_chantier_TOUS_' + today() + '.json', JSON.stringify(out), 'application/json');
+  if (S) await markExported(); toast(`${out.projects.length} chantier(s) exporté(s) dans un seul fichier`);
 }
 async function importFile(file) {
   try { const j = JSON.parse(await file.text()); await importData(j); }
@@ -525,8 +605,11 @@ function afterChange() { if (S.R.project.project) regProject(S.pid, S.P.name); u
 /* ---------------- Chantiers ---------------- */
 async function openProject(pid) {
   await IDB.open(pid); fileCache.clear();
-  S = { pid, events: await IDB.all('events') };
-  rebuild();
+  const sv = await IDB.getMeta('schema') || 1;
+  for (let v = sv + 1; v <= SCHEMA; v++) if (MIGRATIONS[v]) await MIGRATIONS[v]();
+  if (sv !== SCHEMA || !(await IDB.getMeta('schema'))) await IDB.setMeta('schema', SCHEMA);
+  const evs = await IDB.all('events');
+  S = { pid, events: evs }; rebuild(); // S n'est jamais visible à moitié construit
   S.lastBackup = await IDB.getMeta('lastBackup') || 0; S.lastBackupN = await IDB.getMeta('lastBackupN') || 0;
   S.fh = await IDB.getMeta('fh') || null; S.fhOk = false;
   if (S.fh && S.fh.queryPermission) { try { S.fhOk = (await S.fh.queryPermission({ mode: 'readwrite' })) === 'granted'; } catch (e) { } }
@@ -591,28 +674,10 @@ function barList(entries, o = {}) {
     return `<div class="it"${e.click ? ` data-go="${esc(e.click)}" style="cursor:pointer"` : ''}><div class="hd"><span>${e.dot ? `<span class="dot" style="background:${e.dot}"></span>` : ''}${esc(e.l)}</span><b>${mshort(e.v)}${e.b ? ` <span class="muted small">/ ${mshort(e.b)} (${Math.round(e.v / e.b * 100)} %)</span>` : o.total ? ` <span class="muted small">${Math.round(e.v / o.total * 100)} %</span>` : ''}</b></div><div class="track"><div class="fill${over ? ' over' : ''}" style="width:${w}%"></div></div></div>`;
   }).join('')}</div>`;
 }
-function monthChart(xs) {
-  const m = {}; xs.forEach(x => { if (!x.d.date) return; const k = x.d.date.slice(0, 7); m[k] = (m[k] || 0) + x.cost; });
-  let keys = Object.keys(m).sort(); if (!keys.length) return '<div class="muted small">Aucune dépense</div>';
-  // remplir les mois vides
-  const all = []; let [y, mo] = keys[0].split('-').map(Number); const [ly, lm] = keys[keys.length - 1].split('-').map(Number);
-  while (y < ly || (y === ly && mo <= lm)) { all.push(y + '-' + pad(mo)); mo++; if (mo > 12) { mo = 1; y++; } }
-  keys = all.slice(-18);
-  const W = 640, H = 220, pl = 8, pb = 34, pt = 22, bw = (W - pl * 2) / keys.length, max = Math.max(...keys.map(k => m[k] || 0), 1);
-  let cum = 0; const tot = sum(keys, k => m[k] || 0); const pts = [];
-  const bars = keys.map((k, i) => {
-    const v = m[k] || 0; cum += v; const h = (H - pb - pt) * v / max; const x = pl + i * bw + bw * .15, w = bw * .7, yy = H - pb - h;
-    pts.push([pl + i * bw + bw / 2, H - pb - (H - pb - pt) * cum / tot]);
-    return `<g><rect x="${x}" y="${yy}" width="${w}" height="${Math.max(h, v ? 1 : 0)}" rx="3" fill="var(--ac)"><title>${monthLabel(k)} : ${money(v)}</title></rect>${v && keys.length <= 12 ? `<text x="${x + w / 2}" y="${yy - 4}" text-anchor="middle">${v >= 1e6 ? nf2.format(v / 1e6) + ' M' : Math.round(v / 1e3) + ' k'}</text>` : ''}<text x="${pl + i * bw + bw / 2}" y="${H - pb + 14}" text-anchor="middle">${MSHORT[+k.slice(5) - 1]}</text>${(i === 0 || k.endsWith('-01')) ? `<text x="${pl + i * bw + bw / 2}" y="${H - pb + 27}" text-anchor="middle">${k.slice(0, 4)}</text>` : ''}</g>`;
-  }).join('');
-  const line = `<polyline points="${pts.map(p => p.join(',')).join(' ')}" fill="none" stroke="var(--in)" stroke-width="2" stroke-dasharray="4 3"/>`;
-  return `<div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Dépenses par mois">${bars}${line}<line x1="${pl}" x2="${W - pl}" y1="${H - pb}" y2="${H - pb}" stroke="var(--bd)"/></svg><div class="small muted"><span class="dot" style="background:var(--ac)"></span>Coût du mois &nbsp; <span class="dot" style="background:var(--in)"></span>Cumul (échelle relative, total ${money(tot)})</div></div>`;
-}
-
 /* =====================================================================
    Navigation & en-tête
    ===================================================================== */
-const TABS = [['dash', 'Tableau de bord'], ['exp', 'Dépenses'], ['funds', 'Fonds & caisses'], ['mat', 'Matériaux'], ['report', 'Bilan / rapport'], ['ref', 'Référentiels'], ['journal', 'Journal'], ['settings', 'Sauvegarde & réglages']];
+const TABS = [['dash', 'Tableau de bord'], ['exp', 'Dépenses'], ['funds', 'Fonds & caisses'], ['ana', 'Analyses'], ['report', 'Rapports'], ['mat', 'Matériaux'], ['ref', 'Référentiels'], ['journal', 'Journal'], ['settings', 'Sauvegarde & réglages']];
 let VIEW = LS.get('cd_view', 'dash');
 function go(v) { VIEW = v; LS.set('cd_view', v); render(); window.scrollTo(0, 0); }
 function updStatus() {
@@ -637,9 +702,9 @@ function renderHeader() {
 function render() {
   renderHeader(); document.body.classList.toggle('hasproj', !!S && canWrite());
   if (!S) return renderWelcome();
-  const v = { dash: renderDash, exp: renderExp, funds: renderFunds, mat: renderMat, report: renderReport, ref: renderRef, journal: renderJournal, settings: renderSettings }[VIEW] || renderDash;
+  const v = { dash: renderDash, exp: renderExp, funds: renderFunds, mat: renderMat, ana: renderAna, report: renderReport, ref: renderRef, journal: renderJournal, settings: renderSettings }[VIEW] || renderDash;
   $('#view').innerHTML = v(); hydrateThumbs($('#view'));
-  const after = { exp: bindExp, report: bindReport, journal: bindJournal }[VIEW]; after && after();
+  const after = { exp: bindExp, ana: bindAna, report: bindReport, journal: bindJournal }[VIEW]; after && after();
 }
 
 /* =====================================================================
@@ -695,7 +760,7 @@ function renderDash() {
   if (B && cost + due > B) alerts.push(`<div class="alert a-er">⚠ Coût engagé (${money(cost + due)}) supérieur au budget global (${money(B)}).</div>`);
   if (noJust.length) alerts.push(`<div class="alert a-wa">📎 ${noJust.length} dépense(s) payée(s) sans justificatif. <button class="btn sm" data-filt="nojust">Afficher</button></div>`);
   if (!S.fhOk && (n > 20 || (!S.lastBackup && n > 30))) alerts.push(`<div class="alert a-wa">💾 ${n} saisie(s) de cet appareil pas encore partagée(s) ni sauvegardée(s). <button class="btn sm" data-act="share">📤 Partager / sauvegarder</button></div>`);
-  return `<div class="sec-title"><h2>${esc(S.P.name)}</h2><div class="row noprint"><button class="btn pri" data-act="newExp">＋ Nouvelle dépense</button><button class="btn" data-act="newFund">＋ Envoi de fonds</button></div></div>
+  return `<div class="sec-title"><h2>${esc(S.P.name)}</h2><div class="row noprint"><button class="btn pri" data-act="newExp">＋ Nouvelle dépense</button><button class="btn" data-act="newFund">＋ Envoi de fonds</button><button class="btn" data-act="etatPdf">📄 État du projet (PDF)</button></div></div>
   ${S.P.place ? `<p class="muted small" style="margin-top:-8px">${esc(S.P.place)}${S.P.owner ? ' · Maître d’ouvrage : ' + esc(S.P.owner) : ''}</p>` : ''}
   ${alerts.join('')}
   <div class="kpis">
@@ -706,7 +771,8 @@ function renderDash() {
    <div class="kpi"><div class="l">Budget restant</div><div class="v" style="color:${B && B - cost - due < 0 ? 'var(--er)' : 'inherit'}">${B ? mshort(B - cost - due) : '—'}</div><div class="s">après dettes</div></div>
   </div>
   <div class="cols">
-   <div class="card"><h3>Dépenses par mois</h3>${monthChart(xs)}</div>
+   <div class="card"><h3>Dépenses par mois et par segment</h3>${monthChart(xs)}</div>
+   <div class="card"><h3>Évolution cumulée${B ? ' vs budget' : ''}</h3>${(() => { const bk = bucketRange(xs.map(x => x.d.date), 'month'); return bk.length ? sCurve(xs, 'month', bk, true).html : '<div class="muted small">Aucune dépense</div>'; })()}</div>
    <div class="card"><h3>Budget vs réalisé par segment</h3>${barList(lotEntries)}</div>
    <div class="card"><h3>Par catégorie</h3>${barList(grp('cat', catName), { total: cost })}</div>
    <div class="card"><h3>Par moyen de paiement</h3>${barList(grp('mode', k => k), { total: cost })}</div>
@@ -1049,6 +1115,440 @@ function renderMat() {
 }
 
 /* =====================================================================
+   Graphiques (SVG natif, hors-ligne) + vue Analyses
+   Palette catégorielle validée (ordre fixe, jamais recyclée) : 7 couleurs + « Autres » gris.
+   Couleur attachée à l'entité (classement sur tout le chantier, pas sur le filtre).
+   ===================================================================== */
+const SERIES_N = 7;
+const sc = i => i < 0 ? 'var(--sO)' : `var(--s${i + 1})`;
+const fmtS = v => { v = Math.round(v || 0); const a = Math.abs(v); return a >= 1e6 ? nf2.format(Math.round(v / 1e4) / 100) + ' M' : a >= 1e3 ? Math.round(v / 1e3) + ' k' : String(v); };
+function niceTicks(max, n = 4) {
+  if (!(max > 0)) return [0, 1];
+  const raw = max / n, p = 10 ** Math.floor(Math.log10(raw)), f = raw / p;
+  const step = (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * p;
+  const t = []; for (let v = 0; v <= max + step * .001; v += step) t.push(v); if (t[t.length - 1] < max) t.push(t[t.length - 1] + step); return t;
+}
+/* ---------- infobulles (contenu inséré en textContent) ---------- */
+const TIPS = new Map(); let tipSeq = 0;
+function tip(title, rows) { const id = 't' + (++tipSeq); TIPS.set(id, { title, rows }); if (TIPS.size > 4000) TIPS.delete(TIPS.keys().next().value); return id; }
+(function initTip() {
+  const el = document.createElement('div'); el.id = 'tipBox'; el.setAttribute('role', 'tooltip'); document.body.appendChild(el);
+  let cur = null, guide = null;
+  const hide = () => { el.style.display = 'none'; cur = null; if (guide) { guide.style.opacity = 0; guide = null; } };
+  const show = (t, x, y) => {
+    const d = TIPS.get(t.dataset.tip); if (!d) return hide();
+    if (cur !== t) {
+      cur = t; el.textContent = '';
+      const h = document.createElement('div'); h.className = 'tt'; h.textContent = d.title; el.appendChild(h);
+      d.rows.forEach(r => { const row = document.createElement('div'); row.className = 'tr'; if (r.color) { const k = document.createElement('i'); k.style.color = r.color; row.appendChild(k); } const v = document.createElement('b'); v.textContent = r.value; row.appendChild(v); const n = document.createElement('span'); n.textContent = r.name || ''; row.appendChild(n); el.appendChild(row); });
+      if (guide) guide.style.opacity = 0;
+      guide = t.dataset.guide ? t.ownerSVGElement && t.ownerSVGElement.querySelector('#' + t.dataset.guide) : null; if (guide) guide.style.opacity = 1;
+    }
+    el.style.display = 'block';
+    const w = el.offsetWidth, hgt = el.offsetHeight;
+    let left = x + 14, top = y + 14; if (left + w > innerWidth - 8) left = x - w - 14; if (left < 8) left = 8; if (top + hgt > innerHeight - 8) top = y - hgt - 14;
+    el.style.left = left + 'px'; el.style.top = top + 'px';
+  };
+  document.addEventListener('pointermove', e => { const t = e.target.closest && e.target.closest('[data-tip]'); if (t) show(t, e.clientX, e.clientY); else if (cur) hide(); }, { passive: true });
+  document.addEventListener('pointerdown', e => { const t = e.target.closest && e.target.closest('[data-tip]'); if (t) show(t, e.clientX, e.clientY); else hide(); }, { passive: true });
+  document.addEventListener('focusin', e => { const t = e.target.closest && e.target.closest('[data-tip]'); if (t) { const r = t.getBoundingClientRect(); show(t, r.right, r.top); } });
+  document.addEventListener('scroll', hide, { passive: true, capture: true });
+})();
+
+/* ---------- périodes ---------- */
+const GRANS = { week: 'Semaine', month: 'Mois', quarter: 'Trimestre', year: 'Année' };
+function bucketOf(date, g) {
+  if (g === 'week') return mondayOf(date);
+  if (g === 'quarter') return date.slice(0, 4) + '-Q' + (Math.floor((+date.slice(5, 7) - 1) / 3) + 1);
+  if (g === 'year') return date.slice(0, 4);
+  return date.slice(0, 7);
+}
+function bucketLabel(k, g, long) {
+  if (g === 'week') return long ? 'Semaine du ' + fdate(k) : k.slice(8, 10) + '/' + k.slice(5, 7);
+  if (g === 'quarter') return 'T' + k.slice(-1) + ' ' + (long ? k.slice(0, 4) : k.slice(2, 4));
+  if (g === 'year') return k;
+  return long ? monthLabel(k + '-01') : MSHORT[+k.slice(5, 7) - 1] + ' ' + k.slice(2, 4);
+}
+function bucketRange(dates, g, from, to) {
+  const ds = dates.filter(Boolean).sort(); const a = from || ds[0], b = to || ds[ds.length - 1];
+  if (!a || !b) return [];
+  const out = []; let d = new Date(a + 'T12:00:00'); const end = new Date(b + 'T12:00:00'); let guard = 0;
+  while (d <= end && guard++ < 2000) { const k = bucketOf(isoD(d), g); if (out[out.length - 1] !== k) out.push(k); d.setDate(d.getDate() + (g === 'week' ? 7 : g === 'year' ? 20 : 1)); }
+  const kb = bucketOf(b, g); if (out[out.length - 1] !== kb) out.push(kb);
+  return [...new Set(out)].map(k => ({ k, label: bucketLabel(k, g), long: bucketLabel(k, g, true) }));
+}
+/* ---------- dimensions ---------- */
+const DIMS = { lot: 'Segment', cat: 'Catégorie', payee: 'Bénéficiaire', payer: 'Payeur', mode: 'Moyen de paiement' };
+const dimId = (x, dim) => (x.d[dim] || '');
+const dimName = (dim, id) => dim === 'lot' ? (id ? lotName(id) : 'Sans segment') : dim === 'cat' ? (id ? catName(id) : 'Sans catégorie') : dim === 'mode' ? (id || 'Non précisé') : (id ? pName(id) : 'Non précisé');
+const measureOf = (x, m) => m === 'engaged' ? x.cost + x.due : x.cost;
+/* rang stable (tout le chantier) → couleur fixe par entité */
+function colorMap(dim, m) {
+  const t = {}; live('expenses').map(X).forEach(x => { const k = dimId(x, dim); t[k] = (t[k] || 0) + measureOf(x, m || 'cost'); });
+  const ids = Object.keys(t).filter(k => t[k] > 0).sort((a, b) => t[b] - t[a]);
+  const map = {}; ids.forEach((id, i) => map[id] = i < SERIES_N ? i : -1); return map;
+}
+/* séries temporelles par dimension (top 7 + Autres) */
+function seriesBy(xs, dim, gran, measure, buckets) {
+  const cm = colorMap(dim, measure); const idx = {}; buckets.forEach((b, i) => idx[b.k] = i);
+  const S2 = {}; xs.forEach(x => { if (!x.d.date) return; const i = idx[bucketOf(x.d.date, gran)]; if (i == null) return; const id = dimId(x, dim); const slot = cm[id] ?? -1; const key = slot < 0 ? '__o' : id; (S2[key] || (S2[key] = { id: key, slot, name: slot < 0 ? 'Autres' : dimName(dim, id), values: buckets.map(() => 0) })).values[i] += measureOf(x, measure); });
+  return Object.values(S2).sort((a, b) => (a.slot < 0 ? 99 : a.slot) - (b.slot < 0 ? 99 : b.slot)).map(s => ({ ...s, color: sc(s.slot) }));
+}
+function totalsBy(xs, dim, measure) {
+  const cm = colorMap(dim, measure); const t = {};
+  xs.forEach(x => { const id = dimId(x, dim); (t[id] || (t[id] = { id, name: dimName(dim, id), v: 0, n: 0, due: 0, slot: cm[id] ?? -1 })); t[id].v += measureOf(x, measure); t[id].n++; t[id].due += x.due; });
+  return Object.values(t).sort((a, b) => b.v - a.v);
+}
+
+/* ---------- graphique temporel : colonnes empilées / barres / lignes ---------- */
+function chartTS(o) {
+  const { buckets, series } = o; const mode = o.mode || 'stack'; const lines = o.lines || [];
+  if (!buckets.length || !series.length) return '<div class="muted small">Aucune donnée sur la période</div>';
+  const narrow = innerWidth < 720, W = narrow ? 400 : (o.width || 680), H = o.height || (narrow ? 230 : 240), pl = narrow ? 40 : 50, pr = o.endLabels ? 96 : 14, pt = 14, pb = 30, n = buckets.length, iw = W - pl - pr, ih = H - pt - pb, bw = iw / n;
+  const tot = buckets.map((_, i) => sum(series, s => s.values[i]));
+  let max = mode === 'stack' ? Math.max(...tot) : Math.max(...series.flatMap(s => s.values));
+  lines.forEach(l => max = Math.max(max, ...l.values)); if (o.ref) max = Math.max(max, o.ref.value);
+  const ticks = niceTicks(max), ymax = ticks[ticks.length - 1] || 1, y = v => pt + ih - v / ymax * ih, cx = i => pl + i * bw + bw / 2;
+  const gid = 'g' + (++tipSeq);
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(o.title || 'graphique')}">`;
+  s += ticks.map(t => `<line x1="${pl}" x2="${W - pr}" y1="${y(t)}" y2="${y(t)}" stroke="var(--grid)" stroke-width="1"/><text x="${pl - 6}" y="${y(t) + 4}" text-anchor="end">${fmtS(t)}</text>`).join('');
+  const every = Math.max(1, Math.ceil(n / (iw / 54)));
+  s += buckets.map((b, i) => (i % every === 0 || i === n - 1 && n <= 24) ? `<text x="${cx(i)}" y="${H - pb + 16}" text-anchor="middle">${esc(b.label)}</text>` : '').join('');
+  const guide = `<line id="${gid}" x1="0" x2="0" y1="${pt}" y2="${pt + ih}" stroke="var(--mu)" stroke-width="1" style="opacity:0;pointer-events:none"/>`;
+  if (mode === 'stack' || mode === 'bars') {
+    const w = Math.max(2, Math.min(bw * .72, 56)), gap = n > 40 ? 0 : 1;
+    buckets.forEach((b, i) => {
+      let acc = 0; const x0 = cx(i) - w / 2;
+      const segs = (mode === 'bars' ? series.slice(0, 1) : series).filter(se => se.values[i] > 0);
+      segs.forEach((se, j) => { const v = se.values[i]; const y1 = y(acc + v), y0 = y(acc); acc += v; const top = j === segs.length - 1; const hgt = Math.max(0, y0 - y1 - (top ? 0 : gap)); if (hgt <= 0) return; s += top && hgt > 4 ? `<path d="M${x0},${y0}V${y1 + 3}q0,-3 3,-3h${w - 6}q3,0 3,3V${y0}Z" fill="${se.color}"/>` : `<rect x="${x0}" y="${y1}" width="${w}" height="${hgt}" fill="${se.color}"/>`; });
+    });
+  }
+  const drawLine = (l, dash) => { const pts = l.values.map((v, i) => `${cx(i).toFixed(1)},${y(v).toFixed(1)}`); return `<polyline points="${pts.join(' ')}" fill="none" stroke="${l.color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"${dash ? ' stroke-dasharray="5 4"' : ''}/>`; };
+  if (mode === 'line') series.forEach(l => { s += drawLine(l); if (n === 1) s += `<circle cx="${cx(0)}" cy="${y(l.values[0])}" r="4" fill="${l.color}"/>`; });
+  lines.forEach(l => s += drawLine(l, l.dash));
+  if (o.ref) s += `<line x1="${pl}" x2="${W - pr}" y1="${y(o.ref.value)}" y2="${y(o.ref.value)}" stroke="var(--er)" stroke-width="1.5" stroke-dasharray="6 4"/><text x="${W - pr}" y="${y(o.ref.value) - 5}" text-anchor="end" style="fill:var(--er)">${esc(o.ref.label)} ${fmtS(o.ref.value)}</text>`;
+  // étiquettes directes en bout de ligne (≤ 4 séries)
+  if (o.endLabels) { const all = (mode === 'line' ? series : []).concat(lines).slice(0, 4); const used = []; all.forEach(l => { let yy = y(l.values[n - 1]) + 4; while (used.some(u => Math.abs(u - yy) < 13)) yy += 13; used.push(yy); s += `<text x="${cx(n - 1) + 8}" y="${yy}" style="fill:var(--tx)">${esc(fmtS(l.values[n - 1]))}</text>`; }); }
+  s += guide;
+  // zones de survol (une par période, tout en hauteur) + lecture de toutes les séries
+  buckets.forEach((b, i) => {
+    const rows = []; const all = series.concat(lines);
+    all.forEach(se => { const v = se.values[i]; if (v || mode === 'line' || lines.includes(se)) rows.push({ color: se.color, name: se.name, value: fmtS(v) + (o.unitTip ? '' : '') }); });
+    if (mode === 'stack' && series.length > 1) rows.push({ name: 'Total', value: nf0.format(Math.round(tot[i])) + ' FCFA' });
+    s += `<rect x="${pl + i * bw}" y="${pt}" width="${bw}" height="${ih}" fill="transparent" data-tip="${tip(b.long, rows)}" data-guide="${gid}" tabindex="-1"/>`;
+  });
+  // guide suit la zone survolée
+  s += `</svg>`;
+  const legend = (o.legend !== false && (series.length + lines.length) >= 2) ? `<div class="lgd">${series.map(se => `<span><i class="${mode === 'line' ? 'ln' : ''}" style="background:${se.color};border-color:${se.color}"></i>${esc(se.name)}</span>`).join('')}${lines.map(l => `<span><i class="ln${l.dash ? ' dash' : ''}" style="background:${l.color};border-color:${l.color}"></i>${esc(l.name)}</span>`).join('')}${o.ref ? `<span><i class="ln dash" style="border-color:var(--er)"></i>${esc(o.ref.label)}</span>` : ''}</div>` : '';
+  return `<div class="chart" data-gid="${gid}">${s}${legend}</div>`;
+}
+/* le guide vertical se place sur la période survolée */
+document.addEventListener('pointerover', e => { const r = e.target.closest && e.target.closest('rect[data-guide]'); if (!r) return; const g = r.ownerSVGElement.querySelector('#' + r.dataset.guide); if (g) { const x = +r.getAttribute('x') + +r.getAttribute('width') / 2; g.setAttribute('x1', x); g.setAttribute('x2', x); } }, { passive: true });
+
+function dataTable(buckets, series, lines) {
+  const all = series.concat(lines || []);
+  return `<details class="tview noprint"><summary>Voir les données (tableau)</summary><div class="tw"><table><thead><tr><th>Période</th>${all.map(s => `<th class="num">${esc(s.name)}</th>`).join('')}${series.length > 1 ? '<th class="num">Total</th>' : ''}</tr></thead><tbody>${buckets.map((b, i) => `<tr><td>${esc(b.long)}</td>${all.map(s => `<td class="num">${mshort(s.values[i])}</td>`).join('')}${series.length > 1 ? `<td class="num">${mshort(sum(series, s => s.values[i]))}</td>` : ''}</tr>`).join('')}</tbody></table></div></details>`;
+}
+/* barres horizontales avec repère de budget */
+function hbars(rows, o = {}) {
+  if (!rows.length) return '<div class="muted small">Aucune donnée</div>';
+  const max = Math.max(1, ...rows.map(r => Math.max(r.v, r.b || 0)));
+  return `<div class="hb">${rows.map(r => {
+    const over = r.b && r.v > r.b; const t = tip(r.name, [{ color: r.color, name: 'Réalisé', value: money(r.v) }].concat(r.b ? [{ name: 'Budget', value: money(r.b) }, { name: 'Consommé', value: Math.round(r.v / r.b * 100) + ' %' }] : []).concat(o.total ? [{ name: 'Part', value: nf2.format(r.v / o.total * 100) + ' %' }] : []));
+    return `<div class="hbr" data-tip="${t}"${r.click ? ` data-go="${esc(r.click)}" style="cursor:pointer"` : ''}><div class="hbl"><span>${r.color ? `<i style="background:${r.color}"></i>` : ''}${esc(r.name)}</span><b>${mshort(r.v)}${r.b ? ` <span class="muted">/ ${mshort(r.b)}</span>` : o.total ? ` <span class="muted">${Math.round(r.v / o.total * 100)} %</span>` : ''}${over ? ' <span class="bdg b-er">⚠ dépassé</span>' : ''}</b></div><div class="hbt"><div class="hbf${over ? ' over' : ''}" style="width:${Math.min(100, r.v / max * 100)}%;${r.color && !over ? 'background:' + r.color : ''}"></div>${r.b ? `<div class="hbm" style="left:${Math.min(100, r.b / max * 100)}%"></div>` : ''}</div></div>`;
+  }).join('')}</div>`;
+}
+/* carte de chaleur dimension × période */
+function heatmap(xs, dim, gran, measure, buckets) {
+  if (!buckets.length) return '<div class="muted small">Aucune donnée</div>';
+  const idx = {}; buckets.forEach((b, i) => idx[b.k] = i); const M = {};
+  xs.forEach(x => { if (!x.d.date) return; const i = idx[bucketOf(x.d.date, gran)]; if (i == null) return; const id = dimId(x, dim); (M[id] || (M[id] = buckets.map(() => 0)))[i] += measureOf(x, measure); });
+  const rows = Object.entries(M).map(([id, v]) => ({ id, name: dimName(dim, id), v, t: sum(v, a => a) })).sort((a, b) => b.t - a.t);
+  const max = Math.max(1, ...rows.flatMap(r => r.v));
+  return `<div class="tw"><table class="heat"><thead><tr><th>${esc(DIMS[dim])}</th>${buckets.map(b => `<th class="num">${esc(b.label)}</th>`).join('')}<th class="num">Total</th></tr></thead><tbody>${rows.map(r => `<tr><td class="nowrap">${esc(r.name)}</td>${r.v.map((v, i) => { const p = v ? Math.max(8, Math.round(v / max * 100)) : 0; return `<td class="num hc" style="background:${p ? `color-mix(in srgb, var(--s1) ${p}%, transparent)` : 'transparent'};color:${p > 55 ? '#fff' : 'var(--tx)'}" data-tip="${tip(r.name + ' — ' + buckets[i].long, [{ name: '', value: money(v) }])}">${v ? fmtS(v) : ''}</td>`; }).join('')}<td class="num"><b>${fmtS(r.t)}</b></td></tr>`).join('')}</tbody></table></div><div class="small muted" style="margin-top:4px">Intensité proportionnelle au montant (max ${money(max)}).</div>`;
+}
+/* petits multiples : avancement cumulé par segment vs budget */
+function lotMultiples(xs, gran, buckets, measure) {
+  const idx = {}; buckets.forEach((b, i) => idx[b.k] = i); const cm = colorMap('lot', measure);
+  const lots = lotsSorted(true).filter(l => !l.del || xs.some(x => x.d.lot === l.id));
+  const cards = lots.map(l => {
+    const v = buckets.map(() => 0); xs.filter(x => x.d.lot === l.id).forEach(x => { const i = idx[bucketOf(x.d.date, gran)]; if (i != null) v[i] += measureOf(x, measure); });
+    let c = 0; const cum = v.map(a => c += a); const tot = c, b = num(l.d.budget);
+    if (!tot && !b) return '';
+    const W = 220, H = 64, max = Math.max(tot, b, 1), n = buckets.length, X = i => n === 1 ? W / 2 : 4 + i * (W - 8) / (n - 1), Y = a => H - 4 - a / max * (H - 10);
+    const col = sc(cm[l.id] ?? -1), over = b && tot > b;
+    const t = tip(l.d.name, [{ color: col, name: 'Cumul', value: money(tot) }].concat(b ? [{ name: 'Budget', value: money(b) }, { name: 'Consommé', value: Math.round(tot / b * 100) + ' %' }] : []));
+    return `<div class="sm" data-tip="${t}" data-go="lot:${l.id}"><div class="smh"><span>${esc(l.d.name)}</span>${over ? '<span class="bdg b-er">⚠</span>' : ''}</div><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${b ? `<line x1="0" x2="${W}" y1="${Y(b)}" y2="${Y(b)}" stroke="var(--er)" stroke-dasharray="4 3" stroke-width="1"/>` : ''}<polyline points="${cum.map((a, i) => X(i).toFixed(1) + ',' + Y(a).toFixed(1)).join(' ')}" fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round"/></svg><div class="smf"><b>${fmtS(tot)}</b><span class="muted">${b ? Math.round(tot / b * 100) + ' % de ' + fmtS(b) : 'sans budget'}</span></div></div>`;
+  }).join('');
+  return cards ? `<div class="sms">${cards}</div><div class="small muted" style="margin-top:6px">Ligne : dépense cumulée ; pointillés rouges : budget du segment. Échelle propre à chaque segment.</div>` : '<div class="muted small">Aucune donnée</div>';
+}
+/* courbe en S : cumul réalisé (+ engagé) vs budget */
+function sCurve(xs, gran, buckets, withDue) {
+  const idx = {}; buckets.forEach((b, i) => idx[b.k] = i); const a = buckets.map(() => 0), d = buckets.map(() => 0);
+  xs.forEach(x => { const i = idx[bucketOf(x.d.date, gran)]; if (i == null) return; a[i] += x.cost; d[i] += x.cost + x.due; });
+  let c1 = 0, c2 = 0; const ca = a.map(v => c1 += v), cd = d.map(v => c2 += v);
+  const series = [{ name: 'Coût réalisé cumulé', color: sc(0), values: ca }]; if (withDue && c2 > c1) series.push({ name: 'Engagé cumulé (réalisé + à payer)', color: sc(1), values: cd });
+  const B = budgetTotal();
+  return { html: chartTS({ buckets, series, mode: 'line', ref: B ? { value: B, label: 'Budget' } : null, endLabels: true, title: 'Cumul' }), series };
+}
+/* graphique du tableau de bord (remplace l'ancien) */
+function monthChart(xs) {
+  const bk = bucketRange(xs.map(x => x.d.date), 'month'); if (!bk.length) return '<div class="muted small">Aucune dépense</div>';
+  const b = bk.slice(-18); const ser = seriesBy(xs, 'lot', 'month', 'cost', b);
+  return chartTS({ buckets: b, series: ser, mode: 'stack', title: 'Dépenses par mois et par segment' });
+}
+
+/* =====================================================================
+   Vue Analyses
+   ===================================================================== */
+const AN = { from: '', to: '', gran: 'month', dim: 'lot', measure: 'cost', lot: '' };
+function anData() {
+  let xs = live('expenses').map(X).filter(x => x.d.date && (!AN.from || x.d.date >= AN.from) && (!AN.to || x.d.date <= AN.to));
+  if (AN.lot) xs = xs.filter(x => x.d.lot === AN.lot);
+  const bk = bucketRange(xs.map(x => x.d.date), AN.gran, AN.from, AN.to);
+  return { xs, bk };
+}
+function renderAna() {
+  const { xs, bk } = anData(); const dim = AN.lot && AN.dim === 'lot' ? 'cat' : AN.dim; const m = AN.measure;
+  const total = sum(xs, x => measureOf(x, m));
+  const per = bk.map(b => sum(xs.filter(x => bucketOf(x.d.date, AN.gran) === b.k), x => measureOf(x, m)));
+  const avg = per.length ? total / per.length : 0; const peak = per.length ? per.indexOf(Math.max(...per)) : -1;
+  const last3 = per.slice(-3), rate = last3.length ? sum(last3, a => a) / last3.length : 0;
+  const B = AN.lot ? num((rec('lots', AN.lot) || { d: {} }).d.budget) : budgetTotal();
+  const spentAll = sum((AN.lot ? live('expenses').map(X).filter(x => x.d.lot === AN.lot) : live('expenses').map(X)), x => x.cost + x.due);
+  const remain = B - spentAll - (AN.lot ? 0 : sum(live('funds').map(FX), 'fee')); const nPer = rate > 0 && remain > 0 ? remain / rate : null;
+  const ser = seriesBy(xs, dim, AN.gran, m, bk);
+  const sc2 = sCurve(xs, AN.gran, bk, true);
+  // rythme hebdomadaire + moyenne mobile 4 semaines
+  const wk = bucketRange(xs.map(x => x.d.date), 'week', AN.from, AN.to).slice(-52);
+  const wv = wk.map(b => sum(xs.filter(x => mondayOf(x.d.date) === b.k), x => measureOf(x, m)));
+  const ma = wv.map((_, i) => { const s = wv.slice(Math.max(0, i - 3), i + 1); return sum(s, a => a) / s.length; });
+  const tb = totalsBy(xs, dim, m);
+  const lotRows = lotsSorted(true).map(l => ({ name: l.d.name, v: sum(xs.filter(x => x.d.lot === l.id), x => measureOf(x, m)), b: num(l.d.budget), color: sc(colorMap('lot', m)[l.id] ?? -1), click: 'lot:' + l.id })).filter(r => r.v || (r.b && !AN.lot));
+  const people = null;
+  return `<div class="sec-title"><h2>Analyses</h2><div class="row noprint"><button class="btn" data-act="anaPrint">🖨 Imprimer / PDF</button></div></div>
+  <div class="card noprint anactl" style="margin-bottom:12px"><div class="filters">
+   <label class="f">Période<select id="anPer">${opts([['', '— choisir —'], ['all', 'Tout le chantier'], ['month', 'Ce mois'], ['prev', 'Mois dernier'], ['d30', '30 derniers jours'], ['year', 'Cette année']], '')}</select></label>
+   <label class="f">Du<input type="date" id="anFrom" value="${AN.from}"></label><label class="f">Au<input type="date" id="anTo" value="${AN.to}"></label>
+   <label class="f">Pas de temps<select id="anGran">${opts(Object.entries(GRANS), AN.gran)}</select></label>
+   <label class="f">Ventiler par<select id="anDim">${opts(Object.entries(DIMS), AN.dim)}</select></label>
+   <label class="f">Mesure<select id="anMeas">${opts([['cost', 'Coût réalisé (payé + frais)'], ['engaged', 'Engagé (réalisé + à payer)']], m)}</select></label>
+   <label class="f">Limiter à un segment<select id="anLot">${lotOpts(AN.lot, 'Tout le chantier')}</select></label></div></div>
+  <div class="kpis">
+   <div class="kpi"><div class="l">Total période</div><div class="v">${mshort(total)}</div><div class="s">${xs.length} opération(s)</div></div>
+   <div class="kpi"><div class="l">Moyenne / ${GRANS[AN.gran].toLowerCase()}</div><div class="v">${mshort(avg)}</div><div class="s">sur ${per.length} période(s)</div></div>
+   <div class="kpi"><div class="l">Pic</div><div class="v">${peak >= 0 ? mshort(per[peak]) : '—'}</div><div class="s">${peak >= 0 ? esc(bk[peak].long) : ''}</div></div>
+   <div class="kpi"><div class="l">Rythme récent</div><div class="v">${mshort(rate)}</div><div class="s">moy. des 3 dernières périodes</div></div>
+   <div class="kpi"><div class="l">Budget restant ${AN.lot ? '(segment)' : ''}</div><div class="v" style="color:${B && remain < 0 ? 'var(--er)' : 'inherit'}">${B ? mshort(remain) : '—'}</div><div class="s">${B ? (nPer != null ? `≈ ${nf2.format(nPer)} ${GRANS[AN.gran].toLowerCase()}(s) au rythme récent` : remain < 0 ? '⚠ dépassé' : '') : 'budget non défini'}</div></div>
+  </div>
+  <div class="cols2">
+   <div class="card"><h3>Évolution cumulée ${B ? 'vs budget' : ''}</h3>${sc2.html}${dataTable(bk, sc2.series)}</div>
+   <div class="card"><h3>Dépenses par ${esc(GRANS[AN.gran].toLowerCase())} et par ${esc(DIMS[dim].toLowerCase())}</h3>${chartTS({ buckets: bk, series: ser, mode: 'stack', title: 'Répartition' })}${dataTable(bk, ser)}</div>
+   ${!AN.lot ? `<div class="card span-all"><h3>Avancement financier par segment</h3>${lotMultiples(xs, AN.gran, bk, m)}</div>` : ''}
+   <div class="card"><h3>${AN.lot ? 'Segment vs budget' : 'Budget vs réalisé par segment'}</h3>${hbars(lotRows)}</div>
+   <div class="card"><h3>Répartition par ${esc(DIMS[dim].toLowerCase())}</h3>${hbars(tb.slice(0, 12).map(r => ({ name: r.name, v: r.v, color: sc(r.slot) })), { total })}${tb.length > 12 ? `<div class="small muted">+ ${tb.length - 12} autre(s) : ${money(sum(tb.slice(12), 'v'))}</div>` : ''}</div>
+   <div class="card span-all"><h3>Rythme hebdomadaire des dépenses</h3>${chartTS({ buckets: wk.map(b => ({ ...b, label: bucketLabel(b.k, 'week'), long: bucketLabel(b.k, 'week', true) })), series: [{ name: 'Dépense de la semaine', color: sc(0), values: wv }], lines: [{ name: 'Moyenne mobile 4 semaines', color: 'var(--tx)', values: ma, dash: true }], mode: 'bars', height: 220, width: 1200 })}</div>
+   <div class="card span-all"><h3>Carte de chaleur : ${esc(DIMS[dim].toLowerCase())} × ${esc(GRANS[AN.gran].toLowerCase())}</h3>${heatmap(xs, dim, AN.gran, m, bk.slice(-24))}</div>
+  </div>`;
+}
+function bindAna() {
+  const m = { anFrom: 'from', anTo: 'to', anGran: 'gran', anDim: 'dim', anMeas: 'measure', anLot: 'lot' };
+  for (const id in m) $('#' + id).onchange = e => { AN[m[id]] = e.target.value; render(); };
+  $('#anPer').onchange = e => { const s = [F.from, F.to]; periodPreset(e.target.value); AN.from = F.from; AN.to = F.to; [F.from, F.to] = s; render(); };
+}
+
+/* =====================================================================
+   Rapports : état du projet, par phase, par bénéficiaire, par payeur,
+   par période, par catégorie, par moyen, dettes, matériaux, journal.
+   Export : PDF (impression), HTML autonome, CSV.
+   ===================================================================== */
+const RTYPES = { etat: 'État du projet (synthèse complète)', lot: 'Par phase / segment', payee: 'Par bénéficiaire (à qui)', payer: 'Par payeur & caisses (qui a payé)', period: 'Par période', cat: 'Par catégorie', mode: 'Par moyen de paiement', debts: 'Dettes & restes à payer', mat: 'Matériaux & quantités', audit: 'Journal des modifications' };
+const RP = { type: 'etat', from: '', to: '', sel: '', gran: 'month', detail: false, charts: true };
+function rpData() {
+  const inP = d => (!RP.from || d >= RP.from) && (!RP.to || d <= RP.to);
+  const xs = live('expenses').map(X).filter(x => inP(x.d.date || ''));
+  const fs = live('funds').map(FX).filter(f => inP(f.d.date || ''));
+  const bk = bucketRange(xs.map(x => x.d.date), RP.gran, RP.from, RP.to);
+  return { xs, fs, bk };
+}
+const repPeriod = () => `${RP.from ? fdate(RP.from) : 'début du chantier'} → ${RP.to ? fdate(RP.to) : 'aujourd’hui (' + fdate(today()) + ')'}`;
+function kpiRow(xs, extra) {
+  const paid = sum(xs, 'paid'), fee = sum(xs, 'fee'), due = sum(xs, 'due'), cost = paid + fee, B = budgetTotal();
+  return `<div class="kpis"><div class="kpi"><div class="l">Coût réalisé</div><div class="v">${mshort(cost)}</div><div class="s">FCFA · ${xs.length} opération(s)</div></div><div class="kpi"><div class="l">dont frais</div><div class="v">${mshort(fee)}</div></div><div class="kpi"><div class="l">Reste à payer</div><div class="v">${mshort(due)}</div></div>${extra || ''}</div>`;
+}
+/* tableau récapitulatif par dimension */
+function dimTable(xs, dim, o = {}) {
+  const rows = totalsBy(xs, dim, 'cost'); const tot = sum(rows, 'v'); const tdue = sum(rows, 'due');
+  if (dim === 'lot' && o.budget) lotsSorted().forEach(l => { if (!rows.find(r => r.id === l.id) && num(l.d.budget)) rows.push({ id: l.id, name: l.d.name, v: 0, n: 0, due: 0, slot: -1 }); });
+  if (dim === 'lot') rows.sort((a, b) => num((rec('lots', a.id) || { d: { order: 1e9 } }).d.order) - num((rec('lots', b.id) || { d: { order: 1e9 } }).d.order));
+  const last = {}; xs.forEach(x => { const k = dimId(x, dim); if (!last[k] || x.d.date > last[k]) last[k] = x.d.date; });
+  const B = id => num((rec('lots', id) || { d: {} }).d.budget);
+  return `<div class="tw"><table><thead><tr><th>${esc(DIMS[dim])}</th><th class="num">Nb</th><th class="num">Coût FCFA</th><th class="num">%</th>${o.budget ? '<th class="num">Budget</th><th class="num">Écart</th><th class="num">Consommé</th>' : ''}<th class="num">Reste à payer</th><th>Dernière</th></tr></thead><tbody>${rows.map(r => { const b = o.budget ? B(r.id) : 0; return `<tr><td>${esc(r.name)}</td><td class="num">${r.n}</td><td class="num">${mshort(r.v)}</td><td class="num">${tot ? nf2.format(r.v / tot * 100) : 0}</td>${o.budget ? `<td class="num">${b ? mshort(b) : '—'}</td><td class="num"${b && r.v > b ? ' style="color:var(--er);font-weight:700"' : ''}>${b ? (r.v > b ? '⚠ ' : '') + mshort(b - r.v) : ''}</td><td class="num">${b ? Math.round(r.v / b * 100) + ' %' : ''}</td>` : ''}<td class="num">${r.due ? mshort(r.due) : ''}</td><td class="nowrap small">${fdate(last[r.id])}</td></tr>`; }).join('')}</tbody><tfoot><tr><td>Total</td><td class="num">${sum(rows, 'n')}</td><td class="num">${mshort(tot)}</td><td class="num">100</td>${o.budget ? `<td class="num">${mshort(budgetTotal())}</td><td class="num">${mshort(budgetTotal() - tot)}</td><td class="num">${budgetTotal() ? Math.round(tot / budgetTotal() * 100) + ' %' : ''}</td>` : ''}<td class="num">${mshort(tdue)}</td><td></td></tr></tfoot></table></div>`;
+}
+/* liste d'opérations (imprimable) */
+function opsTable(xs, cols) {
+  if (!xs.length) return '<p class="muted">Aucune opération.</p>';
+  xs = xs.slice().sort((a, b) => (a.d.date || '').localeCompare(b.d.date || '') || a.r.created - b.r.created);
+  return `<div class="tw"><table class="ops"><thead><tr><th>Date</th>${cols.includes('lot') ? '<th>Segment</th>' : ''}<th>Objet</th><th class="num">Qté</th>${cols.includes('payer') ? '<th>Payé par</th>' : ''}${cols.includes('payee') ? '<th>Bénéficiaire</th>' : ''}<th>Moyen / réf.</th><th class="num">Montant</th><th class="num">Frais</th><th>Statut</th></tr></thead><tbody>${xs.map(x => { const d = x.d; return `<tr><td class="nowrap">${fdate(d.date)}</td>${cols.includes('lot') ? `<td class="small">${esc(lotName(d.lot))}</td>` : ''}<td>${esc(d.label)}${d.notes ? `<div class="small muted">${esc(d.notes)}</div>` : ''}</td><td class="num small">${num(d.qty) ? nf2.format(num(d.qty)) + ' ' + esc(d.unit || '') : ''}</td>${cols.includes('payer') ? `<td class="small">${esc(pName(d.payer))}</td>` : ''}${cols.includes('payee') ? `<td class="small">${esc(pName(d.payee))}</td>` : ''}<td class="small">${esc(d.mode || '')} ${esc(d.ref || '')}</td><td class="num">${mshort(x.amt)}${d.cur && d.cur !== 'XAF' ? `<div class="small muted">${nf2.format(num(d.amount))} ${d.cur}</div>` : ''}</td><td class="num">${x.fee ? mshort(x.fee) : ''}</td><td class="small">${d.status === 'du' ? 'À payer' : d.status === 'acompte' ? 'Acompte, reste ' + mshort(x.due) : 'Payé'}${(d.files || []).length ? ' 📎' : ''}${d.locked ? ' 🔒' : ''}</td></tr>`; }).join('')}</tbody><tfoot><tr><td colspan="${3 + cols.length}">Total (${xs.length})</td><td class="num">${mshort(sum(xs, 'amt'))}</td><td class="num">${mshort(sum(xs, 'fee'))}</td><td class="small">à payer ${mshort(sum(xs, 'due'))}</td></tr></tfoot></table></div>`;
+}
+function matTable(xs) {
+  const m = new Map();
+  xs.forEach(x => { const d = x.d; if (!num(d.qty)) return; const k = norm(d.label) + '|' + norm(d.unit); if (!m.has(k)) m.set(k, { label: d.label, unit: d.unit, qty: 0, amt: 0, n: 0, min: Infinity, max: 0 }); const o = m.get(k); o.qty += num(d.qty); o.amt += x.amt; o.n++; const pu = x.amt / num(d.qty); o.min = Math.min(o.min, pu); o.max = Math.max(o.max, pu); });
+  const arr = [...m.values()].sort((a, b) => b.amt - a.amt);
+  if (!arr.length) return '<p class="muted">Aucune dépense avec quantité.</p>';
+  return `<div class="tw"><table><thead><tr><th>Article</th><th class="num">Quantité</th><th class="num">Montant</th><th class="num">PU moyen</th><th class="num">PU min</th><th class="num">PU max</th><th class="num">Achats</th></tr></thead><tbody>${arr.map(o => `<tr><td>${esc(o.label)}</td><td class="num">${nf2.format(o.qty)} ${esc(o.unit)}</td><td class="num">${mshort(o.amt)}</td><td class="num">${mshort(o.amt / o.qty)}</td><td class="num">${mshort(o.min)}</td><td class="num">${mshort(o.max)}</td><td class="num">${o.n}</td></tr>`).join('')}</tbody><tfoot><tr><td>Total</td><td></td><td class="num">${mshort(sum(arr, 'amt'))}</td><td colspan="4"></td></tr></tfoot></table></div>`;
+}
+const fig = (title, body) => `<div class="fig"><h3>${esc(title)}</h3>${body}</div>`;
+/* ---------- rapports ---------- */
+function repEtat(xs, fs, bk) {
+  const due = sum(xs, 'due'), cost = sum(xs, 'cost'), ffee = sum(fs, 'fee'), B = budgetTotal();
+  const sc2 = sCurve(xs, RP.gran, bk, true);
+  const cb = cashBook();
+  const debts = xs.filter(x => x.due > 0);
+  return `${kpiRow(xs, `<div class="kpi"><div class="l">Budget</div><div class="v">${B ? mshort(B) : '—'}</div><div class="s">${B ? Math.round(cost / B * 100) + ' % consommé' : ''}</div></div><div class="kpi"><div class="l">Frais de transfert de fonds</div><div class="v">${mshort(ffee)}</div></div>`)}
+  ${RP.charts ? `<div class="figs">${fig('Évolution cumulée' + (B ? ' vs budget' : ''), sc2.html)}${fig('Dépenses par ' + GRANS[RP.gran].toLowerCase() + ' et par segment', chartTS({ buckets: bk, series: seriesBy(xs, 'lot', RP.gran, 'cost', bk), mode: 'stack' }))}</div>
+  ${fig('Budget vs réalisé par segment', hbars(lotsSorted(true).map(l => ({ name: l.d.name, v: sum(xs.filter(x => x.d.lot === l.id), 'cost'), b: num(l.d.budget) })).filter(r => r.v || r.b)))}` : ''}
+  <h2>Par phase / segment</h2>${dimTable(xs, 'lot', { budget: true })}
+  <h2>Par catégorie</h2>${dimTable(xs, 'cat')}
+  <h2>Par bénéficiaire</h2>${dimTable(xs, 'payee')}
+  <h2>Par payeur</h2>${dimTable(xs, 'payer')}
+  <h2>Par moyen de paiement</h2>${dimTable(xs, 'mode')}
+  <h2>Dettes & restes à payer (${money(due)})</h2>${debts.length ? opsTable(debts, ['lot', 'payee']) : '<p class="muted">Aucune dette.</p>'}
+  <h2>Mouvements de fonds</h2>${fundsTable(fs)}
+  <h2>Soldes de caisse (à date)</h2>${cashTable(cb)}
+  ${RP.detail ? `<h2 class="pb">Détail des opérations</h2>${opsTable(xs, ['lot', 'payer', 'payee'])}` : ''}`;
+}
+function fundsTable(fs) {
+  if (!fs.length) return '<p class="muted">Aucun mouvement de fonds.</p>';
+  return `<div class="tw"><table><thead><tr><th>Date</th><th>De → À</th><th>Moyen / réf.</th><th class="num">Envoyé</th><th class="num">Frais FCFA</th><th class="num">Reçu FCFA</th></tr></thead><tbody>${fs.sort((a, b) => (a.d.date || '').localeCompare(b.d.date || '')).map(f => `<tr><td>${fdate(f.d.date)}</td><td>${esc(pName(f.d.from))} → ${esc(pName(f.d.to))}</td><td class="small">${esc(f.d.mode || '')} ${esc(f.d.ref || '')}</td><td class="num">${nf2.format(num(f.d.amount))} ${f.d.cur}</td><td class="num">${mshort(f.fee)}</td><td class="num">${mshort(f.recv)}</td></tr>`).join('')}</tbody><tfoot><tr><td colspan="4">Total</td><td class="num">${mshort(sum(fs, 'fee'))}</td><td class="num">${mshort(sum(fs, 'recv'))}</td></tr></tfoot></table></div>`;
+}
+function cashTable(cb) {
+  if (!cb.length) return '<p class="muted">Aucune donnée.</p>';
+  return `<div class="tw"><table><thead><tr><th>Personne</th><th class="num">Reçu</th><th class="num">Envoyé</th><th class="num">Dépensé</th><th class="num">Solde</th></tr></thead><tbody>${cb.map(b => `<tr><td>${esc(pName(b.id))}</td><td class="num">${mshort(b.recv)}</td><td class="num">${mshort(b.sent)}</td><td class="num">${mshort(b.spent)}</td><td class="num">${b.bal >= 0 ? mshort(b.bal) + ' à justifier' : 'apport ' + mshort(-b.bal)}</td></tr>`).join('')}</tbody></table></div>`;
+}
+/* rapport par dimension (phase, bénéficiaire, payeur, catégorie, moyen) */
+function repDim(dim, xs, fs, bk) {
+  const ids = totalsBy(xs, dim, 'cost').map(r => r.id);
+  const one = RP.sel !== '' && RP.sel != null;
+  const cols = ['lot', 'payer', 'payee'].filter(c => c !== dim);
+  let out = '';
+  if (!one) {
+    out += kpiRow(xs);
+    if (RP.charts) out += `<div class="figs">${fig('Dépenses par ' + GRANS[RP.gran].toLowerCase() + ' et par ' + DIMS[dim].toLowerCase(), chartTS({ buckets: bk, series: seriesBy(xs, dim, RP.gran, 'cost', bk), mode: 'stack' }))}${fig('Répartition', hbars(totalsBy(xs, dim, 'cost').slice(0, 10).map(r => ({ name: r.name, v: r.v, color: sc(r.slot), b: dim === 'lot' ? num((rec('lots', r.id) || { d: {} }).d.budget) : 0 })), { total: sum(xs, 'cost') }))}</div>`;
+    if (dim === 'lot' && RP.charts) out += fig('Avancement cumulé par segment', lotMultiples(xs, RP.gran, bk, 'cost'));
+    out += `<h2>Synthèse par ${esc(DIMS[dim].toLowerCase())}</h2>${dimTable(xs, dim, { budget: dim === 'lot' })}`;
+    if (dim === 'payer') out += `<h2>Soldes de caisse (à date)</h2>${cashTable(cashBook())}`;
+  }
+  const list = one ? [RP.sel] : (RP.detail ? ids : []);
+  list.forEach((id, i) => {
+    const sx = xs.filter(x => dimId(x, dim) === id);
+    const b = dim === 'lot' ? num((rec('lots', id) || { d: {} }).d.budget) : 0;
+    const cost = sum(sx, 'cost');
+    const sub = [];
+    if (dim !== 'lot') sub.push(`<h3>Par segment</h3>${dimTable(sx, 'lot')}`);
+    if (dim !== 'cat') sub.push(`<h3>Par catégorie</h3>${dimTable(sx, 'cat')}`);
+    if (dim === 'lot' || dim === 'cat') sub.push(`<h3>Par bénéficiaire</h3>${dimTable(sx, 'payee')}`);
+    if (dim === 'lot') sub.push(`<h3>Matériaux & quantités</h3>${matTable(sx)}`);
+    let extra = b ? `<div class="kpi"><div class="l">Budget du segment</div><div class="v">${mshort(b)}</div><div class="s">${Math.round(cost / b * 100)} % consommé${cost > b ? ' — ⚠ dépassé' : ''}</div></div>` : '';
+    if (dim === 'payer') { const c = cashBook().find(z => z.id === id); if (c) extra += `<div class="kpi"><div class="l">Solde de caisse</div><div class="v">${mshort(Math.abs(c.bal))}</div><div class="s">${c.bal >= 0 ? 'à justifier' : 'apport net'}</div></div>`; }
+    const sbk = bk;
+    out += `<section class="${!one || i ? 'pb' : ''}"><h2>${esc(DIMS[dim])} : ${esc(dimName(dim, id))}</h2>${kpiRow(sx, extra)}
+     ${RP.charts && sx.length ? `<div class="figs">${fig('Dépenses par ' + GRANS[RP.gran].toLowerCase(), chartTS({ buckets: sbk, series: [{ name: dimName(dim, id), color: sc((colorMap(dim)[id]) ?? 0), values: sbk.map(bb => sum(sx.filter(x => bucketOf(x.d.date, RP.gran) === bb.k), 'cost')) }], mode: 'bars' }))}${fig('Cumul' + (b ? ' vs budget' : ''), (() => { let c = 0; return chartTS({ buckets: sbk, series: [{ name: 'Cumul', color: sc(0), values: sbk.map(bb => c += sum(sx.filter(x => bucketOf(x.d.date, RP.gran) === bb.k), 'cost')) }], mode: 'line', ref: b ? { value: b, label: 'Budget' } : null, endLabels: true }); })())}</div>` : ''}
+     ${sub.join('')}<h3>Opérations</h3>${opsTable(sx, cols)}</section>`;
+  });
+  if (!one && !RP.detail) out += `<p class="small muted noprint">Cochez « détail » pour ajouter une fiche par ${esc(DIMS[dim].toLowerCase())}, ou choisissez un élément dans « Sélection ».</p>`;
+  return out;
+}
+function repPeriod2(xs, fs, bk) {
+  const cm = colorMap('lot'); const lots = totalsBy(xs, 'lot', 'cost'); const top = lots.filter(l => (cm[l.id] ?? -1) >= 0).slice(0, 6); const topIds = new Set(top.map(t => t.id));
+  const rows = bk.map(b => { const bx = xs.filter(x => bucketOf(x.d.date, RP.gran) === b.k); return { b, bx, v: sum(bx, 'cost'), due: sum(bx, 'due'), by: top.map(t => sum(bx.filter(x => x.d.lot === t.id), 'cost')), other: sum(bx.filter(x => !topIds.has(x.d.lot)), 'cost') }; });
+  let c = 0;
+  const table = `<div class="tw"><table><thead><tr><th>Période</th>${top.map(t => `<th class="num">${esc(t.name)}</th>`).join('')}<th class="num">Autres</th><th class="num">Total</th><th class="num">Cumul</th><th class="num">À payer</th></tr></thead><tbody>${rows.map(r => `<tr><td class="nowrap">${esc(r.b.long)}</td>${r.by.map(v => `<td class="num">${v ? mshort(v) : ''}</td>`).join('')}<td class="num">${r.other ? mshort(r.other) : ''}</td><td class="num"><b>${mshort(r.v)}</b></td><td class="num">${mshort(c += r.v)}</td><td class="num">${r.due ? mshort(r.due) : ''}</td></tr>`).join('')}</tbody><tfoot><tr><td>Total</td>${top.map(t => `<td class="num">${mshort(t.v)}</td>`).join('')}<td class="num">${mshort(sum(rows, 'other'))}</td><td class="num">${mshort(sum(rows, 'v'))}</td><td></td><td class="num">${mshort(sum(rows, 'due'))}</td></tr></tfoot></table></div>`;
+  return `${kpiRow(xs, `<div class="kpi"><div class="l">Moyenne / ${GRANS[RP.gran].toLowerCase()}</div><div class="v">${mshort(rows.length ? sum(rows, 'v') / rows.length : 0)}</div></div>`)}
+  ${RP.charts ? `<div class="figs">${fig('Dépenses par ' + GRANS[RP.gran].toLowerCase() + ' et par segment', chartTS({ buckets: bk, series: seriesBy(xs, 'lot', RP.gran, 'cost', bk), mode: 'stack' }))}${fig('Cumul', sCurve(xs, RP.gran, bk, true).html)}</div>` : ''}
+  <h2>Tableau par ${esc(GRANS[RP.gran].toLowerCase())}</h2>${table}
+  ${RP.detail ? rows.filter(r => r.bx.length).map(r => `<section class="pb"><h2>${esc(r.b.long)}</h2>${dimTable(r.bx, 'lot')}${opsTable(r.bx, ['lot', 'payer', 'payee'])}</section>`).join('') : ''}`;
+}
+function repDebts(xs) {
+  const d = xs.filter(x => x.due > 0); const tot = sum(d, 'due');
+  const by = {}; d.forEach(x => { const k = x.d.payee || ''; (by[k] || (by[k] = [])).push(x); });
+  return `<div class="kpis"><div class="kpi"><div class="l">Total dû</div><div class="v">${mshort(tot)}</div><div class="s">${d.length} opération(s)</div></div><div class="kpi"><div class="l">Créanciers</div><div class="v">${Object.keys(by).length}</div></div></div>
+  ${Object.entries(by).sort((a, b) => sum(b[1], 'due') - sum(a[1], 'due')).map(([k, arr]) => `<h2>${esc(pName(k))} — ${money(sum(arr, 'due'))}</h2><div class="tw"><table><thead><tr><th>Date</th><th>Âge</th><th>Segment</th><th>Objet</th><th class="num">Montant</th><th class="num">Reste dû</th></tr></thead><tbody>${arr.sort((a, b) => a.d.date.localeCompare(b.d.date)).map(x => `<tr><td>${fdate(x.d.date)}</td><td class="small">${Math.max(0, Math.round((Date.now() - new Date(x.d.date + 'T12:00:00')) / 864e5))} j</td><td class="small">${esc(lotName(x.d.lot))}</td><td>${esc(x.d.label)}</td><td class="num">${mshort(x.amt)}</td><td class="num"><b>${mshort(x.due)}</b></td></tr>`).join('')}</tbody></table></div>`).join('') || '<p class="muted">Aucune dette sur la période.</p>'}`;
+}
+function repAudit() {
+  const inP = ts => { const d = isoD(new Date(ts)); return (!RP.from || d >= RP.from) && (!RP.to || d <= RP.to); };
+  const evs = S.sorted.filter(e => inP(e.ts)); const first = {}; S.sorted.forEach(e => { if (!first[e.rid]) first[e.rid] = e.eid; });
+  const by = {}; evs.forEach(e => by[e.au] = (by[e.au] || 0) + 1);
+  return `<div class="kpis"><div class="kpi"><div class="l">Opérations</div><div class="v">${evs.length}</div></div>${Object.entries(by).map(([a, n]) => `<div class="kpi"><div class="l">${esc(a)}</div><div class="v">${n}</div></div>`).join('')}<div class="kpi"><div class="l">Conflits ouverts</div><div class="v">${S.conf.length}</div></div></div>
+  <div class="tw"><table><thead><tr><th>Quand</th><th>Qui</th><th>Opération</th><th>Élément</th></tr></thead><tbody>${evs.map(e => `<tr><td class="nowrap small">${fdt(e.ts)}</td><td class="small">${esc(e.au)}</td><td class="small">${first[e.rid] === e.eid ? 'Création' : OP_L[e.op] || e.op} ${esc(COLL_L[e.coll] || e.coll)}</td><td class="small">${esc(e.op === 'put' ? recTitle(e.coll, { d: e.data }) : recTitle(e.coll, rec(e.coll, e.rid)))}</td></tr>`).join('')}</tbody></table></div>`;
+}
+function reportBody() {
+  const { xs, fs, bk } = rpData(); const t = RP.type;
+  if (['lot', 'payee', 'payer', 'cat', 'mode'].includes(t)) return repDim(t, xs, fs, bk);
+  if (t === 'period') return repPeriod2(xs, fs, bk);
+  if (t === 'debts') return repDebts(xs);
+  if (t === 'mat') return `<div class="kpis"><div class="kpi"><div class="l">Achats avec quantité</div><div class="v">${xs.filter(x => num(x.d.qty)).length}</div></div></div>${matTable(xs)}${RP.detail ? '<h2 class="pb">Par segment</h2>' + lotsSorted(true).map(l => { const sx = xs.filter(x => x.d.lot === l.id && num(x.d.qty)); return sx.length ? `<h3>${esc(l.d.name)}</h3>${matTable(sx)}` : ''; }).join('') : ''}`;
+  if (t === 'audit') return repAudit();
+  return repEtat(xs, fs, bk);
+}
+function selOptions() {
+  const t = RP.type; if (!['lot', 'payee', 'payer', 'cat', 'mode'].includes(t)) return '';
+  const ids = totalsBy(live('expenses').map(X), t, 'cost').map(r => [r.id, dimName(t, r.id)]);
+  if (t === 'lot') lotsSorted().forEach(l => { if (!ids.find(i => i[0] === l.id)) ids.push([l.id, l.d.name]); });
+  return `<label class="f">Sélection<select id="rpSel"><option value="__all"${RP.sel === '' ? ' selected' : ''}>Tous (synthèse)</option>${ids.map(([v, l]) => `<option value="${esc(v)}"${RP.sel === v ? ' selected' : ''}>${esc(l)}</option>`).join('')}</select></label>`;
+}
+function renderReport() {
+  const title = RTYPES[RP.type] + (RP.sel ? ' — ' + dimName(RP.type, RP.sel) : '');
+  return `<div class="sec-title noprint"><h2>Rapports</h2></div>
+  <div class="card noprint" style="margin-bottom:14px"><div class="filters">
+   <label class="f">Type de rapport<select id="rpType">${opts(Object.entries(RTYPES), RP.type)}</select></label>
+   ${selOptions()}
+   <label class="f">Période<select id="rpPer">${opts([['', '— choisir —'], ['all', 'Tout le chantier'], ['week', 'Cette semaine'], ['month', 'Ce mois'], ['prev', 'Mois dernier'], ['d30', '30 derniers jours'], ['year', 'Cette année']], '')}</select></label>
+   <label class="f">Du<input type="date" id="rpFrom" value="${RP.from}"></label><label class="f">Au<input type="date" id="rpTo" value="${RP.to}"></label>
+   <label class="f">Pas de temps<select id="rpGran">${opts(Object.entries(GRANS), RP.gran)}</select></label></div>
+   <div class="row"><label class="row small"><input type="checkbox" id="rpCharts" ${RP.charts ? 'checked' : ''}> graphiques</label><label class="row small"><input type="checkbox" id="rpDet" ${RP.detail ? 'checked' : ''}> détail des opérations / fiches</label><div class="grow"></div>
+   <button class="btn pri" data-act="print">🖨 PDF / imprimer</button><button class="btn" data-act="repHtml">⬇ HTML</button><button class="btn" data-act="repCsv">⬇ CSV</button></div>
+   <p class="small muted" style="margin:6px 0 0">PDF : dans la fenêtre d’impression, choisissez « Enregistrer au format PDF ». L’export HTML est un fichier autonome (graphiques inclus) qui s’ouvre sans l’application et s’imprime plus tard.</p></div>
+  <div class="rep card" id="repBody">
+   <div class="rephead"><div><div class="small muted">${esc(S.P.name)}${S.P.place ? ' · ' + esc(S.P.place) : ''}</div><h1>${esc(title)}</h1><div class="muted small">Période : ${repPeriod()} · Édité le ${fdt(Date.now())} par ${esc(USER.name)} · Carnet de Chantier v${APPV}</div></div></div>
+   ${reportBody()}
+   <div class="sign"><div>Établi par</div><div>Vérifié / approuvé par</div></div>
+  </div>`;
+}
+function bindReport() {
+  const m = { rpFrom: 'from', rpTo: 'to', rpGran: 'gran' };
+  for (const id in m) $('#' + id).onchange = e => { RP[m[id]] = e.target.value; render(); };
+  $('#rpType').onchange = e => { RP.type = e.target.value; RP.sel = ''; render(); };
+  const s = $('#rpSel'); if (s) s.onchange = e => { RP.sel = e.target.value === '__all' ? '' : e.target.value; render(); };
+  $('#rpDet').onchange = e => { RP.detail = e.target.checked; render(); };
+  $('#rpCharts').onchange = e => { RP.charts = e.target.checked; render(); };
+  $('#rpPer').onchange = e => { const sv = [F.from, F.to]; periodPreset(e.target.value); RP.from = F.from; RP.to = F.to; [F.from, F.to] = sv; render(); };
+}
+const repFileBase = () => ('rapport_' + RP.type + '_' + (S.P.name || '').replace(/[^\p{L}\p{N}]+/gu, '_').slice(0, 30) + '_' + today());
+function exportReportHTML() {
+  const el = $('#repBody'); if (!el) return;
+  const css = [...document.querySelectorAll('style')].map(s => s.textContent).join('\n');
+  const body = el.outerHTML.replace(/ data-tip="[^"]*"/g, '').replace(/ data-go="[^"]*"/g, '').replace(/<details class="tview[\s\S]*?<\/details>/g, '');
+  const html = `<!DOCTYPE html><html lang="fr" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc($('h1', el).textContent)} — ${esc(S.P.name)}</title><style>${css}</style></head><body><main>${body}</main><p class="noprint" style="text-align:center;margin:20px"><button class="btn pri" onclick="print()">🖨 Imprimer / PDF</button></p></body></html>`;
+  download(repFileBase() + '.html', html, 'text/html;charset=utf-8'); toast('Rapport HTML téléchargé');
+}
+function exportReportCSV() {
+  const el = $('#repBody'); if (!el) return; const q = v => { const s = String(v ?? '').replace(/\s+/g, ' ').trim(); return /[;"\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+  const lines = [q($('h1', el).textContent), q('Période : ' + repPeriod()), ''];
+  $$('table', el).forEach(t => {
+    if (t.closest('details.tview')) return;
+    let h = t.closest('section, .fig'); let title = ''; let p = t.closest('.tw') || t; let prev = p.previousElementSibling; while (prev && !/^H[23]$/.test(prev.tagName)) prev = prev.previousElementSibling; title = prev ? prev.textContent : (h && $('h2,h3', h) ? $('h2,h3', h).textContent : '');
+    lines.push(q(title));
+    $$('tr', t).forEach(tr => lines.push($$('th,td', tr).map(c => { const tx = c.textContent; return q(c.classList.contains('num') && /^[−\-\d\s  ,⚠%]+$/.test(tx.trim()) ? tx.replace(/[\s  ⚠%]/g, '') : tx); }).join(';')));
+    lines.push('');
+  });
+  download(repFileBase() + '.csv', '﻿' + lines.join('\r\n'), 'text/csv;charset=utf-8'); toast('Tableaux du rapport exportés en CSV');
+}
+/* ouvrir les sections repliées avant impression */
+window.addEventListener('beforeprint', () => { $$('#view details.grp').forEach(d => { if (!d.open) { d.dataset.wasClosed = 1; d.open = true; } }); });
+window.addEventListener('afterprint', () => { $$('#view details[data-was-closed]').forEach(d => { d.open = false; delete d.dataset.wasClosed; }); });
+
+/* =====================================================================
    Verrouillage par code PIN (par appareil)
    - PIN jamais stocké en clair : empreinte PBKDF2-SHA256 (150 000 itérations) + sel
    - Code de secours (affiché une seule fois) pour réinitialiser un PIN oublié sans perte de données
@@ -1176,55 +1676,6 @@ document.addEventListener('visibilitychange', () => {
 setInterval(() => { const c = lockCfg(); if (!c || LOCKED) return; const t = (c.timeout ?? 5) * 60000; if (t > 0 && Date.now() - lastAct >= t) showLock(); }, 10000);
 
 /* =====================================================================
-   Bilan / rapport imprimable
-   ===================================================================== */
-const RP = { from: '', to: '', g1: 'lot', g2: 'none', detail: true, funds: true };
-function renderReport() {
-  const xs = live('expenses').map(X).filter(x => (!RP.from || x.d.date >= RP.from) && (!RP.to || x.d.date <= RP.to));
-  const fs = live('funds').map(FX).filter(f => (!RP.from || f.d.date >= RP.from) && (!RP.to || f.d.date <= RP.to));
-  const paid = sum(xs, 'paid'), fee = sum(xs, 'fee'), ffee = sum(fs, 'fee'), due = sum(xs, 'due'), cost = paid + fee;
-  const table = (title, key, nameFn, withBudget) => {
-    const m = {}; xs.forEach(x => { const k = x.d[key] || ''; (m[k] || (m[k] = { v: 0, n: 0, due: 0 })); m[k].v += x.cost; m[k].n++; m[k].due += x.due; });
-    let rows = Object.entries(m);
-    if (withBudget) { lotsSorted().forEach(l => { if (!m[l.id] && num(l.d.budget)) rows.push([l.id, { v: 0, n: 0, due: 0 }]); }); rows.sort((a, b) => num((rec('lots', a[0]) || { d: {} }).d.order) - num((rec('lots', b[0]) || { d: {} }).d.order)); }
-    else rows.sort((a, b) => b[1].v - a[1].v);
-    return `<h2>${title}</h2><div class="tw"><table><thead><tr><th>${title.replace('Par ', '')}</th><th class="num">Nb</th><th class="num">Coût FCFA</th><th class="num">%</th>${withBudget ? '<th class="num">Budget</th><th class="num">Écart</th>' : ''}<th class="num">Reste à payer</th></tr></thead><tbody>${rows.map(([k, o]) => { const b = withBudget ? num((rec('lots', k) || { d: {} }).d.budget) : 0; return `<tr><td>${esc(nameFn(k) || '—')}</td><td class="num">${o.n}</td><td class="num">${mshort(o.v)}</td><td class="num">${cost ? nf2.format(o.v / cost * 100) : 0}</td>${withBudget ? `<td class="num">${b ? mshort(b) : '—'}</td><td class="num" style="color:${b && o.v > b ? 'var(--er)' : 'inherit'}">${b ? mshort(b - o.v) : ''}</td>` : ''}<td class="num">${o.due ? mshort(o.due) : ''}</td></tr>`; }).join('')}</tbody><tfoot><tr><td>Total</td><td class="num">${xs.length}</td><td class="num">${mshort(cost)}</td><td class="num">100</td>${withBudget ? `<td class="num">${mshort(budgetTotal())}</td><td class="num">${mshort(budgetTotal() - cost)}</td>` : ''}<td class="num">${mshort(due)}</td></tr></tfoot></table></div>`;
-  };
-  const cb = cashBook();
-  const levels = [RP.g1, RP.g2].filter(g => g && g !== 'none');
-  const saveF = F; F = Object.assign({}, F, { sort: 'asc' });
-  const detail = RP.detail ? `<h2>Détail des dépenses</h2>${xs.length ? groupRender(xs, levels) : '<p>Aucune</p>'}` : '';
-  F = saveF;
-  return `<div class="card noprint" style="margin-bottom:14px"><div class="row">
-   <label class="f">Du<input type="date" id="rpFrom" value="${RP.from}"></label><label class="f">Au<input type="date" id="rpTo" value="${RP.to}"></label>
-   <label class="f">Période<select id="rpPer">${opts([['', '— choisir —'], ['all', 'Tout le chantier'], ['month', 'Ce mois'], ['prev', 'Mois dernier'], ['year', 'Cette année']], '')}</select></label>
-   <label class="f">Détail groupé par<select id="rpG1">${opts(Object.entries(GROUPS), RP.g1)}</select></label><label class="f">puis<select id="rpG2">${opts(Object.entries(GROUPS), RP.g2)}</select></label>
-   <label class="row small"><input type="checkbox" id="rpDet" ${RP.detail ? 'checked' : ''}> détail</label><label class="row small"><input type="checkbox" id="rpFunds" ${RP.funds ? 'checked' : ''}> fonds & caisses</label>
-   <button class="btn pri" data-act="print">🖨 Imprimer / PDF</button><button class="btn" data-act="csvRep">⬇ CSV</button></div></div>
-  <div class="rep card">
-   <h1>Bilan des dépenses — ${esc(S.P.name)}</h1>
-   <div class="muted small">${S.P.place ? esc(S.P.place) + ' · ' : ''}Période : ${RP.from ? fdate(RP.from) : 'début'} → ${RP.to ? fdate(RP.to) : 'aujourd’hui'} · Édité le ${fdt(Date.now())} par ${esc(USER.name)}</div>
-   <div class="kpis" style="margin-top:12px"><div class="kpi"><div class="l">Payé</div><div class="v">${mshort(paid)}</div></div><div class="kpi"><div class="l">Frais sur dépenses</div><div class="v">${mshort(fee)}</div></div><div class="kpi"><div class="l">Coût total</div><div class="v">${mshort(cost)}</div><div class="s">FCFA${budgetTotal() ? ' · ' + Math.round(cost / budgetTotal() * 100) + ' % du budget' : ''}</div></div><div class="kpi"><div class="l">Reste à payer</div><div class="v">${mshort(due)}</div></div>${RP.funds ? `<div class="kpi"><div class="l">Frais de transfert de fonds</div><div class="v">${mshort(ffee)}</div></div>` : ''}</div>
-   ${table('Par segment du projet', 'lot', lotName, true)}
-   ${table('Par catégorie', 'cat', catName)}
-   ${table('Par moyen de paiement', 'mode', k => k)}
-   ${table('Par payeur', 'payer', pName)}
-   ${table('Par bénéficiaire', 'payee', pName)}
-   ${RP.funds ? `<h2>Mouvements de fonds</h2>${fs.length ? `<div class="tw"><table><thead><tr><th>Date</th><th>De → À</th><th>Moyen / réf.</th><th class="num">Envoyé</th><th class="num">Frais FCFA</th><th class="num">Reçu FCFA</th></tr></thead><tbody>${fs.sort((a, b) => a.d.date.localeCompare(b.d.date)).map(f => `<tr><td>${fdate(f.d.date)}</td><td>${esc(pName(f.d.from))} → ${esc(pName(f.d.to))}</td><td>${esc(f.d.mode || '')} ${esc(f.d.ref || '')}</td><td class="num">${nf2.format(num(f.d.amount))} ${f.d.cur}</td><td class="num">${mshort(f.fee)}</td><td class="num">${mshort(f.recv)}</td></tr>`).join('')}</tbody><tfoot><tr><td colspan="4">Total</td><td class="num">${mshort(ffee)}</td><td class="num">${mshort(sum(fs, 'recv'))}</td></tr></tfoot></table></div>` : '<p class="muted">Aucun</p>'}
-   <h2>Soldes de caisse (tout le chantier, à date)</h2><div class="tw"><table><thead><tr><th>Personne</th><th class="num">Reçu</th><th class="num">Envoyé</th><th class="num">Dépensé</th><th class="num">Solde</th></tr></thead><tbody>${cb.map(b => `<tr><td>${esc(pName(b.id))}</td><td class="num">${mshort(b.recv)}</td><td class="num">${mshort(b.sent)}</td><td class="num">${mshort(b.spent)}</td><td class="num">${b.bal >= 0 ? mshort(b.bal) + ' à justifier' : 'apport ' + mshort(-b.bal)}</td></tr>`).join('')}</tbody></table></div>` : ''}
-   ${detail}
-   <div class="sign"><div>Établi par</div><div>Vérifié / approuvé par</div></div>
-  </div>`;
-}
-function bindReport() {
-  const m = { rpFrom: 'from', rpTo: 'to', rpG1: 'g1', rpG2: 'g2' };
-  for (const id in m) $('#' + id).onchange = e => { RP[m[id]] = e.target.value; render(); };
-  $('#rpDet').onchange = e => { RP.detail = e.target.checked; render(); };
-  $('#rpFunds').onchange = e => { RP.funds = e.target.checked; render(); };
-  $('#rpPer').onchange = e => { const s = [F.from, F.to]; periodPreset(e.target.value); RP.from = F.from; RP.to = F.to; [F.from, F.to] = s; render(); };
-}
-
-/* =====================================================================
    Référentiels
    ===================================================================== */
 function renderRef() {
@@ -1310,6 +1761,10 @@ function renderSettings() {
    <p class="small muted">${fsa ? 'Chrome/Edge sur ordinateur : chaque modification est écrite dans le fichier choisi (idéalement dans un dossier synchronisé : Google Drive, OneDrive, clé USB…).' : 'Non disponible dans ce navigateur : utilisez l’export manuel régulièrement.'}</p>
    ${S.fh ? `<div class="row"><span class="bdg ${S.fhOk ? 'b-ok' : 'b-wa'}">${S.fhOk ? 'Active' : 'En pause — autorisation requise'} : ${esc(S.fh.name || '')}</span>${S.fhOk ? '' : '<button class="btn sm pri" data-act="reactivate">Réactiver</button>'}<button class="btn sm" data-act="unlink">Délier</button></div>` : `<button class="btn" data-act="link" ${fsa ? '' : 'disabled'}>🔗 Lier un fichier de sauvegarde</button>`}
   </div>
+  <div class="card"><h3>🔁 Transfert & compatibilité des versions</h3>
+   <p class="small">Format de fichier <b>v${FORMAT_V}</b> — identique depuis la première version. Toute version de l’application lit les fichiers des autres versions ; les informations inconnues d’une ancienne version sont conservées et ré-exportées sans perte.</p>
+   <div class="row"><button class="btn" data-act="export">⬇ Exporter ce chantier</button><button class="btn" data-act="exportAll">⬇ Exporter tous les chantiers (${projects().length})</button><button class="btn" data-act="openFile">📂 Importer un fichier…</button></div>
+   <p class="small muted">Pour passer à un nouvel appareil ou à une nouvelle version : « Exporter tous les chantiers » ici, puis « Importer » dans la nouvelle. L’import fusionne : il n’efface ni ne remplace rien.</p></div>
   <div class="card help"><h3>👥 Travailler à plusieurs sans perte de données</h3><ol>
    <li>L’administrateur crée le chantier puis le <b>partage</b> (bouton 📤 → WhatsApp, e-mail, Drive…).</li>
    <li>Le destinataire installe l’application depuis la même adresse, s’identifie, puis ouvre le fichier reçu : sur Android, appui long sur le fichier dans WhatsApp → <b>Partager → Chantier</b> ; sinon <b>« 📂 Fusionner un fichier reçu »</b>.</li>
@@ -1364,8 +1819,8 @@ function registerSW() {
     reg.addEventListener('updatefound', () => { const w = reg.installing; w && w.addEventListener('statechange', () => { if (w.state === 'installed' && navigator.serviceWorker.controller) prompt(w); }); });
     setInterval(() => reg.update().catch(() => { }), 3600e3);
   }).catch(() => { });
-  let reloaded = false;
-  navigator.serviceWorker.addEventListener('controllerchange', () => { if (!reloaded) { reloaded = true; location.reload(); } });
+  let reloaded = false; const hadCtrl = !!navigator.serviceWorker.controller; // 1re installation : pas de rechargement
+  navigator.serviceWorker.addEventListener('controllerchange', () => { if (hadCtrl && !reloaded) { reloaded = true; location.reload(); } });
 }
 function applyTheme() { const t = LS.get('cd_theme', ''); if (t) document.documentElement.dataset.theme = t; else delete document.documentElement.dataset.theme; }
 
@@ -1437,7 +1892,11 @@ document.addEventListener('click', async e => {
     case 'newCat': return refForm('cats');
     case 'newPerson': return refForm('people');
     case 'csv': return csvExport(filtered());
-    case 'csvRep': return csvExport(live('expenses').map(X).filter(x => (!RP.from || x.d.date >= RP.from) && (!RP.to || x.d.date <= RP.to)));
+    case 'repHtml': return exportReportHTML();
+    case 'repCsv': return exportReportCSV();
+    case 'anaPrint': return window.print();
+    case 'etatPdf': Object.assign(RP, { type: 'etat', sel: '', from: '', to: '', charts: true }); go('report'); setTimeout(() => window.print(), 400); return;
+    case 'exportAll': return exportAll();
     case 'clearF': { const g = [F.g1, F.g2]; resetFilters();[F.g1, F.g2] = g; return render(); }
     case 'print': return window.print();
     case 'export': return exportBackup(true);

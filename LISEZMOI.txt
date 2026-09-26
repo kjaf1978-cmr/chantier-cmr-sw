@@ -1,4 +1,4 @@
-CARNET DE DÉPENSES CHANTIER — application installable (v1.2)
+CARNET DE DÉPENSES CHANTIER — application installable (v1.3)
 =============================================================
 
 Contenu du dossier (les 7 fichiers doivent rester ensemble) :
@@ -40,6 +40,26 @@ TRAVAILLER À PLUSIEURS
 REPRENDRE LES DONNÉES DE L'ANCIENNE VERSION (fichier carnet_chantier.html)
  Ouvrir l'ancienne version → Sauvegarde & réglages → Exporter ;
  ouvrir la nouvelle adresse → « Ouvrir un fichier chantier reçu » → choisir ce fichier.
+
+ANALYSES & RAPPORTS (v1.3)
+ - Onglet « Analyses » : évolution cumulée vs budget, dépenses par période et par segment /
+   catégorie / bénéficiaire / payeur / moyen, avancement de chaque segment, rythme hebdomadaire,
+   carte de chaleur. Réglages : période, pas de temps, ventilation, coût réalisé ou engagé,
+   limitation à un segment. Toucher un graphique affiche les valeurs ; « Voir les données » = tableau.
+ - Onglet « Rapports » : état du projet, par phase/segment, par bénéficiaire, par payeur & caisses,
+   par période, par catégorie, par moyen de paiement, dettes, matériaux, journal des modifications.
+   Chaque rapport : sélection d'un élément ou synthèse, période, graphiques, détail optionnel.
+ - Exports : PDF (bouton « PDF / imprimer » → « Enregistrer au format PDF »),
+   HTML autonome (s'ouvre sans l'application, graphiques inclus), CSV (Excel).
+ - Tableau de bord : bouton « 📄 État du projet (PDF) ».
+
+COMPATIBILITÉ & TRANSFERT ENTRE VERSIONS
+ - Le format des fichiers chantier n'a pas changé depuis la v1.0 : chaque version lit les fichiers
+   des autres. Les données inconnues d'une version plus récente sont conservées et ré-exportées.
+ - Mise à jour sur place : les données déjà présentes sur l'appareil sont reprises telles quelles.
+ - Sauvegarde & réglages → « Exporter tous les chantiers » : un seul fichier contenant tous les
+   chantiers de l'appareil ; « Importer un fichier » dans l'autre version/appareil. L'import fusionne
+   sans rien effacer.
 
 CODE PIN (par appareil)
  Sauvegarde & réglages → « 🔒 Définir un code PIN » (4 à 8 chiffres).
