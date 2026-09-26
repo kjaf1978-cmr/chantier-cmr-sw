@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Carnet de Dépenses Chantier</title>
+<meta name="theme-color" content="#b8520b">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{--bg:#f3f1ec;--sf:#fff;--sf2:#f8f6f1;--tx:#1d1b18;--mu:#6b655c;--bd:#e2dcd1;--ac:#b8520b;--acb:#fbe8d8;--act:#fff;--ok:#1f7a4d;--okb:#e0f2e8;--wa:#8a5d00;--wab:#fbf0d0;--er:#b42318;--erb:#fde5e2;--in:#2355a8;--inb:#e3ebfa;--sh:0 1px 2px rgba(0,0,0,.06),0 3px 10px rgba(0,0,0,.04);--c1:#b8520b;--c2:#2f6f9f;--c3:#5b8a3a;--c4:#8a5ca8;--c5:#c28a12;--c6:#3f8f8a;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141310;--sf:#1e1c18;--sf2:#25231e;--tx:#ece8e1;--mu:#a39d92;--bd:#38342d;--ac:#f08a3c;--acb:#3a2616;--act:#1a1208;--ok:#5cc28e;--okb:#16301f;--wa:#e2b34a;--wab:#352a10;--er:#f07b6e;--erb:#3a1a16;--in:#7fa8ef;--inb:#18253d;--sh:0 1px 2px rgba(0,0,0,.4);--c1:#f08a3c;--c2:#6aa8d8;--c3:#8cc26a;--c4:#b98ad6;--c5:#e2b34a;--c6:#6cc4bd;color-scheme:dark}}
+:root[data-theme=dark]{--bg:#141310;--sf:#1e1c18;--sf2:#25231e;--tx:#ece8e1;--mu:#a39d92;--bd:#38342d;--ac:#f08a3c;--acb:#3a2616;--act:#1a1208;--ok:#5cc28e;--okb:#16301f;--wa:#e2b34a;--wab:#352a10;--er:#f07b6e;--erb:#3a1a16;--in:#7fa8ef;--inb:#18253d;--sh:0 1px 2px rgba(0,0,0,.4);--c1:#f08a3c;--c2:#6aa8d8;--c3:#8cc26a;--c4:#b98ad6;--c5:#e2b34a;--c6:#6cc4bd;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--in)}
+header.top{position:sticky;top:0;z-index:20;background:var(--sf);border-bottom:1px solid var(--bd);box-shadow:var(--sh)}
+.bar{display:flex;align-items:center;gap:10px;padding:8px 16px;flex-wrap:wrap}
+.brand{font-weight:700;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.brand .logo{width:26px;height:26px;border-radius:6px;background:var(--ac);color:var(--act);display:grid;place-items:center;font-size:14px}
+.grow{flex:1}
+#projSel{max-width:260px}
+nav.tabs{display:flex;gap:2px;overflow-x:auto;padding:0 12px;scrollbar-width:thin}
+nav.tabs button{border:0;background:none;padding:9px 12px;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap;color:var(--mu);font-weight:600}
+nav.tabs button.on{color:var(--tx);border-bottom-color:var(--ac)}
+nav.tabs .cnt{background:var(--er);color:#fff;border-radius:9px;padding:0 6px;font-size:11px;margin-left:4px}
+main{padding:16px;max-width:1280px;margin:0 auto}
+.btn{border:1px solid var(--bd);background:var(--sf);padding:7px 12px;border-radius:8px;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--mu)}
+.btn.pri{background:var(--ac);border-color:var(--ac);color:var(--act);font-weight:600}
+.btn.dng{color:var(--er);border-color:var(--er)}
+.btn.sm{padding:3px 8px;font-size:13px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+input,select,textarea{background:var(--sf);border:1px solid var(--bd);border-radius:7px;padding:6px 8px;min-width:0;max-width:100%}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--ac);outline-offset:-1px}
+label.f{display:flex;flex-direction:column;gap:3px;font-size:13px;color:var(--mu)}
+label.f>input,label.f>select,label.f>textarea{color:var(--tx);font-size:15px}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.span2{grid-column:span 2}.span3{grid-column:span 3}.spanall{grid-column:1/-1}
+@media (max-width:720px){.g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.span3{grid-column:1/-1}}
+@media (max-width:460px){.g2{grid-template-columns:1fr}.span2{grid-column:1/-1}}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:14px;box-shadow:var(--sh)}
+.card h3{margin:0 0 10px;font-size:15px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.muted{color:var(--mu)}.small{font-size:13px}.r{text-align:right}.nowrap{white-space:nowrap}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:14px}
+.kpi{background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:12px 14px}
+.kpi .l{font-size:12px;color:var(--mu);text-transform:uppercase;letter-spacing:.03em}
+.kpi .v{font-size:21px;font-weight:700;margin-top:2px;font-variant-numeric:tabular-nums}
+.kpi .s{font-size:12px;color:var(--mu)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px}
+@media (max-width:400px){.cols{grid-template-columns:1fr}}
+.tw{overflow-x:auto;border:1px solid var(--bd);border-radius:10px;background:var(--sf)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:7px 9px;border-bottom:1px solid var(--bd);text-align:left;vertical-align:top}
+th{background:var(--sf2);font-size:12px;text-transform:uppercase;letter-spacing:.03em;color:var(--mu);white-space:nowrap}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tbody tr.click{cursor:pointer}tbody tr.click:hover{background:var(--sf2)}
+tfoot td{font-weight:700;background:var(--sf2)}
+.bdg{display:inline-block;padding:1px 7px;border-radius:9px;font-size:12px;font-weight:600;white-space:nowrap}
+.b-ok{background:var(--okb);color:var(--ok)}.b-wa{background:var(--wab);color:var(--wa)}.b-er{background:var(--erb);color:var(--er)}.b-in{background:var(--inb);color:var(--in)}.b-mu{background:var(--sf2);color:var(--mu);border:1px solid var(--bd)}
+.bars .it{margin:7px 0}
+.bars .hd{display:flex;justify-content:space-between;gap:8px;font-size:13px}
+.bars .hd b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.track{height:9px;background:var(--sf2);border-radius:5px;overflow:hidden;border:1px solid var(--bd);position:relative}
+.fill{height:100%;background:var(--ac);border-radius:5px}
+.fill.over{background:var(--er)}
+.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:10px}
+details.grp{border:1px solid var(--bd);border-radius:10px;margin:8px 0;background:var(--sf)}
+details.grp>summary{padding:8px 12px;cursor:pointer;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-weight:600;background:var(--sf2);border-radius:10px}
+details.grp[open]>summary{border-bottom:1px solid var(--bd);border-radius:10px 10px 0 0}
+details.grp .gm{font-weight:400;color:var(--mu);font-size:13px}.gm b{color:var(--tx)}
+details.grp details.grp{margin:8px}
+details.grp>.tw{border:0;border-radius:0 0 10px 10px}
+.alert{padding:9px 12px;border-radius:9px;margin:6px 0;font-size:14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.a-er{background:var(--erb);color:var(--er)}.a-wa{background:var(--wab);color:var(--wa)}.a-ok{background:var(--okb);color:var(--ok)}.a-in{background:var(--inb);color:var(--in)}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:50;display:flex;align-items:flex-start;justify-content:center;padding:24px 12px;overflow-y:auto}
+.md{background:var(--sf);border-radius:14px;width:100%;max-width:760px;box-shadow:0 10px 40px rgba(0,0,0,.3);border:1px solid var(--bd)}
+.md.sm{max-width:440px}
+.md .mh{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--bd);gap:8px}
+.md .mh h2{margin:0;font-size:17px}
+.md .mb{padding:16px}
+.md .mf{padding:12px 16px;border-top:1px solid var(--bd);display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.x{border:0;background:none;font-size:22px;cursor:pointer;color:var(--mu);line-height:1}
+#toasts{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:80;display:flex;flex-direction:column;gap:6px;align-items:center;width:min(92vw,520px)}
+.toast{background:var(--tx);color:var(--bg);padding:9px 14px;border-radius:10px;box-shadow:var(--sh);display:flex;gap:12px;align-items:center;font-size:14px}
+.toast button{background:none;border:1px solid currentColor;color:inherit;border-radius:6px;padding:2px 8px;cursor:pointer;font-weight:700}
+.toast.err{background:var(--er);color:#fff}
+.thumbs{display:flex;gap:8px;flex-wrap:wrap}
+.th{width:74px;height:74px;border:1px solid var(--bd);border-radius:8px;overflow:hidden;position:relative;background:var(--sf2);display:grid;place-items:center;font-size:12px;cursor:pointer}
+.th img{width:100%;height:100%;object-fit:cover}
+.th .rm{position:absolute;top:2px;right:2px;background:var(--er);color:#fff;border:0;border-radius:50%;width:20px;height:20px;cursor:pointer;font-size:13px;line-height:1}
+.kv{display:grid;grid-template-columns:minmax(120px,auto) 1fr;gap:4px 14px;font-size:14px}
+.kv dt{color:var(--mu)}.kv dd{margin:0}
+.ev{border-left:3px solid var(--bd);padding:6px 10px;margin:8px 0}
+.ev.put{border-color:var(--in)}.ev.del{border-color:var(--er)}.ev.restore{border-color:var(--ok)}
+.diff{font-size:13px;margin-top:4px}
+.diff .o{color:var(--er);text-decoration:line-through}.diff .n{color:var(--ok)}
+.status{font-size:12px;padding:3px 9px;border-radius:12px;cursor:pointer;border:1px solid var(--bd);white-space:nowrap}
+.empty{padding:30px;text-align:center;color:var(--mu)}
+.welcome{max-width:640px;margin:30px auto}
+.welcome h1{font-size:24px}
+.chart svg{width:100%;height:auto;display:block}
+.chart text{fill:var(--mu);font-size:11px}
+.sec-title{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 0 12px}
+.sec-title h2{margin:0;font-size:19px}
+.help{font-size:14px}.help li{margin:4px 0}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:middle}
+.rep h1{font-size:21px;margin:0 0 4px}.rep h2{font-size:16px;margin:18px 0 6px;border-bottom:2px solid var(--ac);padding-bottom:3px}
+.sign{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:40px}.sign div{border-top:1px solid var(--tx);padding-top:4px;font-size:13px}
+#fab{display:none;position:fixed;right:16px;bottom:18px;z-index:30;width:58px;height:58px;border-radius:50%;border:0;background:var(--ac);color:var(--act);font-size:30px;line-height:1;box-shadow:0 4px 14px rgba(0,0,0,.3);cursor:pointer}
+body.hasproj #fab{display:none}
+@media (max-width:720px){
+ body.hasproj #fab{display:block}
+ main{padding:12px 12px 90px}
+ #toasts{bottom:86px}
+ .bar{padding:6px 12px;gap:6px}
+ .brand>span:last-child{display:none}
+ #projSel{order:9;flex:1 1 100%;max-width:none}
+ .fpanel:not([open])>.fbody{display:none}
+ .sec-title h2{font-size:17px}
+ .kpi .v{font-size:18px}
+ .md .mb{padding:12px}
+ .ov{padding:8px 6px}
+ table.exp thead{display:none}
+ table.exp tbody tr{display:grid;grid-template-columns:1fr auto;grid-template-areas:"date ic" "obj amt" "lot amt" "who mode";gap:1px 10px;padding:9px 10px;border-bottom:1px solid var(--bd)}
+ table.exp td{border:0;padding:0}
+ table.exp .c-date{grid-area:date;font-size:12px;color:var(--mu)}
+ table.exp .c-ic{grid-area:ic;text-align:right}
+ table.exp .c-obj{grid-area:obj}
+ table.exp .c-amt{grid-area:amt;align-self:center}
+ table.exp .c-lot{grid-area:lot}
+ table.exp .c-lot .muted{display:none}
+ table.exp .c-who{grid-area:who}
+ table.exp .c-mode{grid-area:mode;text-align:right}
+ table.exp tfoot tr{display:flex;justify-content:space-between;padding:8px 10px}
+ table.exp tfoot td{border:0;padding:0}
+ table.exp tfoot td:empty{display:none}
+}
+details.fpanel>summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:8px}
+details.fpanel>summary::after{content:"▾";color:var(--mu)}details.fpanel[open]>summary{margin-bottom:10px}details.fpanel[open]>summary::after{content:"▴"}
+#lockScr{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto}
+.ov.overlock{z-index:210}
+.lk{width:100%;max-width:320px;text-align:center}
+.lk .brand{font-size:18px;margin-bottom:18px}
+.lkmsg{color:var(--mu);min-height:1.4em}.lkmsg.err{color:var(--er);font-weight:600}
+.dots{display:flex;gap:12px;justify-content:center;margin:14px 0 22px;min-height:16px}
+.dots span{width:15px;height:15px;border-radius:50%;border:2px solid var(--mu)}
+.dots span.on{background:var(--ac);border-color:var(--ac)}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.pad button{height:64px;border-radius:16px;border:1px solid var(--bd);background:var(--sf);font-size:26px;font-weight:600;cursor:pointer;box-shadow:var(--sh);touch-action:manipulation}
+.pad button:active{background:var(--acb)}
+.pad [data-k=ok]{background:var(--ac);color:var(--act);border-color:var(--ac)}
+.lkforgot{margin-top:18px;background:none;border:0;color:var(--in);cursor:pointer;text-decoration:underline}
+.shake{animation:shk .35s}@keyframes shk{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+body.locked{overflow:hidden}
+@media print{
+ header.top,.noprint,#toasts,#lockScr{display:none!important}
+ body,main{background:#fff;color:#000;padding:0;max-width:none}
+ .card,.tw,.kpi{box-shadow:none;border-color:#bbb}
+ details.grp>summary{background:#eee}
+ .rep h2{border-color:#000}
+ th{background:#eee!important;color:#000}
+ table{font-size:11px}
+ @page{margin:12mm}
+}
+</style>
+</head>
+<body>
+<header class="top">
+ <div class="bar">
+  <div class="brand"><span class="logo">⚒</span><span>Carnet de Chantier</span></div>
+  <select id="projSel" title="Chantier"></select>
+  <div class="grow"></div>
+  <span id="bkStatus" class="status" title="État de la sauvegarde"></span>
+  <span id="userBadge" class="status" title="Utilisateur de cet appareil"></span>
+  <button id="lockBtn" class="status" title="Verrouiller maintenant" aria-label="Verrouiller" style="display:none;background:none">🔒</button>
+ </div>
+ <nav class="tabs" id="tabs"></nav>
+</header>
+<main id="view"></main>
+<div id="modals"></div>
+<div id="toasts"></div>
+<input type="file" id="importInput" hidden>
+<button id="fab" class="noprint" data-act="newExp" aria-label="Nouvelle dépense" title="Nouvelle dépense">＋</button>
+<script>
+'use strict';
+/* =====================================================================
+   Carnet de Dépenses Chantier — moteur de données
+   Principe : journal d'opérations immuable (append-only). Rien n'est
+   jamais effacé : une suppression est une opération « del », une
+   modification crée une nouvelle version. La fusion entre appareils
+   est l'union des journaux ; les éditions concurrentes = conflits.
+   ===================================================================== */
+const APPV = '1.2';
+const FORMAT = 'chantier-depenses';
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const num = v => { if (v == null || v === '') return 0; const n = parseFloat(String(v).replace(/[\s  ]/g, '').replace(',', '.')); return isFinite(n) ? n : 0; };
+const nf0 = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 });
+const nf2 = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 2 });
+const money = n => nf0.format(Math.round(n || 0)) + ' FCFA';
+const mshort = n => nf0.format(Math.round(n || 0));
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+const pad = n => String(n).padStart(2, '0');
+const isoD = d => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+const today = () => isoD(new Date());
+const fdate = s => s ? s.split('-').reverse().join('/') : '';
+const fdt = ts => { const d = new Date(ts); return pad(d.getDate()) + '/' + pad(d.getMonth() + 1) + '/' + d.getFullYear() + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes()); };
+const MONTHS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+const MSHORT = ['janv', 'févr', 'mars', 'avr', 'mai', 'juin', 'juil', 'août', 'sept', 'oct', 'nov', 'déc'];
+const DAYS = ['dim.', 'lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.'];
+const monthLabel = s => MONTHS[+s.slice(5, 7) - 1] + ' ' + s.slice(0, 4);
+function isoWeek(s) { const d = new Date(s + 'T12:00:00'); const day = (d.getDay() + 6) % 7; d.setDate(d.getDate() - day + 3); const y = d.getFullYear(); const f = new Date(y, 0, 4); const w = 1 + Math.round(((d - f) / 864e5 - 3 + ((f.getDay() + 6) % 7)) / 7); return [y, w]; }
+function mondayOf(s) { const m = new Date(s + 'T12:00:00'); m.setDate(m.getDate() - ((m.getDay() + 6) % 7)); return isoD(m); }
+const sum = (a, k) => a.reduce((t, x) => t + (typeof k === 'function' ? k(x) : x[k] || 0), 0);
+const norm = s => String(s || '').trim().toLowerCase().replace(/\s+/g, ' ');
+
+const LS = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { } }
+};
+let DEV = LS.get('cd_dev', null); if (!DEV) { DEV = 'd' + uid(); LS.set('cd_dev', DEV); }
+let USER = LS.get('cd_user', null); // {name, role: admin|saisie|lecture}
+
+/* ---------------- Référentiels par défaut ---------------- */
+const DEF_LOTS = ['Études, plans & permis', 'Installation de chantier', 'Préparation & assainissement du terrain', 'Terrassement & fouilles', 'Fondations', 'Soubassement & dallage', 'Élévation des murs', 'Poteaux, chaînages & dalle', 'Charpente & toiture', 'Menuiseries (portes, fenêtres)', 'Électricité', 'Plomberie & sanitaires', 'Assainissement (fosse, puisard)', 'Enduits & revêtements', 'Carrelage', 'Peinture & finitions', 'Clôture & portail', 'VRD & aménagements extérieurs', 'Frais généraux & divers'];
+const DEF_CATS = ['Matériaux', "Main-d'œuvre", 'Transport', 'Location matériel / engins', 'Honoraires & études', 'Taxes, permis & administratif', 'Eau & électricité de chantier', 'Gardiennage', 'Frais financiers', 'Divers'];
+const DEF_MODES = ['Espèces', 'MTN Mobile Money', 'Orange Money', 'WorldRemit', 'Western Union', 'MoneyGram', 'Virement bancaire', 'Chèque', 'Carte bancaire', 'Autre'];
+const DEF_UNITS = ['sac', 'tonne', 'm³', 'voyage', 'brouette', 'barre', 'pièce', 'paquet', 'rouleau', 'm²', 'ml', 'kg', 'litre', 'jour', 'forfait', 'lot'];
+const PROLES = ["Maître d'ouvrage", 'Chef de chantier', 'Fournisseur', 'Tâcheron / ouvrier', 'Transporteur', 'Prestataire / bureau d’études', 'Administration', 'Autre'];
+const UROLES = { admin: "Administrateur (maître d'ouvrage)", saisie: 'Saisie (chef de chantier…)', lecture: 'Consultation seule' };
+const STATUS = { paye: 'Payé', acompte: 'Acompte (reste dû)', du: 'À payer (non réglé)' };
+const CURS = ['XAF', 'EUR', 'USD', 'GBP'];
+const COLLS = ['project', 'lots', 'cats', 'people', 'expenses', 'funds'];
+const COLL_L = { project: 'Chantier', lots: 'Segment', cats: 'Catégorie', people: 'Intervenant', expenses: 'Dépense', funds: 'Mouvement de fonds' };
+const OP_L = { put: 'Modification', del: 'Suppression', restore: 'Restauration' };
+const FIELD_L = { date: 'Date', lot: 'Segment', cat: 'Catégorie', label: 'Objet', qty: 'Quantité', unit: 'Unité', pu: 'Prix unitaire', amount: 'Montant', cur: 'Devise', rate: 'Taux', fees: 'Frais', payer: 'Payé par', payee: 'Bénéficiaire', mode: 'Moyen', ref: 'Référence', status: 'Statut', reste: 'Reste dû', notes: 'Notes', tags: 'Étiquettes', files: 'Justificatifs', locked: 'Validée', name: 'Nom', budget: 'Budget', order: 'Ordre', role: 'Rôle', phone: 'Téléphone', from: 'De', to: 'À', received: 'Reçu (FCFA)', place: 'Lieu', owner: "Maître d'ouvrage", rates: 'Taux par défaut', modes: 'Moyens', units: 'Unités', closedUntil: 'Période close jusqu’au', start: 'Début', end: 'Fin prévue' };
+
+/* ---------------- IndexedDB (avec repli mémoire) ---------------- */
+const KP = { events: 'eid', files: 'id', meta: 'k' };
+const IDB = {
+  db: null, mem: null,
+  async open(pid) {
+    this.close();
+    try {
+      if (!window.indexedDB) throw new Error('no idb');
+      this.db = await new Promise((res, rej) => {
+        const r = indexedDB.open('cd_' + pid, 1);
+        r.onupgradeneeded = () => { const d = r.result; for (const s in KP) if (!d.objectStoreNames.contains(s)) d.createObjectStore(s, { keyPath: KP[s] }); };
+        r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); r.onblocked = () => rej(new Error('blocked'));
+      });
+    } catch (e) {
+      this.mem = { events: new Map(), files: new Map(), meta: new Map() };
+      setTimeout(() => toast('Stockage local indisponible : les données ne seront PAS conservées. Exportez avant de fermer.', { err: 1, ms: 9000 }), 300);
+    }
+  },
+  close() { if (this.db) { this.db.close(); this.db = null; } this.mem = null; },
+  _tx(store, mode, fn) {
+    return new Promise((res, rej) => {
+      const t = this.db.transaction(store, mode); const s = t.objectStore(store); let out;
+      const r = fn(s); if (r) r.onsuccess = () => { out = r.result; };
+      t.oncomplete = () => res(out); t.onerror = () => rej(t.error); t.onabort = () => rej(t.error);
+    });
+  },
+  all(store) { if (this.mem) return Promise.resolve([...this.mem[store].values()]); return this._tx(store, 'readonly', s => s.getAll()); },
+  get(store, k) { if (this.mem) return Promise.resolve(this.mem[store].get(k)); return this._tx(store, 'readonly', s => s.get(k)); },
+  put(store, v) { if (this.mem) { this.mem[store].set(v[KP[store]], v); return Promise.resolve(); } return this._tx(store, 'readwrite', s => s.put(v)); },
+  putMany(store, arr) { if (!arr.length) return Promise.resolve(); if (this.mem) { arr.forEach(v => this.mem[store].set(v[KP[store]], v)); return Promise.resolve(); } return this._tx(store, 'readwrite', s => { arr.forEach(v => s.put(v)); }); },
+  async setMeta(k, v) { try { await this.put('meta', { k, v }); } catch (e) { } },
+  async getMeta(k) { try { const r = await this.get('meta', k); return r ? r.v : undefined; } catch (e) { return undefined; } }
+};
+
+/* ---------------- État ---------------- */
+let S = null; // {pid, events, R, hist, conf, P, ...}
+const projects = () => LS.get('cd_projects', []);
+function regProject(pid, name) { const p = projects(); const i = p.findIndex(x => x.pid === pid); if (i < 0) p.push({ pid, name }); else if (name) p[i].name = name; LS.set('cd_projects', p); }
+
+function evSort(a, b) { return a.ts - b.ts || (a.dev < b.dev ? -1 : a.dev > b.dev ? 1 : 0) || (a.eid < b.eid ? -1 : a.eid > b.eid ? 1 : 0); }
+function rebuild() {
+  const evs = S.events.slice().sort(evSort);
+  const R = {}; COLLS.forEach(c => R[c] = {});
+  const hist = {};
+  for (const e of evs) {
+    const m = R[e.coll] || (R[e.coll] = {});
+    let r = m[e.rid];
+    if (!r) r = m[e.rid] = { id: e.rid, coll: e.coll, d: {}, del: false, head: null, headTs: 0, created: e.ts, by: e.au };
+    if (e.op === 'put') r.d = e.data || {};
+    else if (e.op === 'del') r.del = true;
+    else if (e.op === 'restore') r.del = false;
+    r.head = e.eid; r.headTs = e.ts; r.upd = e.ts; r.updBy = e.au;
+    (hist[e.rid] || (hist[e.rid] = [])).push(e);
+  }
+  const conf = [];
+  for (const rid in hist) {
+    const h = hist[rid]; const byBase = {}; const merged = new Set();
+    h.forEach(e => { (e.merged || []).forEach(x => merged.add(x)); const b = e.base || '∅'; (byBase[b] || (byBase[b] = [])).push(e); });
+    for (const b in byBase) { const g = byBase[b]; if (g.length > 1 && !g.every(e => merged.has(e.eid))) conf.push({ rid, coll: g[0].coll, base: b, evs: g }); }
+  }
+  S.sorted = evs; S.R = R; S.hist = hist; S.conf = conf;
+  S.P = Object.assign({ name: 'Chantier', rates: { EUR: 655.957, USD: 600, GBP: 760 }, modes: DEF_MODES, units: DEF_UNITS }, R.project.project ? R.project.project.d : {});
+}
+const live = c => Object.values(S.R[c] || {}).filter(r => !r.del);
+const rec = (c, id) => (S.R[c] || {})[id];
+const lotsSorted = (all) => (all ? Object.values(S.R.lots) : live('lots')).sort((a, b) => num(a.d.order) - num(b.d.order) || a.d.name.localeCompare(b.d.name));
+const nameOf = (c, id) => { const r = rec(c, id); return r ? (r.d.name || '?') + (r.del ? ' (supprimé)' : '') : (id ? '?' : '—'); };
+const lotName = id => nameOf('lots', id), catName = id => nameOf('cats', id), pName = id => nameOf('people', id);
+
+/* ---------------- Droits (garde-fous anti-erreur, pas une sécurité) ---------------- */
+const isAdmin = () => USER && USER.role === 'admin';
+const canWrite = () => USER && USER.role !== 'lecture';
+function canEdit(r) {
+  if (!canWrite()) return false;
+  if (!r) return true;
+  if (r.d.locked && !isAdmin()) return false;
+  if (r.coll === 'expenses' || r.coll === 'funds') { if (S.P.closedUntil && r.d.date && r.d.date <= S.P.closedUntil && !isAdmin()) return false; }
+  if (['lots', 'cats', 'project'].includes(r.coll) && !isAdmin()) return false;
+  return true;
+}
+function whyNot(r) {
+  if (!canWrite()) return 'Profil « consultation seule ».';
+  if (r && r.d.locked && !isAdmin()) return 'Écriture validée (verrouillée) — seul un administrateur peut la modifier.';
+  if (r && r.d.date && S.P.closedUntil && r.d.date <= S.P.closedUntil && !isAdmin()) return 'Période clôturée jusqu’au ' + fdate(S.P.closedUntil) + '.';
+  return 'Réservé à l’administrateur.';
+}
+
+/* ---------------- Écriture dans le journal ---------------- */
+function mkEvent(coll, rid, op, data, extra, baseOverride) {
+  const r = rec(coll, rid);
+  let ts = Date.now(); if (r && ts <= r.headTs) ts = r.headTs + 1;
+  const e = { eid: uid() + DEV.slice(-4), coll, rid, op, base: baseOverride !== undefined ? baseOverride : (r ? r.head : null), au: USER ? USER.name : '?', dev: DEV, ts };
+  if (op === 'put') e.data = JSON.parse(JSON.stringify(data));
+  if (extra) Object.assign(e, extra);
+  return e;
+}
+async function commit(coll, rid, op, data, extra) {
+  const e = mkEvent(coll, rid, op, data, extra);
+  await IDB.put('events', e);
+  S.events.push(e); rebuild(); afterChange();
+  return e;
+}
+async function commitMany(list) { // list of [coll,rid,op,data] — enregistrements neufs
+  let ts = Date.now();
+  const evs = list.map(([c, rid, op, data, extra]) => { const e = mkEvent(c, rid, op, data, extra); e.ts = ts++; return e; });
+  await IDB.putMany('events', evs); S.events.push(...evs); rebuild(); afterChange();
+}
+/* Enregistrer avec possibilité d'annuler */
+async function saveRec(coll, rid, data, msg) {
+  const r = rec(coll, rid); const prev = r ? { d: JSON.parse(JSON.stringify(r.d)) } : null;
+  await commit(coll, rid, 'put', data);
+  render();
+  toast(msg || 'Enregistré', { action: 'Annuler', fn: async () => { if (prev) await commit(coll, rid, 'put', prev.d); else await commit(coll, rid, 'del'); render(); toast('Action annulée'); } });
+}
+async function delRec(coll, rid, label) {
+  const r = rec(coll, rid); if (!r) return;
+  if (!canEdit(r)) return toast(whyNot(r), { err: 1 });
+  if (!await ask(`Mettre « ${esc(label || r.d.name || r.d.label || '')} » à la corbeille ?<br><span class="small muted">Rien n’est effacé définitivement : l’élément reste restaurable depuis le Journal › Corbeille, avec tout son historique.</span>`, { ok: 'Mettre à la corbeille', danger: 1 })) return false;
+  await commit(coll, rid, 'del'); render();
+  toast('Placé à la corbeille', { action: 'Annuler', fn: async () => { await commit(coll, rid, 'restore'); render(); } });
+  return true;
+}
+async function restoreRec(coll, rid) { const r = rec(coll, rid); if (!canWrite() || (r && r.d.locked && !isAdmin())) return toast(whyNot(r), { err: 1 }); await commit(coll, rid, 'restore'); render(); toast('Restauré'); }
+
+/* Intervenant par nom (création automatique) */
+async function personId(name, role) {
+  name = String(name || '').trim(); if (!name) return '';
+  const f = live('people').find(p => norm(p.d.name) === norm(name)) || Object.values(S.R.people).find(p => norm(p.d.name) === norm(name));
+  if (f) { if (f.del) await commit('people', f.id, 'restore'); return f.id; }
+  const id = 'p' + uid(); await commit('people', id, 'put', { name, role: role || 'Autre', phone: '', notes: '' });
+  return id;
+}
+
+/* ---------------- Calculs ---------------- */
+function rateOf(d) { if (!d.cur || d.cur === 'XAF') return 1; return num(d.rate) || (S.P.rates || {})[d.cur] || 1; }
+function X(r) { // dépense dérivée
+  const d = r.d, rt = rateOf(d), amt = num(d.amount) * rt, fee = num(d.fees) * rt;
+  const paid = d.status === 'du' ? 0 : amt;
+  const due = d.status === 'du' ? amt : d.status === 'acompte' ? num(d.reste) * rt : 0;
+  return { r, d, id: r.id, amt, fee, paid, due, cost: paid + fee };
+}
+function FX(r) { const d = r.d, rt = rateOf(d), sent = num(d.amount) * rt, fee = num(d.fees) * rt; const recv = num(d.received) || sent; return { r, d, id: r.id, sent, fee, recv }; }
+function budgetTotal() { return num(S.P.budget) || sum(live('lots'), l => num(l.d.budget)); }
+function cashBook() {
+  const B = {};
+  const g = id => B[id] || (B[id] = { id, recv: 0, sent: 0, spent: 0, due: 0 });
+  live('funds').map(FX).forEach(f => { if (f.d.to) g(f.d.to).recv += f.recv; if (f.d.from) g(f.d.from).sent += f.sent + f.fee; });
+  live('expenses').map(X).forEach(x => { if (x.d.payer) { g(x.d.payer).spent += x.cost; } });
+  Object.values(B).forEach(b => b.bal = b.recv - b.sent - b.spent);
+  return Object.values(B).sort((a, b) => b.bal - a.bal);
+}
+
+/* ---------------- Justificatifs (photos / PDF) ---------------- */
+function readAsDataURL(f) { return new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => res(fr.result); fr.onerror = rej; fr.readAsDataURL(f); }); }
+async function compressImage(file, max = 1400, q = .72) {
+  const url = await readAsDataURL(file);
+  return new Promise(res => {
+    const im = new Image(); im.onload = () => {
+      let { width: w, height: h } = im; const k = Math.min(1, max / Math.max(w, h)); w = Math.round(w * k); h = Math.round(h * k);
+      const c = document.createElement('canvas'); c.width = w; c.height = h; c.getContext('2d').drawImage(im, 0, 0, w, h);
+      try { res(c.toDataURL('image/jpeg', q)); } catch (e) { res(url); }
+    }; im.onerror = () => res(url); im.src = url;
+  });
+}
+async function storeFile(file) {
+  let data, type = file.type || 'application/octet-stream';
+  if (type.startsWith('image/')) { data = await compressImage(file); type = 'image/jpeg'; }
+  else { if (file.size > 4e6) { toast('Fichier trop volumineux (max 4 Mo) : ' + file.name, { err: 1 }); return null; } data = await readAsDataURL(file); }
+  const id = 'f' + uid(); await IDB.put('files', { id, name: file.name, type, data, ts: Date.now(), by: USER.name });
+  return id;
+}
+const fileCache = new Map();
+async function getFile(id) { if (fileCache.has(id)) return fileCache.get(id); const f = await IDB.get('files', id); if (f) fileCache.set(id, f); return f; }
+async function hydrateThumbs(root = document) {
+  for (const el of $$('[data-fid]', root)) {
+    if (el.dataset.h) continue; el.dataset.h = 1;
+    const f = await getFile(el.dataset.fid);
+    if (!f) { el.insertAdjacentHTML('afterbegin', '<span class="muted">absent</span>'); el.title = 'Justificatif non présent sur cet appareil (fusion faite sans justificatifs ?)'; continue; }
+    if (f.type.startsWith('image/')) el.insertAdjacentHTML('afterbegin', `<img src="${f.data}" alt="">`); else el.insertAdjacentHTML('afterbegin', '<b>PDF</b>');
+    el.title = f.name;
+  }
+}
+async function viewFile(id) {
+  const f = await getFile(id); if (!f) return toast('Justificatif absent de cet appareil', { err: 1 });
+  const body = f.type.startsWith('image/') ? `<img src="${f.data}" style="max-width:100%;border-radius:8px">` : `<p>${esc(f.name)}</p>`;
+  openModal(esc(f.name), body + `<p class="small muted">Ajouté par ${esc(f.by || '?')} le ${fdt(f.ts)}</p>`, { foot: `<a class="btn" download="${esc(f.name)}" href="${f.data}">Télécharger</a><button class="btn" data-close>Fermer</button>` });
+}
+
+/* ---------------- Sauvegarde / fusion ---------------- */
+async function buildBackup(withFiles = true) {
+  return { format: FORMAT, version: 1, app: APPV, pid: S.pid, projectName: S.P.name, exportedAt: Date.now(), by: USER ? USER.name : '?', dev: DEV, events: S.sorted, files: withFiles ? await IDB.all('files') : [] };
+}
+const fname = () => 'chantier_' + (S.P.name || 'export').replace(/[^\p{L}\p{N}]+/gu, '_').slice(0, 40) + '_' + today() + '.json';
+function download(name, content, type) {
+  const blob = content instanceof Blob ? content : new Blob([content], { type: type || 'application/octet-stream' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+}
+/* Opérations saisies sur CET appareil et pas encore partagées/exportées (les opérations reçues d'autres appareils existent déjà ailleurs) */
+const unsaved = () => S ? S.events.filter(e => e.dev === DEV && e.ts > (S.lastBackup || 0)).length : 0;
+async function markExported() { S.lastBackup = Date.now(); await IDB.setMeta('lastBackup', S.lastBackup); S.lastBackupN = S.events.length; await IDB.setMeta('lastBackupN', S.lastBackupN); updStatus(); }
+async function exportBackup(withFiles) {
+  const b = await buildBackup(withFiles);
+  download(fname(), JSON.stringify(b), 'application/json');
+  await markExported();
+  toast('Fichier chantier exporté' + (withFiles ? ' (avec justificatifs)' : ' (sans justificatifs)'));
+}
+/* Partage direct (Android : WhatsApp, Gmail, Drive…). Chrome n'autorise pas le partage de .json :
+   le fichier est donc partagé en .txt (contenu identique, reconnu à l'import). */
+async function shareBackup(withFiles) {
+  const b = await buildBackup(withFiles); const txt = JSON.stringify(b);
+  const name = fname().replace(/\.json$/, '.txt');
+  let file = null; try { file = new File([txt], name, { type: 'text/plain' }); } catch (e) { }
+  if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+    try {
+      await navigator.share({ files: [file], title: 'Chantier ' + S.P.name, text: `Fichier chantier « ${S.P.name} » (${fdate(today())}, ${USER.name}). À ouvrir avec Carnet de Chantier : Partager → Chantier, ou « Fusionner un fichier reçu ».` });
+      await markExported(); toast('Fichier partagé' + (withFiles ? '' : ' (sans justificatifs)'));
+    } catch (e) { if (e.name !== 'AbortError') { toast('Partage impossible (' + e.message + ') : fichier téléchargé à la place.', { err: 1, ms: 6000 }); download(fname(), txt, 'application/json'); await markExported(); } }
+  } else { download(fname(), txt, 'application/json'); await markExported(); toast('Partage direct indisponible ici : le fichier a été téléchargé.', { ms: 5000 }); }
+}
+/* Fichier reçu via la cible de partage Android (voir sw.js) */
+async function consumeSharedFile() {
+  if (!/[?&]shared=1/.test(location.search)) return;
+  history.replaceState(null, '', location.pathname);
+  try {
+    const c = await caches.open('cdc-share'); const r = await c.match('./shared-file');
+    if (!r) return toast('Aucun fichier reçu.', { err: 1 });
+    await c.delete('./shared-file');
+    const txt = await r.text(); let j;
+    try { j = JSON.parse(txt); } catch (e) { return toast('Le fichier partagé n’est pas un fichier chantier.', { err: 1, ms: 6000 }); }
+    await importData(j);
+  } catch (e) { toast('Import du fichier partagé impossible : ' + e.message, { err: 1, ms: 7000 }); }
+}
+function validEvent(e) { return e && typeof e.eid === 'string' && typeof e.rid === 'string' && COLLS.includes(e.coll) && ['put', 'del', 'restore'].includes(e.op) && typeof e.ts === 'number' && (e.op !== 'put' || (e.data && typeof e.data === 'object')); }
+async function importData(j) {
+  if (!j || j.format !== FORMAT || !Array.isArray(j.events)) throw new Error('Ce fichier n’est pas un fichier « Carnet de Chantier ».');
+  if (!S || j.pid !== S.pid) {
+    const known = projects().find(p => p.pid === j.pid);
+    if (S && !await ask(`Ce fichier concerne le chantier « <b>${esc(j.projectName)}</b> », différent du chantier ouvert (« ${esc(S.P.name)} »).<br>${known ? 'Il sera ouvert et le fichier y sera fusionné.' : 'Il sera ajouté comme nouveau chantier sur cet appareil.'}`, { ok: 'Continuer' })) return;
+    regProject(j.pid, j.projectName); await openProject(j.pid);
+  }
+  const have = new Set(S.events.map(e => e.eid));
+  const nw = j.events.filter(e => validEvent(e) && !have.has(e.eid));
+  const bad = j.events.filter(e => !validEvent(e)).length;
+  const confBefore = S.conf.length;
+  await IDB.putMany('events', nw);
+  let nf = 0;
+  if (Array.isArray(j.files) && j.files.length) {
+    const haveF = new Set((await IDB.all('files')).map(f => f.id));
+    const nfs = j.files.filter(f => f && f.id && f.data && !haveF.has(f.id)); nf = nfs.length; await IDB.putMany('files', nfs);
+  }
+  S.events.push(...nw); rebuild(); afterChange(); render();
+  const nc = S.conf.length - confBefore;
+  let msg = `Fusion terminée : ${nw.length} opération(s) nouvelle(s)` + (nf ? `, ${nf} justificatif(s)` : '') + (nw.length ? '' : ' — déjà à jour') + '.';
+  if (bad) msg += ` ${bad} ligne(s) invalide(s) ignorée(s).`;
+  toast(msg, { ms: 6000 });
+  if (nc > 0) toast(`${nc} conflit(s) détecté(s) : voir Journal › Conflits`, { err: 1, ms: 8000 });
+}
+async function importFile(file) {
+  try { const j = JSON.parse(await file.text()); await importData(j); }
+  catch (e) { toast('Import impossible : ' + e.message, { err: 1, ms: 7000 }); }
+}
+/* Sauvegarde automatique vers un fichier lié (Chrome/Edge ordinateur) */
+let autoT = null;
+async function linkFile() {
+  if (!window.showSaveFilePicker) return toast('Fonction non disponible dans ce navigateur (utilisez Chrome ou Edge sur ordinateur). Utilisez l’export manuel.', { err: 1, ms: 7000 });
+  try {
+    const h = await showSaveFilePicker({ suggestedName: fname().replace(/_\d{4}-\d\d-\d\d/, ''), types: [{ description: 'Fichier chantier', accept: { 'application/json': ['.json'] } }] });
+    S.fh = h; S.fhOk = true; await IDB.setMeta('fh', h); await writeLinked(); render();
+  } catch (e) { if (e.name !== 'AbortError') toast('Liaison impossible : ' + e.message, { err: 1 }); }
+}
+async function reactivateFile() { try { const p = await S.fh.requestPermission({ mode: 'readwrite' }); S.fhOk = p === 'granted'; if (S.fhOk) await writeLinked(); updStatus(); render(); } catch (e) { toast(e.message, { err: 1 }); } }
+async function unlinkFile() { S.fh = null; S.fhOk = false; await IDB.setMeta('fh', null); updStatus(); render(); }
+async function writeLinked() {
+  if (!S.fh || !S.fhOk) return;
+  try { const w = await S.fh.createWritable(); await w.write(JSON.stringify(await buildBackup(true))); await w.close(); S.lastBackup = Date.now(); S.lastBackupN = S.events.length; await IDB.setMeta('lastBackup', S.lastBackup); await IDB.setMeta('lastBackupN', S.lastBackupN); }
+  catch (e) { S.fhOk = false; }
+  updStatus();
+}
+function afterChange() { if (S.R.project.project) regProject(S.pid, S.P.name); updStatus(); if (S.fh && S.fhOk) { clearTimeout(autoT); autoT = setTimeout(writeLinked, 2500); } }
+
+/* ---------------- Chantiers ---------------- */
+async function openProject(pid) {
+  await IDB.open(pid); fileCache.clear();
+  S = { pid, events: await IDB.all('events') };
+  rebuild();
+  S.lastBackup = await IDB.getMeta('lastBackup') || 0; S.lastBackupN = await IDB.getMeta('lastBackupN') || 0;
+  S.fh = await IDB.getMeta('fh') || null; S.fhOk = false;
+  if (S.fh && S.fh.queryPermission) { try { S.fhOk = (await S.fh.queryPermission({ mode: 'readwrite' })) === 'granted'; } catch (e) { } }
+  LS.set('cd_current', pid); regProject(pid, S.R.project.project ? S.P.name : null);
+  resetFilters();
+  render();
+}
+async function newProject(p, withDefaults = true) {
+  const pid = 'c' + uid(); regProject(pid, p.name); await openProject(pid);
+  const list = [['project', 'project', 'put', Object.assign({ name: p.name, place: '', owner: USER.name, budget: '', start: today(), end: '', rates: { EUR: 655.957, USD: 600, GBP: 760 }, modes: DEF_MODES, units: DEF_UNITS, closedUntil: '' }, p)]];
+  if (withDefaults) {
+    DEF_LOTS.forEach((n, i) => list.push(['lots', 'l' + uid() + i, 'put', { name: n, budget: '', order: (i + 1) * 10, notes: '' }]));
+    DEF_CATS.forEach((n, i) => list.push(['cats', 'k' + uid() + i, 'put', { name: n }]));
+    list.push(['people', 'p' + uid(), 'put', { name: USER.name, role: USER.role === 'admin' ? "Maître d'ouvrage" : 'Chef de chantier', phone: '', notes: '' }]);
+  }
+  await commitMany(list); render();
+  return pid;
+}
+
+/* =====================================================================
+   Interface — composants de base
+   ===================================================================== */
+function toast(msg, o = {}) {
+  const t = document.createElement('div'); t.className = 'toast' + (o.err ? ' err' : '');
+  t.innerHTML = `<span>${msg}</span>`;
+  if (o.action) { const b = document.createElement('button'); b.textContent = o.action; b.onclick = () => { t.remove(); o.fn(); }; t.appendChild(b); }
+  $('#toasts').appendChild(t); setTimeout(() => t.remove(), o.ms || (o.action ? 7000 : 3200));
+}
+function openModal(title, body, o = {}) {
+  const ov = document.createElement('div'); ov.className = 'ov' + (o.cls ? ' ' + o.cls : '');
+  ov.innerHTML = `<div class="md ${o.small ? 'sm' : ''}" role="dialog" aria-modal="true"><div class="mh"><h2>${title}</h2><button class="x" data-close aria-label="Fermer">×</button></div><div class="mb">${body}</div>${o.foot ? `<div class="mf">${o.foot}</div>` : ''}</div>`;
+  ov.addEventListener('click', e => { if (e.target.closest('[data-close]') || (e.target === ov && !o.sticky)) { closeModal(ov); o.onClose && o.onClose(); } });
+  $('#modals').appendChild(ov); o.onMount && o.onMount(ov); hydrateThumbs(ov);
+  const f = ov.querySelector('input:not([type=hidden]):not([readonly]),select,textarea'); if (f && !o.noFocus && (innerWidth > 720 || o.focusMobile)) setTimeout(() => f.focus(), 30);
+  return ov;
+}
+function closeModal(ov) { (ov || $('#modals').lastElementChild)?.remove(); }
+function closeAllModals() { $('#modals').innerHTML = ''; }
+function ask(msg, o = {}) {
+  return new Promise(res => {
+    let done = false;
+    const ov = openModal(o.title || 'Confirmation', `<div>${msg}</div>${o.input ? `<label class="f" style="margin-top:10px">${o.input}<input id="askIn"></label>` : ''}`, {
+      small: 1, sticky: 1, noFocus: !o.input, focusMobile: 1, cls: o.cls,
+      foot: `<button class="btn" data-close>Annuler</button><button class="btn ${o.danger ? 'dng' : 'pri'}" id="askOk">${o.ok || 'OK'}</button>`,
+      onClose: () => { if (!done) res(false); }
+    });
+    $('#askOk', ov).onclick = () => { const v = o.input ? $('#askIn', ov).value.trim() : true; if (o.input && !v) return $('#askIn', ov).focus(); done = true; closeModal(ov); res(v); };
+  });
+}
+const opts = (arr, sel, empty) => (empty != null ? `<option value="">${esc(empty)}</option>` : '') + arr.map(o => { const [v, l] = Array.isArray(o) ? o : [o, o]; return `<option value="${esc(v)}"${String(v) === String(sel ?? '') ? ' selected' : ''}>${esc(l)}</option>`; }).join('');
+const lotOpts = (sel, empty) => opts(lotsSorted().map(l => [l.id, l.d.name]), sel, empty);
+const catOpts = (sel, empty) => opts(live('cats').sort((a, b) => a.d.name.localeCompare(b.d.name)).map(l => [l.id, l.d.name]), sel, empty);
+const peopleDL = () => `<datalist id="dlPeople">${live('people').sort((a, b) => a.d.name.localeCompare(b.d.name)).map(p => `<option value="${esc(p.d.name)}">${esc(p.d.role || '')}</option>`).join('')}</datalist>`;
+const pNameRaw = id => { const r = rec('people', id); return r ? r.d.name : ''; };
+const stBadge = s => s === 'du' ? '<span class="bdg b-er">À payer</span>' : s === 'acompte' ? '<span class="bdg b-wa">Acompte</span>' : '<span class="bdg b-ok">Payé</span>';
+
+function barList(entries, o = {}) {
+  const max = Math.max(1, ...entries.map(e => Math.max(e.v, e.b || 0)));
+  if (!entries.length) return '<div class="muted small">Aucune donnée</div>';
+  return `<div class="bars">${entries.map(e => {
+    const over = e.b && e.v > e.b; const w = e.b ? Math.min(100, e.v / e.b * 100) : e.v / max * 100;
+    return `<div class="it"${e.click ? ` data-go="${esc(e.click)}" style="cursor:pointer"` : ''}><div class="hd"><span>${e.dot ? `<span class="dot" style="background:${e.dot}"></span>` : ''}${esc(e.l)}</span><b>${mshort(e.v)}${e.b ? ` <span class="muted small">/ ${mshort(e.b)} (${Math.round(e.v / e.b * 100)} %)</span>` : o.total ? ` <span class="muted small">${Math.round(e.v / o.total * 100)} %</span>` : ''}</b></div><div class="track"><div class="fill${over ? ' over' : ''}" style="width:${w}%"></div></div></div>`;
+  }).join('')}</div>`;
+}
+function monthChart(xs) {
+  const m = {}; xs.forEach(x => { if (!x.d.date) return; const k = x.d.date.slice(0, 7); m[k] = (m[k] || 0) + x.cost; });
+  let keys = Object.keys(m).sort(); if (!keys.length) return '<div class="muted small">Aucune dépense</div>';
+  // remplir les mois vides
+  const all = []; let [y, mo] = keys[0].split('-').map(Number); const [ly, lm] = keys[keys.length - 1].split('-').map(Number);
+  while (y < ly || (y === ly && mo <= lm)) { all.push(y + '-' + pad(mo)); mo++; if (mo > 12) { mo = 1; y++; } }
+  keys = all.slice(-18);
+  const W = 640, H = 220, pl = 8, pb = 34, pt = 22, bw = (W - pl * 2) / keys.length, max = Math.max(...keys.map(k => m[k] || 0), 1);
+  let cum = 0; const tot = sum(keys, k => m[k] || 0); const pts = [];
+  const bars = keys.map((k, i) => {
+    const v = m[k] || 0; cum += v; const h = (H - pb - pt) * v / max; const x = pl + i * bw + bw * .15, w = bw * .7, yy = H - pb - h;
+    pts.push([pl + i * bw + bw / 2, H - pb - (H - pb - pt) * cum / tot]);
+    return `<g><rect x="${x}" y="${yy}" width="${w}" height="${Math.max(h, v ? 1 : 0)}" rx="3" fill="var(--ac)"><title>${monthLabel(k)} : ${money(v)}</title></rect>${v && keys.length <= 12 ? `<text x="${x + w / 2}" y="${yy - 4}" text-anchor="middle">${v >= 1e6 ? nf2.format(v / 1e6) + ' M' : Math.round(v / 1e3) + ' k'}</text>` : ''}<text x="${pl + i * bw + bw / 2}" y="${H - pb + 14}" text-anchor="middle">${MSHORT[+k.slice(5) - 1]}</text>${(i === 0 || k.endsWith('-01')) ? `<text x="${pl + i * bw + bw / 2}" y="${H - pb + 27}" text-anchor="middle">${k.slice(0, 4)}</text>` : ''}</g>`;
+  }).join('');
+  const line = `<polyline points="${pts.map(p => p.join(',')).join(' ')}" fill="none" stroke="var(--in)" stroke-width="2" stroke-dasharray="4 3"/>`;
+  return `<div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Dépenses par mois">${bars}${line}<line x1="${pl}" x2="${W - pl}" y1="${H - pb}" y2="${H - pb}" stroke="var(--bd)"/></svg><div class="small muted"><span class="dot" style="background:var(--ac)"></span>Coût du mois &nbsp; <span class="dot" style="background:var(--in)"></span>Cumul (échelle relative, total ${money(tot)})</div></div>`;
+}
+
+/* =====================================================================
+   Navigation & en-tête
+   ===================================================================== */
+const TABS = [['dash', 'Tableau de bord'], ['exp', 'Dépenses'], ['funds', 'Fonds & caisses'], ['mat', 'Matériaux'], ['report', 'Bilan / rapport'], ['ref', 'Référentiels'], ['journal', 'Journal'], ['settings', 'Sauvegarde & réglages']];
+let VIEW = LS.get('cd_view', 'dash');
+function go(v) { VIEW = v; LS.set('cd_view', v); render(); window.scrollTo(0, 0); }
+function updStatus() {
+  const el = $('#bkStatus'); if (!S) { el.style.display = 'none'; return; } el.style.display = '';
+  const n = unsaved();
+  if (S.fh && S.fhOk) { el.className = 'status b-ok'; el.textContent = '● Sauvegarde auto active'; }
+  else if (S.fh && !S.fhOk) { el.className = 'status b-wa'; el.textContent = '● Réactiver la sauvegarde auto'; }
+  else if (n === 0) { el.className = 'status b-ok'; el.textContent = S.lastBackup ? '● Partagé le ' + fdt(S.lastBackup).slice(0, 10) : '● À jour'; }
+  else if (!S.lastBackup) { el.className = 'status ' + (n > 30 ? 'b-er' : 'b-wa'); el.textContent = `● ${n} saisie(s) non partagée(s)`; }
+  else if (n > 0) { const days = Math.floor((Date.now() - S.lastBackup) / 864e5); el.className = 'status ' + (days > 7 || n > 50 ? 'b-er' : 'b-wa'); el.textContent = `● ${n} saisie(s) non partagée(s)`; }
+  else { el.className = 'status b-ok'; el.textContent = '● Exporté le ' + fdt(S.lastBackup).slice(0, 10); }
+}
+function renderHeader() {
+  const ps = projects(); const sel = $('#projSel');
+  sel.innerHTML = ps.map(p => `<option value="${p.pid}"${S && p.pid === S.pid ? ' selected' : ''}>${esc(p.name)}</option>`).join('') + '<option value="__new">＋ Nouveau chantier…</option><option value="__open">📂 Ouvrir / fusionner un fichier…</option>';
+  sel.style.display = S ? '' : 'none';
+  $('#lockBtn').style.display = lockCfg() ? '' : 'none';
+  $('#userBadge').textContent = USER ? '👤 ' + USER.name + (USER.role === 'admin' ? ' · admin' : USER.role === 'lecture' ? ' · lecture' : '') : '';
+  $('#tabs').innerHTML = S ? TABS.map(([k, l]) => `<button data-tab="${k}" class="${VIEW === k ? 'on' : ''}">${l}${k === 'journal' && S.conf.length ? `<span class="cnt">${S.conf.length}</span>` : ''}</button>`).join('') : '';
+  updStatus();
+}
+function render() {
+  renderHeader(); document.body.classList.toggle('hasproj', !!S && canWrite());
+  if (!S) return renderWelcome();
+  const v = { dash: renderDash, exp: renderExp, funds: renderFunds, mat: renderMat, report: renderReport, ref: renderRef, journal: renderJournal, settings: renderSettings }[VIEW] || renderDash;
+  $('#view').innerHTML = v(); hydrateThumbs($('#view'));
+  const after = { exp: bindExp, report: bindReport, journal: bindJournal }[VIEW]; after && after();
+}
+
+/* =====================================================================
+   Accueil / identité
+   ===================================================================== */
+function renderWelcome() {
+  $('#tabs').innerHTML = '';
+  $('#view').innerHTML = `<div class="welcome card"><h1>Carnet de Dépenses Chantier</h1>
+  <p>Documentez au fil de l’eau chaque dépense de votre chantier — quand, par qui, à qui, pour quoi, quelle quantité, par quel moyen — et obtenez à tout moment un bilan groupé par période ou par segment des travaux.</p>
+  <p class="small muted">Fonctionne entièrement hors-ligne. Les données restent sur cet appareil ; elles sont partagées entre plusieurs personnes par échange de fichiers, sans jamais écraser une saisie antérieure.</p>
+  <div class="row" style="margin-top:14px"><button class="btn pri" data-act="newProj">＋ Créer un chantier</button><button class="btn" data-act="openFile">📂 Ouvrir un fichier chantier reçu</button><button class="btn" data-act="demo">Essayer avec des données de démonstration</button></div>
+  ${installBlock()}</div>`;
+}
+function askUser(force) {
+  return new Promise(res => {
+    const u = USER || { name: '', role: 'admin' };
+    const ov = openModal('Qui utilise cet appareil ?', `<p class="small muted">Chaque saisie est signée avec ce nom : le journal indique toujours qui a créé, modifié ou supprimé quoi, et quand.</p>
+     <div class="grid"><label class="f">Votre nom<input id="uName" value="${esc(u.name)}" placeholder="ex. Jules K."></label>
+     <label class="f">Profil<select id="uRole">${opts(Object.entries(UROLES), u.role)}</select></label>
+     <p class="small muted" style="margin:0">L’administrateur peut valider (verrouiller) des dépenses, clôturer une période, gérer segments et catégories, et résoudre les conflits. Ces profils protègent contre les erreurs de manipulation ; ce n’est pas un contrôle d’accès sécurisé.</p></div>`,
+      { small: 1, focusMobile: 1, sticky: !force ? 1 : 0, foot: `${force ? '<button class="btn" data-close>Annuler</button>' : ''}<button class="btn pri" id="uOk">Valider</button>` });
+    $('#uOk', ov).onclick = () => { const n = $('#uName', ov).value.trim(); if (!n) return $('#uName', ov).focus(); USER = { name: n, role: $('#uRole', ov).value }; LS.set('cd_user', USER); closeModal(ov); renderHeader(); res(USER); };
+  });
+}
+function newProjectDialog() {
+  const ov = openModal('Nouveau chantier', `<div class="grid g2"><label class="f span2">Nom du chantier<input id="npName" placeholder="ex. Maison R+1 — Limbe"></label>
+   <label class="f">Lieu<input id="npPlace"></label><label class="f">Budget prévisionnel (FCFA)<input id="npBudget" inputmode="decimal"></label>
+   <label class="f spanall row" style="flex-direction:row;color:var(--tx)"><input type="checkbox" id="npDef" checked> Pré-remplir les segments (terrain, fondations, murs…) et catégories usuels</label></div>`,
+    { small: 1, foot: '<button class="btn" data-close>Annuler</button><button class="btn pri" id="npOk">Créer</button>' });
+  $('#npOk', ov).onclick = async () => { const n = $('#npName', ov).value.trim(); if (!n) return $('#npName', ov).focus(); closeModal(ov); await newProject({ name: n, place: $('#npPlace', ov).value.trim(), budget: $('#npBudget', ov).value }, $('#npDef', ov).checked); VIEW = 'dash'; render(); toast('Chantier créé'); };
+}
+
+/* =====================================================================
+   Tableau de bord
+   ===================================================================== */
+function renderDash() {
+  const xs = live('expenses').map(X), fs = live('funds').map(FX);
+  const paid = sum(xs, 'paid'), fee = sum(xs, 'fee') + sum(fs, 'fee'), due = sum(xs, 'due'), cost = paid + fee;
+  const B = budgetTotal();
+  const lots = lotsSorted();
+  const byLot = {}; xs.forEach(x => byLot[x.d.lot] = (byLot[x.d.lot] || 0) + x.cost);
+  const lotEntries = lots.filter(l => byLot[l.id] || num(l.d.budget)).map(l => ({ l: l.d.name, v: byLot[l.id] || 0, b: num(l.d.budget), click: 'lot:' + l.id }));
+  const orphan = Object.keys(byLot).filter(k => !lots.find(l => l.id === k)); orphan.forEach(k => lotEntries.push({ l: lotName(k) || 'Sans segment', v: byLot[k] }));
+  const grp = (key, nameFn) => { const m = {}; xs.forEach(x => { const k = x.d[key] || ''; m[k] = (m[k] || 0) + x.cost; }); return Object.entries(m).sort((a, b) => b[1] - a[1]).map(([k, v]) => ({ l: nameFn(k) || '—', v, click: key + ':' + k })); };
+  const noJust = xs.filter(x => x.paid > 0 && !(x.d.files || []).length);
+  const overLots = lotEntries.filter(e => e.b && e.v > e.b);
+  const cb = cashBook().filter(b => Math.abs(b.bal) > .5);
+  const last = xs.slice().sort((a, b) => (b.d.date || '').localeCompare(a.d.date || '') || b.r.created - a.r.created).slice(0, 8);
+  const n = unsaved();
+  const alerts = [];
+  if (S.conf.length) alerts.push(`<div class="alert a-er">⚠ ${S.conf.length} conflit(s) de modification à arbitrer. <button class="btn sm" data-go2="journal">Voir</button></div>`);
+  if (overLots.length) alerts.push(`<div class="alert a-er">⚠ Budget dépassé : ${overLots.map(e => esc(e.l)).join(', ')}</div>`);
+  if (B && cost + due > B) alerts.push(`<div class="alert a-er">⚠ Coût engagé (${money(cost + due)}) supérieur au budget global (${money(B)}).</div>`);
+  if (noJust.length) alerts.push(`<div class="alert a-wa">📎 ${noJust.length} dépense(s) payée(s) sans justificatif. <button class="btn sm" data-filt="nojust">Afficher</button></div>`);
+  if (!S.fhOk && (n > 20 || (!S.lastBackup && n > 30))) alerts.push(`<div class="alert a-wa">💾 ${n} saisie(s) de cet appareil pas encore partagée(s) ni sauvegardée(s). <button class="btn sm" data-act="share">📤 Partager / sauvegarder</button></div>`);
+  return `<div class="sec-title"><h2>${esc(S.P.name)}</h2><div class="row noprint"><button class="btn pri" data-act="newExp">＋ Nouvelle dépense</button><button class="btn" data-act="newFund">＋ Envoi de fonds</button></div></div>
+  ${S.P.place ? `<p class="muted small" style="margin-top:-8px">${esc(S.P.place)}${S.P.owner ? ' · Maître d’ouvrage : ' + esc(S.P.owner) : ''}</p>` : ''}
+  ${alerts.join('')}
+  <div class="kpis">
+   <div class="kpi"><div class="l">Budget</div><div class="v">${B ? mshort(B) : '—'}</div><div class="s">${B ? 'FCFA' : 'à définir (Réglages / Segments)'}</div></div>
+   <div class="kpi"><div class="l">Coût réalisé</div><div class="v">${mshort(cost)}</div><div class="s">${B ? Math.round(cost / B * 100) + ' % du budget' : 'FCFA'} · ${xs.length} dépense(s)</div></div>
+   <div class="kpi"><div class="l">Reste à payer</div><div class="v" style="color:${due ? 'var(--er)' : 'inherit'}">${mshort(due)}</div><div class="s">dettes fournisseurs / ouvriers</div></div>
+   <div class="kpi"><div class="l">Frais de transaction</div><div class="v">${mshort(fee)}</div><div class="s">${cost ? nf2.format(fee / cost * 100) + ' % du coût' : 'FCFA'}</div></div>
+   <div class="kpi"><div class="l">Budget restant</div><div class="v" style="color:${B && B - cost - due < 0 ? 'var(--er)' : 'inherit'}">${B ? mshort(B - cost - due) : '—'}</div><div class="s">après dettes</div></div>
+  </div>
+  <div class="cols">
+   <div class="card"><h3>Dépenses par mois</h3>${monthChart(xs)}</div>
+   <div class="card"><h3>Budget vs réalisé par segment</h3>${barList(lotEntries)}</div>
+   <div class="card"><h3>Par catégorie</h3>${barList(grp('cat', catName), { total: cost })}</div>
+   <div class="card"><h3>Par moyen de paiement</h3>${barList(grp('mode', k => k), { total: cost })}</div>
+   <div class="card"><h3>Qui a payé ?</h3>${barList(grp('payer', pName), { total: cost })}</div>
+   <div class="card"><h3>Caisses (fonds à justifier)</h3>${cb.length ? `<table><tbody>${cb.map(b => `<tr><td>${esc(pName(b.id))}</td><td class="num" style="color:${b.bal < 0 ? 'var(--mu)' : 'var(--tx)'}">${b.bal >= 0 ? money(b.bal) : 'apport ' + money(-b.bal)}</td></tr>`).join('')}</tbody></table><p class="small muted">Solde = fonds reçus − fonds envoyés − dépenses payées. Positif : argent restant à justifier ; « apport » : a financé le chantier.</p>` : '<div class="muted small">Aucun mouvement de fonds</div>'}</div>
+  </div>
+  <div class="card" style="margin-top:14px"><h3>Dernières dépenses</h3>${last.length ? expTable(last) : '<div class="empty">Aucune dépense saisie. <button class="btn pri" data-act="newExp">＋ Saisir la première</button></div>'}</div>`;
+}
+
+/* =====================================================================
+   Dépenses : filtres, regroupement, tableau
+   ===================================================================== */
+let F;
+function resetFilters() { F = { q: '', from: '', to: '', lot: '', cat: '', payer: '', payee: '', mode: '', status: '', nojust: false, g1: 'month', g2: 'lot', sort: 'desc', label: '' }; }
+resetFilters();
+function periodPreset(p) {
+  const d = new Date(), y = d.getFullYear(), m = d.getMonth();
+  const r = { all: ['', ''], month: [isoD(new Date(y, m, 1)), isoD(new Date(y, m + 1, 0))], prev: [isoD(new Date(y, m - 1, 1)), isoD(new Date(y, m, 0))], week: [mondayOf(today()), today()], year: [y + '-01-01', y + '-12-31'], d30: [isoD(new Date(Date.now() - 29 * 864e5)), today()] }[p];
+  if (r) [F.from, F.to] = r;
+}
+function filtered() {
+  const q = norm(F.q);
+  return live('expenses').map(X).filter(x => {
+    const d = x.d;
+    if (F.from && d.date < F.from) return false; if (F.to && d.date > F.to) return false;
+    if (F.lot && d.lot !== F.lot) return false; if (F.cat && d.cat !== F.cat) return false;
+    if (F.payer && d.payer !== F.payer) return false; if (F.payee && d.payee !== F.payee) return false;
+    if (F.mode && d.mode !== F.mode) return false; if (F.status && d.status !== F.status) return false;
+    if (F.nojust && !(x.paid > 0 && !(d.files || []).length)) return false;
+    if (F.label && norm(d.label) + '|' + norm(d.unit) !== F.label) return false;
+    if (q) { const hay = norm([d.label, d.notes, d.ref, d.tags, pNameRaw(d.payer), pNameRaw(d.payee), lotName(d.lot), catName(d.cat), d.mode, d.amount].join(' ')); if (!q.split(' ').every(w => hay.includes(w))) return false; }
+    return true;
+  });
+}
+const GROUPS = { none: 'Aucun', day: 'Jour', week: 'Semaine', month: 'Mois', quarter: 'Trimestre', year: 'Année', lot: 'Segment du projet', cat: 'Catégorie', payer: 'Payé par', payee: 'Bénéficiaire', mode: 'Moyen de paiement', status: 'Statut', tag: 'Étiquette', label: 'Article' };
+const TIMEG = ['day', 'week', 'month', 'quarter', 'year'];
+function gkeys(x, g) {
+  const d = x.d, dt = d.date || '0000-00-00';
+  switch (g) {
+    case 'day': return [[dt, fdate(dt) + ' (' + DAYS[new Date(dt + 'T12:00:00').getDay()] + ')']];
+    case 'week': { const [y, w] = isoWeek(dt); return [[y + '-W' + pad(w), `Semaine ${w} / ${y} — dès le lundi ${fdate(mondayOf(dt))}`]]; }
+    case 'month': return [[dt.slice(0, 7), monthLabel(dt)]];
+    case 'quarter': { const q = Math.floor((+dt.slice(5, 7) - 1) / 3) + 1; return [[dt.slice(0, 4) + '-Q' + q, `${q}${q === 1 ? 'er' : 'e'} trimestre ${dt.slice(0, 4)}`]]; }
+    case 'year': return [[dt.slice(0, 4), dt.slice(0, 4)]];
+    case 'lot': { const l = rec('lots', d.lot); return [[(l ? String(num(l.d.order)).padStart(6, '0') : 'zzz') + d.lot, lotName(d.lot)]]; }
+    case 'cat': return [[d.cat || '', catName(d.cat)]];
+    case 'payer': return [[d.payer || '', pName(d.payer)]];
+    case 'payee': return [[d.payee || '', pName(d.payee)]];
+    case 'mode': return [[d.mode || '', d.mode || '—']];
+    case 'status': return [[d.status || 'paye', STATUS[d.status || 'paye']]];
+    case 'tag': { const t = String(d.tags || '').split(',').map(s => s.trim()).filter(Boolean); return t.length ? t.map(s => [norm(s), s]) : [['', 'Sans étiquette']]; }
+    case 'label': return [[norm(d.label) + '|' + norm(d.unit), (d.label || '—') + (d.unit ? ' (' + d.unit + ')' : '')]];
+  }
+  return [['', '']];
+}
+function sortItems(items) {
+  const s = F.sort; return items.slice().sort(s === 'amount' ? (a, b) => b.cost - a.cost : s === 'asc' ? (a, b) => (a.d.date || '').localeCompare(b.d.date || '') || a.r.created - b.r.created : (a, b) => (b.d.date || '').localeCompare(a.d.date || '') || b.r.created - a.r.created);
+}
+function groupRender(items, levels, depth = 0) {
+  if (!levels.length) return expTable(sortItems(items), true);
+  const g = levels[0]; const m = new Map();
+  items.forEach(x => gkeys(x, g).forEach(([k, l]) => { if (!m.has(k)) m.set(k, { k, l, items: [] }); m.get(k).items.push(x); }));
+  let arr = [...m.values()]; arr.forEach(o => { o.tot = sum(o.items, 'cost'); o.due = sum(o.items, 'due'); o.qty = sum(o.items, x => num(x.d.qty)); });
+  if (TIMEG.includes(g)) arr.sort((a, b) => F.sort === 'asc' ? a.k.localeCompare(b.k) : b.k.localeCompare(a.k));
+  else if (g === 'lot') arr.sort((a, b) => a.k.localeCompare(b.k));
+  else arr.sort((a, b) => b.tot - a.tot);
+  const total = sum(items, 'cost');
+  return arr.map(o => `<details class="grp" ${depth === 0 || arr.length <= 6 ? 'open' : ''}><summary><span>${esc(o.l)}</span><span class="gm">${o.items.length} op. · <b>${money(o.tot)}</b>${total ? ` · ${Math.round(o.tot / total * 100)} %` : ''}${g === 'label' && o.qty ? ` · qté ${nf2.format(o.qty)}` : ''}${o.due ? ` · <span style="color:var(--er)">à payer ${money(o.due)}</span>` : ''}</span></summary>${groupRender(o.items, levels.slice(1), depth + 1)}</details>`).join('');
+}
+function expTable(xs, foot) {
+  if (!xs.length) return '<div class="empty">Aucune dépense</div>';
+  return `<div class="tw"><table class="exp"><thead><tr><th>Date</th><th>Segment</th><th>Objet</th><th>Payé par → à</th><th>Moyen</th><th class="num">Montant FCFA</th><th></th></tr></thead><tbody>${xs.map(x => {
+    const d = x.d; const q = num(d.qty) ? `${nf2.format(num(d.qty))} ${esc(d.unit || '')}${num(d.pu) ? ' × ' + nf2.format(num(d.pu)) : ''}` : '';
+    return `<tr class="click" data-exp="${x.id}"><td class="nowrap c-date">${fdate(d.date)}</td><td class="small c-lot">${esc(lotName(d.lot))}<div class="muted">${esc(catName(d.cat))}</div></td><td class="c-obj"><b>${esc(d.label)}</b>${q ? `<div class="small muted">${q}</div>` : ''}</td><td class="small c-who">${esc(pName(d.payer))} → ${esc(pName(d.payee))}</td><td class="small c-mode">${esc(d.mode || '')}${d.ref ? `<div class="muted">${esc(d.ref)}</div>` : ''}</td><td class="num c-amt">${mshort(x.amt)}${d.cur && d.cur !== 'XAF' ? `<div class="small muted">${nf2.format(num(d.amount))} ${d.cur}</div>` : ''}${x.fee ? `<div class="small muted">+ frais ${mshort(x.fee)}</div>` : ''}</td><td class="nowrap c-ic">${d.status !== 'paye' ? stBadge(d.status) : ''}${(d.files || []).length ? ' 📎' : ''}${d.locked ? ' 🔒' : ''}</td></tr>`;
+  }).join('')}</tbody>${foot ? `<tfoot><tr><td colspan="5">Sous-total (${xs.length})</td><td class="num">${mshort(sum(xs, 'amt'))}${sum(xs, 'fee') ? `<div class="small">+ frais ${mshort(sum(xs, 'fee'))}</div>` : ''}</td><td></td></tr></tfoot>` : ''}</table></div>`;
+}
+function renderExp() {
+  const xs = filtered();
+  const people = live('people').sort((a, b) => a.d.name.localeCompare(b.d.name)).map(p => [p.id, p.d.name]);
+  const levels = [F.g1, F.g2].filter(g => g && g !== 'none');
+  const act = [F.lot, F.cat, F.payer, F.payee, F.mode, F.status, F.q, F.from, F.to, F.label].filter(Boolean).length + (F.nojust ? 1 : 0);
+  return `<div class="sec-title"><h2>Dépenses</h2><div class="row noprint"><button class="btn pri" data-act="newExp">＋ Nouvelle dépense</button><button class="btn" data-act="csv">⬇ CSV (sélection)</button></div></div>
+  <details class="card noprint fpanel" style="margin-bottom:12px" ${innerWidth > 720 || F.open ? 'open' : ''} id="fpanel"><summary><span>🔎 Filtres & regroupement ${act ? `<span class="bdg b-in">${act} actif(s)</span>` : ''}</span><span class="small muted">${esc(GROUPS[F.g1])}${F.g2 !== 'none' ? ' › ' + esc(GROUPS[F.g2]) : ''}</span></summary><div class="fbody">
+   <div class="filters">
+    <label class="f">Recherche<input id="fq" value="${esc(F.q)}" placeholder="ciment, facture, nom…"></label>
+    <label class="f">Période<select id="fper">${opts([['', '— choisir —'], ['all', 'Tout'], ['week', 'Cette semaine'], ['month', 'Ce mois'], ['prev', 'Mois dernier'], ['d30', '30 derniers jours'], ['year', 'Cette année']], '')}</select></label>
+    <label class="f">Du<input type="date" id="ffrom" value="${F.from}"></label><label class="f">Au<input type="date" id="fto" value="${F.to}"></label>
+    <label class="f">Segment<select id="flot">${lotOpts(F.lot, 'Tous')}</select></label>
+    <label class="f">Catégorie<select id="fcat">${catOpts(F.cat, 'Toutes')}</select></label>
+    <label class="f">Payé par<select id="fpayer">${opts(people, F.payer, 'Tous')}</select></label>
+    <label class="f">Bénéficiaire<select id="fpayee">${opts(people, F.payee, 'Tous')}</select></label>
+    <label class="f">Moyen<select id="fmode">${opts(S.P.modes || DEF_MODES, F.mode, 'Tous')}</select></label>
+    <label class="f">Statut<select id="fstatus">${opts(Object.entries(STATUS), F.status, 'Tous')}</select></label>
+   </div>
+   <div class="row"><label class="f" style="flex-direction:row;align-items:center;gap:6px;flex-wrap:wrap">Grouper par <select id="g1">${opts(Object.entries(GROUPS), F.g1)}</select> puis <select id="g2">${opts(Object.entries(GROUPS), F.g2)}</select></label>
+   <label class="f" style="flex-direction:row;align-items:center;gap:6px;flex-wrap:wrap">Tri <select id="fsort">${opts([['desc', 'Plus récent d’abord'], ['asc', 'Chronologique'], ['amount', 'Montant décroissant']], F.sort)}</select></label>
+   <label class="row small"><input type="checkbox" id="fnojust" ${F.nojust ? 'checked' : ''}> Sans justificatif</label>
+   ${act ? `<button class="btn sm" data-act="clearF">✕ Effacer les filtres (${act})</button>` : ''}${F.label ? `<span class="bdg b-in">Article : ${esc(F.label.split('|')[0])}</span>` : ''}</div>
+  </div></details>
+  <div class="kpis"><div class="kpi"><div class="l">Opérations</div><div class="v">${xs.length}</div></div><div class="kpi"><div class="l">Payé</div><div class="v">${mshort(sum(xs, 'paid'))}</div><div class="s">FCFA</div></div><div class="kpi"><div class="l">Frais</div><div class="v">${mshort(sum(xs, 'fee'))}</div></div><div class="kpi"><div class="l">Coût (payé + frais)</div><div class="v">${mshort(sum(xs, 'cost'))}</div></div><div class="kpi"><div class="l">Reste à payer</div><div class="v">${mshort(sum(xs, 'due'))}</div></div></div>
+  ${xs.length ? groupRender(xs, levels) : '<div class="empty card">Aucune dépense ne correspond.</div>'}`;
+}
+function bindExp() {
+  const map = { fq: 'q', ffrom: 'from', fto: 'to', flot: 'lot', fcat: 'cat', fpayer: 'payer', fpayee: 'payee', fmode: 'mode', fstatus: 'status', g1: 'g1', g2: 'g2', fsort: 'sort' };
+  for (const id in map) { const el = $('#' + id); if (!el) continue; el.addEventListener(id === 'fq' ? 'input' : 'change', debounce(() => { F[map[id]] = el.value; const pos = id === 'fq' ? el.selectionStart : null; render(); if (id === 'fq') { const n = $('#fq'); n.focus(); n.setSelectionRange(pos, pos); } }, id === 'fq' ? 250 : 0)); }
+  $('#fper').onchange = e => { periodPreset(e.target.value); render(); };
+  $('#fnojust').onchange = e => { F.nojust = e.target.checked; render(); };
+  $('#fpanel').addEventListener('toggle', e => { F.open = e.target.open; });
+}
+function debounce(fn, ms) { let t; return (...a) => { clearTimeout(t); if (!ms) return fn(...a); t = setTimeout(() => fn(...a), ms); }; }
+function csvExport(xs) {
+  const cols = ['Date', 'Segment', 'Catégorie', 'Objet', 'Quantité', 'Unité', 'Prix unitaire', 'Montant', 'Devise', 'Taux', 'Montant FCFA', 'Frais FCFA', 'Statut', 'Reste dû FCFA', 'Payé par', 'Bénéficiaire', 'Moyen', 'Référence', 'Étiquettes', 'Notes', 'Justificatifs', 'Validée', 'Saisi par', 'Dernière modif.'];
+  const q = v => { const s = String(v ?? ''); return /[;"\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+  const n = v => String(Math.round(v * 100) / 100).replace('.', ',');
+  const rows = sortItems(xs).map(x => { const d = x.d; return [fdate(d.date), lotName(d.lot), catName(d.cat), d.label, d.qty, d.unit, d.pu, d.amount, d.cur || 'XAF', rateOf(d), n(x.amt), n(x.fee), STATUS[d.status || 'paye'], n(x.due), pName(d.payer), pName(d.payee), d.mode, d.ref, d.tags, d.notes, (d.files || []).length, d.locked ? 'oui' : '', x.r.by, fdt(x.r.upd)].map(q).join(';'); });
+  download('depenses_' + (S.P.name || '').replace(/[^\p{L}\p{N}]+/gu, '_') + '_' + today() + '.csv', '﻿' + [cols.join(';'), ...rows].join('\r\n'), 'text/csv;charset=utf-8');
+}
+
+/* =====================================================================
+   Formulaire dépense
+   ===================================================================== */
+function knownLabels() {
+  const m = new Map();
+  live('expenses').sort((a, b) => a.headTs - b.headTs).forEach(r => { const d = r.d; if (d.label) m.set(norm(d.label), d); });
+  return m;
+}
+function expenseForm(rid, dupFrom) {
+  const r = rid ? rec('expenses', rid) : null;
+  if (r && !canEdit(r)) return toast(whyNot(r), { err: 1 });
+  if (!canWrite()) return toast(whyNot(), { err: 1 });
+  const src = r ? r.d : dupFrom ? Object.assign({}, dupFrom, { date: today(), files: [], ref: '', locked: false }) : { date: today(), cur: 'XAF', status: 'paye', lot: F.lot || '', payer: (live('people').find(p => norm(p.d.name) === norm(USER.name)) || {}).id || '' };
+  const d = Object.assign({ qty: '', unit: '', pu: '', amount: '', cur: 'XAF', rate: '', fees: '', mode: '', ref: '', status: 'paye', reste: '', notes: '', tags: '', files: [] }, src);
+  let keep = [...(d.files || [])]; const pending = [];
+  const kl = knownLabels();
+  const body = `<form id="xf" class="grid g4" autocomplete="off">
+   <label class="f">Date *<input type="date" name="date" value="${esc(d.date)}" required></label>
+   <label class="f span2">Segment du projet *<select name="lot" required>${lotOpts(d.lot, '— choisir —')}</select></label>
+   <label class="f">Catégorie<select name="cat">${catOpts(d.cat, '—')}</select></label>
+   <label class="f spanall">Objet / désignation *<input name="label" list="dlLabels" value="${esc(d.label || '')}" placeholder="ex. Ciment CPJ 42,5 — sacs de 50 kg" required>
+    <datalist id="dlLabels">${[...kl.values()].map(x => `<option value="${esc(x.label)}">`).join('')}</datalist></label>
+   <label class="f">Quantité<input name="qty" inputmode="decimal" value="${esc(d.qty)}"></label>
+   <label class="f">Unité<input name="unit" list="dlUnits" value="${esc(d.unit)}"><datalist id="dlUnits">${(S.P.units || DEF_UNITS).map(u => `<option value="${esc(u)}">`).join('')}</datalist></label>
+   <label class="f">Prix unitaire<input name="pu" inputmode="decimal" value="${esc(d.pu)}"></label>
+   <label class="f">Montant *<input name="amount" inputmode="decimal" value="${esc(d.amount)}" required></label>
+   <label class="f">Devise<select name="cur">${opts(CURS, d.cur)}</select></label>
+   <label class="f" id="rateL">Taux → FCFA<input name="rate" inputmode="decimal" value="${esc(d.rate)}"></label>
+   <label class="f">Frais de transaction<input name="fees" inputmode="decimal" value="${esc(d.fees)}" placeholder="frais momo, transfert…"></label>
+   <div class="small muted" style="align-self:end">Équivalent :<br><b id="eqv" style="font-size:16px;color:var(--tx)"></b></div>
+   <label class="f span2">Payé par (qui a sorti l’argent)<input name="payer" list="dlPeople" value="${esc(pNameRaw(d.payer))}"></label>
+   <label class="f span2">Bénéficiaire (à qui)<input name="payee" list="dlPeople" value="${esc(pNameRaw(d.payee))}" placeholder="fournisseur, tâcheron…"></label>
+   <label class="f">Moyen de paiement<select name="mode">${opts(S.P.modes || DEF_MODES, d.mode, '—')}</select></label>
+   <label class="f">Référence transaction<input name="ref" value="${esc(d.ref)}" placeholder="n° reçu, ID momo…"></label>
+   <label class="f">Statut<select name="status">${opts(Object.entries(STATUS), d.status)}</select></label>
+   <label class="f" id="resteL">Reste dû<input name="reste" inputmode="decimal" value="${esc(d.reste)}"></label>
+   <label class="f span2">Étiquettes (séparées par des virgules)<input name="tags" value="${esc(d.tags)}" placeholder="facture, urgent, avenant…"></label>
+   <label class="f span2">Notes<input name="notes" value="${esc(d.notes)}"></label>
+   <div class="spanall"><div class="small muted" style="margin-bottom:4px">Justificatifs (photo du reçu, facture, capture momo/WorldRemit)</div><div class="thumbs" id="thumbs"></div>
+    <label class="btn sm" style="margin-top:6px">📷 Ajouter<input type="file" id="xfFiles" accept="image/*,application/pdf" multiple hidden></label></div>
+   ${peopleDL()}
+  </form>`;
+  const ov = openModal(r ? 'Modifier la dépense' : dupFrom ? 'Dupliquer la dépense' : 'Nouvelle dépense', body, {
+    sticky: 1, foot: `<button class="btn" data-close>Annuler</button>${!r ? '<button class="btn" id="xfSaveNew">Enregistrer + nouvelle</button>' : ''}<button class="btn pri" id="xfSave">Enregistrer</button>`
+  });
+  const fm = $('#xf', ov), el = n => fm.elements[n];
+  let autoAmt = !d.amount || Math.abs(num(d.qty) * num(d.pu) - num(d.amount)) < .01;
+  const upd = () => {
+    const cur = el('cur').value; $('#rateL', ov).style.display = cur === 'XAF' ? 'none' : '';
+    if (cur !== 'XAF' && !el('rate').value) el('rate').value = (S.P.rates || {})[cur] || '';
+    $('#resteL', ov).style.display = el('status').value === 'acompte' ? '' : 'none';
+    const rt = cur === 'XAF' ? 1 : num(el('rate').value) || 1;
+    $('#eqv', ov).textContent = money(num(el('amount').value) * rt) + (num(el('fees').value) ? ' + ' + mshort(num(el('fees').value) * rt) : '');
+  };
+  const recompute = () => { if (autoAmt && num(el('qty').value) && num(el('pu').value)) el('amount').value = Math.round(num(el('qty').value) * num(el('pu').value) * 100) / 100; upd(); };
+  el('qty').oninput = recompute; el('pu').oninput = recompute;
+  el('amount').oninput = () => { autoAmt = !el('amount').value; upd(); };
+  ['cur', 'rate', 'fees', 'status'].forEach(n => el(n).addEventListener('input', upd));
+  el('label').addEventListener('change', () => { const k = kl.get(norm(el('label').value)); if (!k || r) return; if (!el('unit').value) el('unit').value = k.unit || ''; if (!el('pu').value && k.pu) { el('pu').value = k.pu; } if (!el('cat').value && k.cat) el('cat').value = k.cat; if (!el('payee').value && k.payee) el('payee').value = pNameRaw(k.payee); recompute(); });
+  const drawThumbs = () => {
+    $('#thumbs', ov).innerHTML = keep.map((id, i) => `<div class="th" data-fid="${id}" data-view="${id}"><button type="button" class="rm" data-rmk="${i}">×</button></div>`).join('') + pending.map((f, i) => `<div class="th">${f.type.startsWith('image/') ? `<img src="${URL.createObjectURL(f)}">` : 'PDF'}<button type="button" class="rm" data-rmp="${i}">×</button></div>`).join('');
+    hydrateThumbs(ov);
+  };
+  $('#thumbs', ov).onclick = e => { const k = e.target.dataset.rmk, p = e.target.dataset.rmp; if (k != null) { keep.splice(+k, 1); drawThumbs(); } else if (p != null) { pending.splice(+p, 1); drawThumbs(); } else { const v = e.target.closest('[data-view]'); if (v) viewFile(v.dataset.view); } };
+  $('#xfFiles', ov).onchange = e => { pending.push(...e.target.files); e.target.value = ''; drawThumbs(); };
+  drawThumbs(); upd();
+  const save = async again => {
+    const f = Object.fromEntries(new FormData(fm));
+    if (!f.date || !f.lot || !f.label.trim() || !num(f.amount)) return toast('Renseignez au minimum date, segment, objet et montant.', { err: 1 });
+    if (S.P.closedUntil && f.date <= S.P.closedUntil && !isAdmin()) return toast('La période jusqu’au ' + fdate(S.P.closedUntil) + ' est clôturée.', { err: 1 });
+    if (f.status === 'acompte' && !num(f.reste)) return toast('Indiquez le reste dû pour un acompte.', { err: 1 });
+    $('#xfSave', ov).disabled = true;
+    const nd = { date: f.date, lot: f.lot, cat: f.cat, label: f.label.trim(), qty: f.qty.trim(), unit: f.unit.trim(), pu: f.pu.trim(), amount: f.amount.trim(), cur: f.cur, rate: f.cur === 'XAF' ? '' : f.rate.trim(), fees: f.fees.trim(), mode: f.mode, ref: f.ref.trim(), status: f.status, reste: f.status === 'acompte' ? f.reste.trim() : '', notes: f.notes.trim(), tags: f.tags.trim() };
+    nd.payer = await personId(f.payer, 'Chef de chantier');
+    nd.payee = await personId(f.payee, 'Fournisseur');
+    const ids = [...keep]; for (const p of pending) { const id = await storeFile(p); if (id) ids.push(id); }
+    nd.files = ids; nd.locked = r ? !!rec('expenses', r.id).d.locked : false;
+    const id = r ? r.id : 'e' + uid();
+    closeModal(ov);
+    await saveRec('expenses', id, nd, r ? 'Dépense modifiée' : 'Dépense enregistrée');
+    if (again) expenseForm(null, { ...nd, amount: '', qty: '', pu: '', label: '', notes: '', ref: '', tags: nd.tags });
+  };
+  $('#xfSave', ov).onclick = () => save(false);
+  const sn = $('#xfSaveNew', ov); if (sn) sn.onclick = () => save(true);
+}
+function expenseDetail(id) {
+  const r = rec('expenses', id); if (!r) return;
+  const x = X(r), d = r.d, ce = canEdit(r);
+  const body = `${r.del ? '<div class="alert a-er">Cette dépense est à la corbeille.</div>' : ''}${d.locked ? '<div class="alert a-in">🔒 Dépense validée — modifiable uniquement par un administrateur.</div>' : ''}
+  <dl class="kv"><dt>Date</dt><dd>${fdate(d.date)}</dd><dt>Segment</dt><dd>${esc(lotName(d.lot))}</dd><dt>Catégorie</dt><dd>${esc(catName(d.cat))}</dd><dt>Objet</dt><dd><b>${esc(d.label)}</b></dd>
+  ${num(d.qty) ? `<dt>Quantité</dt><dd>${nf2.format(num(d.qty))} ${esc(d.unit)}${num(d.pu) ? ' × ' + nf2.format(num(d.pu)) + ' ' + (d.cur || 'XAF') : ''}</dd>` : ''}
+  <dt>Montant</dt><dd><b>${money(x.amt)}</b>${d.cur && d.cur !== 'XAF' ? ` (${nf2.format(num(d.amount))} ${d.cur} × ${nf2.format(rateOf(d))})` : ''}</dd>
+  ${x.fee ? `<dt>Frais</dt><dd>${money(x.fee)}</dd>` : ''}<dt>Statut</dt><dd>${stBadge(d.status)}${x.due ? ' reste dû ' + money(x.due) : ''}</dd>
+  <dt>Payé par</dt><dd>${esc(pName(d.payer))}</dd><dt>Bénéficiaire</dt><dd>${esc(pName(d.payee))}</dd><dt>Moyen</dt><dd>${esc(d.mode || '—')}${d.ref ? ' · réf. ' + esc(d.ref) : ''}</dd>
+  ${d.tags ? `<dt>Étiquettes</dt><dd>${esc(d.tags)}</dd>` : ''}${d.notes ? `<dt>Notes</dt><dd>${esc(d.notes)}</dd>` : ''}
+  <dt>Traçabilité</dt><dd class="small">Créée par ${esc(r.by)} le ${fdt(r.created)} · ${S.hist[id].length} version(s) · dernière par ${esc(r.updBy)} le ${fdt(r.upd)}</dd></dl>
+  ${(d.files || []).length ? `<h3 style="font-size:14px;margin:12px 0 6px">Justificatifs</h3><div class="thumbs">${d.files.map(f => `<div class="th" data-fid="${f}" data-view="${f}"></div>`).join('')}</div>` : '<p class="small muted">Aucun justificatif.</p>'}`;
+  const ov = openModal('Dépense', body, {
+    foot: `<button class="btn" data-hist="expenses:${id}">🕘 Historique</button>${r.del ? `<button class="btn" id="dRestore">Restaurer</button>` : `
+    ${isAdmin() ? `<button class="btn" id="dLock">${d.locked ? '🔓 Déverrouiller' : '🔒 Valider'}</button>` : ''}
+    <button class="btn" id="dDup" ${canWrite() ? '' : 'disabled'}>Dupliquer</button>
+    <button class="btn dng" id="dDel" ${ce ? '' : 'disabled title="' + esc(whyNot(r)) + '"'}>Corbeille</button>
+    <button class="btn pri" id="dEdit" ${ce ? '' : 'disabled title="' + esc(whyNot(r)) + '"'}>Modifier</button>`}`
+  });
+  ov.querySelector('.mb').addEventListener('click', e => { const v = e.target.closest('[data-view]'); if (v) viewFile(v.dataset.view); });
+  const b = n => $(n, ov);
+  if (b('#dEdit')) b('#dEdit').onclick = () => { closeModal(ov); expenseForm(id); };
+  if (b('#dDup')) b('#dDup').onclick = () => { closeModal(ov); expenseForm(null, r.d); };
+  if (b('#dDel')) b('#dDel').onclick = async () => { if (await delRec('expenses', id, d.label)) closeModal(ov); };
+  if (b('#dRestore')) b('#dRestore').onclick = async () => { closeModal(ov); await restoreRec('expenses', id); };
+  if (b('#dLock')) b('#dLock').onclick = async () => { closeModal(ov); await saveRec('expenses', id, Object.assign({}, d, { locked: !d.locked }), d.locked ? 'Dépense déverrouillée' : 'Dépense validée'); };
+}
+
+/* =====================================================================
+   Historique d'un enregistrement (versions + restauration)
+   ===================================================================== */
+function fmtVal(k, v, coll) {
+  if (v == null || v === '') return '∅';
+  if (k === 'lot') return lotName(v); if (k === 'cat') return catName(v);
+  if (['payer', 'payee', 'from', 'to'].includes(k)) return pName(v);
+  if (k === 'files') return (v || []).length + ' fichier(s)';
+  if (k === 'locked') return v ? 'oui' : 'non';
+  if (k === 'status') return STATUS[v] || v;
+  if (k === 'date' || k === 'closedUntil' || k === 'start' || k === 'end') return fdate(v);
+  if (typeof v === 'object') return Array.isArray(v) ? v.join(', ') : Object.entries(v).map(([a, b]) => a + ' ' + b).join(', ');
+  return String(v);
+}
+function diffHTML(a, b, coll) {
+  a = a || {}; const keys = [...new Set([...Object.keys(a), ...Object.keys(b || {})])];
+  const ch = keys.filter(k => JSON.stringify(a[k] ?? '') !== JSON.stringify((b || {})[k] ?? ''));
+  if (!ch.length) return '<div class="diff muted">aucun changement de contenu</div>';
+  return '<div class="diff">' + ch.map(k => `<div><b>${esc(FIELD_L[k] || k)}</b> : ${a[k] != null && a[k] !== '' ? `<span class="o">${esc(fmtVal(k, a[k], coll))}</span> → ` : ''}<span class="n">${esc(fmtVal(k, (b || {})[k], coll))}</span></div>`).join('') + '</div>';
+}
+function recTitle(coll, r) {
+  if (!r) return '?'; const d = r.d;
+  if (coll === 'expenses') return `${fdate(d.date)} · ${d.label || ''} · ${money(X(r).amt)}`;
+  if (coll === 'funds') return `${fdate(d.date)} · ${pName(d.from)} → ${pName(d.to)} · ${money(FX(r).sent)}`;
+  if (coll === 'project') return 'Paramètres du chantier';
+  return d.name || '?';
+}
+function historyModal(coll, rid) {
+  const h = S.hist[rid] || []; const r = rec(coll, rid); let prev = null;
+  const items = h.map((e, i) => {
+    const html = `<div class="ev ${e.op}"><div class="row"><b>${i === 0 ? 'Création' : OP_L[e.op]}</b><span class="small muted">par ${esc(e.au)} · ${fdt(e.ts)} · appareil ${esc(e.dev.slice(-5))}</span>${e.merged ? '<span class="bdg b-in">résolution de conflit</span>' : ''}${e.eid === r.head ? '<span class="bdg b-ok">version actuelle</span>' : ''}</div>
+      ${e.op === 'put' ? (i === 0 ? '' : diffHTML(prev, e.data, coll)) : ''}
+      ${e.op === 'put' && e.eid !== r.head && canEdit(r) ? `<button class="btn sm" data-restv="${e.eid}" style="margin-top:4px">↺ Revenir à cette version</button>` : ''}</div>`;
+    if (e.op === 'put') prev = e.data; return html;
+  }).reverse().join('');
+  const ov = openModal('Historique — ' + esc(COLL_L[coll]), `<p class="small">${esc(recTitle(coll, r))}</p><p class="small muted">Chaque modification est conservée. Revenir à une version crée une nouvelle version (l’historique n’est jamais réécrit).</p>${items}`, { foot: '<button class="btn" data-close>Fermer</button>' });
+  ov.addEventListener('click', async e => {
+    const b = e.target.closest('[data-restv]'); if (!b) return;
+    const ev = h.find(x => x.eid === b.dataset.restv);
+    if (!await ask('Revenir à la version du ' + fdt(ev.ts) + ' (' + esc(ev.au) + ') ?')) return;
+    closeModal(ov); await saveRec(coll, rid, ev.data, 'Version restaurée');
+  });
+}
+
+/* =====================================================================
+   Fonds & caisses
+   ===================================================================== */
+function fundForm(rid) {
+  const r = rid ? rec('funds', rid) : null;
+  if (r && !canEdit(r)) return toast(whyNot(r), { err: 1 }); if (!canWrite()) return toast(whyNot(), { err: 1 });
+  const d = Object.assign({ date: today(), from: '', to: '', amount: '', cur: 'EUR', rate: '', fees: '', received: '', mode: 'WorldRemit', ref: '', notes: '' }, r ? r.d : { from: (live('people').find(p => norm(p.d.name) === norm(USER.name)) || {}).id || '' });
+  const ov = openModal(r ? 'Modifier le mouvement de fonds' : 'Envoi / approvisionnement de fonds', `<p class="small muted" style="margin-top:0">Pour suivre l’argent confié au chef de chantier (ou à toute personne) avant qu’il ne soit dépensé. Les dépenses payées par cette personne viennent ensuite en déduction de sa caisse.</p>
+  <form id="ff" class="grid g4" autocomplete="off">
+   <label class="f">Date *<input type="date" name="date" value="${esc(d.date)}"></label>
+   <label class="f">Moyen<select name="mode">${opts(S.P.modes || DEF_MODES, d.mode, '—')}</select></label>
+   <label class="f span2">Référence (n° de transfert…)<input name="ref" value="${esc(d.ref)}"></label>
+   <label class="f span2">De (qui envoie) *<input name="from" list="dlPeople" value="${esc(pNameRaw(d.from))}"></label>
+   <label class="f span2">À (qui reçoit) *<input name="to" list="dlPeople" value="${esc(pNameRaw(d.to))}"></label>
+   <label class="f">Montant envoyé *<input name="amount" inputmode="decimal" value="${esc(d.amount)}"></label>
+   <label class="f">Devise<select name="cur">${opts(CURS, d.cur)}</select></label>
+   <label class="f" id="frL">Taux → FCFA<input name="rate" inputmode="decimal" value="${esc(d.rate)}"></label>
+   <label class="f">Frais d’envoi<input name="fees" inputmode="decimal" value="${esc(d.fees)}"></label>
+   <label class="f span2">Montant effectivement reçu (FCFA)<input name="received" inputmode="decimal" value="${esc(d.received)}" placeholder="laisser vide = montant × taux"></label>
+   <label class="f span2">Notes<input name="notes" value="${esc(d.notes)}"></label>
+   <div class="spanall small">Équivalent : <b id="feq"></b></div>${peopleDL()}</form>`,
+    { sticky: 1, foot: `<button class="btn" data-close>Annuler</button><button class="btn pri" id="ffSave">Enregistrer</button>` });
+  const fm = $('#ff', ov), el = n => fm.elements[n];
+  const upd = () => { const c = el('cur').value; $('#frL', ov).style.display = c === 'XAF' ? 'none' : ''; if (c !== 'XAF' && !el('rate').value) el('rate').value = (S.P.rates || {})[c] || ''; const rt = c === 'XAF' ? 1 : num(el('rate').value) || 1; $('#feq', ov).textContent = money(num(el('amount').value) * rt) + (num(el('fees').value) ? ' + frais ' + money(num(el('fees').value) * rt) : ''); };
+  ['cur', 'rate', 'amount', 'fees'].forEach(n => el(n).addEventListener('input', upd)); upd();
+  $('#ffSave', ov).onclick = async () => {
+    const f = Object.fromEntries(new FormData(fm));
+    if (!f.date || !num(f.amount) || !f.from.trim() || !f.to.trim()) return toast('Date, montant, expéditeur et destinataire sont requis.', { err: 1 });
+    const nd = { date: f.date, mode: f.mode, ref: f.ref.trim(), amount: f.amount.trim(), cur: f.cur, rate: f.cur === 'XAF' ? '' : f.rate.trim(), fees: f.fees.trim(), received: f.received.trim(), notes: f.notes.trim(), locked: r ? !!r.d.locked : false };
+    nd.from = await personId(f.from, "Maître d'ouvrage"); nd.to = await personId(f.to, 'Chef de chantier');
+    closeModal(ov); await saveRec('funds', r ? r.id : 'm' + uid(), nd, 'Mouvement de fonds enregistré');
+  };
+}
+function renderFunds() {
+  const fs = live('funds').map(FX).sort((a, b) => (b.d.date || '').localeCompare(a.d.date || ''));
+  const cb = cashBook();
+  return `<div class="sec-title"><h2>Fonds & caisses</h2><button class="btn pri noprint" data-act="newFund">＋ Envoi de fonds</button></div>
+  <div class="card" style="margin-bottom:14px"><h3>Soldes par personne</h3>${cb.length ? `<div class="tw"><table><thead><tr><th>Personne</th><th class="num">Fonds reçus</th><th class="num">Fonds envoyés (+ frais)</th><th class="num">Dépenses payées</th><th class="num">Solde</th></tr></thead><tbody>${cb.map(b => `<tr><td>${esc(pName(b.id))}</td><td class="num">${mshort(b.recv)}</td><td class="num">${mshort(b.sent)}</td><td class="num">${mshort(b.spent)}</td><td class="num"><b>${b.bal >= 0 ? mshort(b.bal) : '−' + mshort(-b.bal)}</b><div class="small muted">${b.bal > .5 ? 'à justifier' : b.bal < -.5 ? 'apport net' : 'soldé'}</div></td></tr>`).join('')}</tbody></table></div>
+  <p class="small muted">Un solde positif est l’argent que la personne détient encore (ou qui n’a pas été justifié par une dépense saisie). Un solde négatif signifie qu’elle a financé le chantier.</p>` : '<div class="muted">Aucune donnée</div>'}</div>
+  <div class="card"><h3>Mouvements (${fs.length}) — total reçu ${money(sum(fs, 'recv'))}, frais ${money(sum(fs, 'fee'))}</h3>${fs.length ? `<div class="tw"><table><thead><tr><th>Date</th><th>De → À</th><th>Moyen</th><th class="num">Envoyé</th><th class="num">Frais</th><th class="num">Reçu FCFA</th><th></th></tr></thead><tbody>${fs.map(f => `<tr class="click" data-fund="${f.id}"><td>${fdate(f.d.date)}</td><td>${esc(pName(f.d.from))} → ${esc(pName(f.d.to))}${f.d.notes ? `<div class="small muted">${esc(f.d.notes)}</div>` : ''}</td><td class="small">${esc(f.d.mode || '')}${f.d.ref ? `<div class="muted">${esc(f.d.ref)}</div>` : ''}</td><td class="num">${nf2.format(num(f.d.amount))} ${f.d.cur}</td><td class="num">${mshort(f.fee)}</td><td class="num">${mshort(f.recv)}</td><td>${f.d.locked ? '🔒' : ''}</td></tr>`).join('')}</tbody></table></div>` : '<div class="empty">Aucun mouvement. Enregistrez ici chaque envoi (WorldRemit, momo…) vers le chef de chantier.</div>'}</div>`;
+}
+function fundDetail(id) {
+  const r = rec('funds', id), f = FX(r), d = r.d, ce = canEdit(r);
+  const ov = openModal('Mouvement de fonds', `${d.locked ? '<div class="alert a-in">🔒 Validé</div>' : ''}<dl class="kv"><dt>Date</dt><dd>${fdate(d.date)}</dd><dt>De → À</dt><dd>${esc(pName(d.from))} → ${esc(pName(d.to))}</dd><dt>Envoyé</dt><dd>${nf2.format(num(d.amount))} ${d.cur}${d.cur !== 'XAF' ? ' × ' + nf2.format(rateOf(d)) + ' = ' + money(f.sent) : ''}</dd><dt>Frais</dt><dd>${money(f.fee)}</dd><dt>Reçu</dt><dd><b>${money(f.recv)}</b></dd><dt>Moyen</dt><dd>${esc(d.mode || '—')} ${d.ref ? '· réf. ' + esc(d.ref) : ''}</dd>${d.notes ? `<dt>Notes</dt><dd>${esc(d.notes)}</dd>` : ''}<dt>Traçabilité</dt><dd class="small">Saisi par ${esc(r.by)} le ${fdt(r.created)} · ${S.hist[id].length} version(s)</dd></dl>`,
+    { foot: `<button class="btn" data-hist="funds:${id}">🕘 Historique</button>${isAdmin() ? `<button class="btn" id="fLock">${d.locked ? '🔓 Déverrouiller' : '🔒 Valider'}</button>` : ''}<button class="btn dng" id="fDel" ${ce ? '' : 'disabled'}>Corbeille</button><button class="btn pri" id="fEdit" ${ce ? '' : 'disabled'}>Modifier</button>` });
+  $('#fEdit', ov).onclick = () => { closeModal(ov); fundForm(id); };
+  $('#fDel', ov).onclick = async () => { if (await delRec('funds', id, 'mouvement du ' + fdate(d.date))) closeModal(ov); };
+  if ($('#fLock', ov)) $('#fLock', ov).onclick = async () => { closeModal(ov); await saveRec('funds', id, Object.assign({}, d, { locked: !d.locked }), 'Mis à jour'); };
+}
+
+/* =====================================================================
+   Matériaux (quantités & prix)
+   ===================================================================== */
+function renderMat() {
+  const m = new Map();
+  live('expenses').map(X).forEach(x => {
+    const d = x.d; if (!num(d.qty)) return; const k = norm(d.label) + '|' + norm(d.unit);
+    if (!m.has(k)) m.set(k, { k, label: d.label, unit: d.unit, qty: 0, amt: 0, n: 0, pus: [], last: '', lots: new Set() });
+    const o = m.get(k); o.qty += num(d.qty); o.amt += x.amt; o.n++; o.lots.add(lotName(d.lot)); if (d.date > o.last) o.last = d.date;
+    o.pus.push({ pu: x.amt / num(d.qty), who: pName(d.payee), date: d.date });
+  });
+  const arr = [...m.values()].sort((a, b) => b.amt - a.amt);
+  return `<div class="sec-title"><h2>Matériaux & quantités</h2></div><p class="muted small">Regroupe les dépenses renseignées avec une quantité, par article et unité. Prix unitaires convertis en FCFA. Cliquez une ligne pour voir les achats correspondants. Astuce : gardez une désignation identique pour un même article (l’autocomplétion vous y aide).</p>
+  ${arr.length ? `<div class="tw"><table><thead><tr><th>Article</th><th class="num">Qté totale</th><th class="num">Montant</th><th class="num">PU moyen</th><th class="num">PU min</th><th class="num">PU max</th><th class="num">Achats</th><th>Segments</th><th>Dernier</th></tr></thead><tbody>${arr.map(o => { const mn = o.pus.reduce((a, b) => b.pu < a.pu ? b : a), mx = o.pus.reduce((a, b) => b.pu > a.pu ? b : a); return `<tr class="click" data-label="${esc(o.k)}"><td><b>${esc(o.label)}</b></td><td class="num">${nf2.format(o.qty)} ${esc(o.unit)}</td><td class="num">${mshort(o.amt)}</td><td class="num">${mshort(o.amt / o.qty)}</td><td class="num" title="${esc(mn.who)} ${fdate(mn.date)}">${mshort(mn.pu)}<div class="small muted">${esc(mn.who)}</div></td><td class="num" title="${esc(mx.who)} ${fdate(mx.date)}">${mshort(mx.pu)}<div class="small muted">${esc(mx.who)}</div></td><td class="num">${o.n}</td><td class="small">${esc([...o.lots].join(', '))}</td><td class="nowrap small">${fdate(o.last)}</td></tr>`; }).join('')}</tbody></table></div>` : '<div class="empty card">Aucune dépense avec quantité.</div>'}`;
+}
+
+/* =====================================================================
+   Verrouillage par code PIN (par appareil)
+   - PIN jamais stocké en clair : empreinte PBKDF2-SHA256 (150 000 itérations) + sel
+   - Code de secours (affiché une seule fois) pour réinitialiser un PIN oublié sans perte de données
+   - Verrouillage auto : à l'ouverture, après inactivité ou retour d'arrière-plan
+   ===================================================================== */
+const lockCfg = () => LS.get('cd_lock', null); // {salt,hash,len,rsalt,rhash,timeout}
+const lockAvailable = () => !!(window.crypto && crypto.subtle && window.TextEncoder);
+const hex = buf => [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+const randStr = (n, abc) => { const a = crypto.getRandomValues(new Uint8Array(n)); return [...a].map(x => abc[x % abc.length]).join(''); };
+async function pinHash(pin, salt) {
+  const enc = new TextEncoder();
+  const key = await crypto.subtle.importKey('raw', enc.encode(pin), 'PBKDF2', false, ['deriveBits']);
+  return hex(await crypto.subtle.deriveBits({ name: 'PBKDF2', salt: enc.encode(salt), iterations: 150000, hash: 'SHA-256' }, key, 256));
+}
+async function checkPin(pin) { const c = lockCfg(); return !!c && (await pinHash(pin, c.salt)) === c.hash; }
+const normRecovery = s => String(s || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+function weakPin(p) { return /^(\d)\1+$/.test(p) || '0123456789012'.includes(p) || '9876543210987'.includes(p); }
+
+let LOCKED = false, lastAct = Date.now(), hiddenAt = 0;
+function showLock() {
+  if (LOCKED) return Promise.resolve();
+  const c = lockCfg(); if (!c) return Promise.resolve();
+  LOCKED = true;
+  return new Promise(res => {
+    const el = document.createElement('div'); el.id = 'lockScr';
+    el.innerHTML = `<div class="lk"><div class="brand" style="justify-content:center"><span class="logo">⚒</span><span>Carnet de Chantier</span></div>
+      <p class="lkmsg" id="lkMsg">Saisissez votre code PIN</p>
+      <div class="dots" id="lkDots"></div>
+      <div class="pad">${[1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => `<button data-k="${n}">${n}</button>`).join('')}<button data-k="del" aria-label="Effacer">⌫</button><button data-k="0">0</button><button data-k="ok" aria-label="Valider">✓</button></div>
+      <button class="lkforgot" id="lkForgot">Code oublié ?</button></div>`;
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+    document.body.appendChild(el); document.body.classList.add('locked');
+    let pin = ''; let busy = false;
+    const dots = () => { $('#lkDots', el).innerHTML = Array.from({ length: Math.max(c.len || 4, pin.length) }, (_, i) => `<span class="${i < pin.length ? 'on' : ''}"></span>`).join(''); };
+    const msg = (t, err) => { const m = $('#lkMsg', el); m.textContent = t; m.classList.toggle('err', !!err); };
+    const waitLeft = () => { const f = LS.get('cd_lock_fail', { n: 0, until: 0 }); return Math.max(0, f.until - Date.now()); };
+    const unlock = () => { LOCKED = false; lastAct = Date.now(); el.remove(); document.body.classList.remove('locked'); document.removeEventListener('keydown', onKey, true); LS.set('cd_lock_fail', { n: 0, until: 0 }); res(); };
+    const submit = async () => {
+      if (busy || !pin) return;
+      const w = waitLeft(); if (w) { msg(`Trop d’essais. Réessayez dans ${Math.ceil(w / 1000)} s.`, 1); pin = ''; dots(); return; }
+      busy = true; msg('Vérification…');
+      const ok = await checkPin(pin); busy = false;
+      if (ok) return unlock();
+      const f = LS.get('cd_lock_fail', { n: 0, until: 0 }); f.n++;
+      if (f.n >= 5) f.until = Date.now() + Math.min(900, 30 * 2 ** (f.n - 5)) * 1000;
+      LS.set('cd_lock_fail', f); pin = ''; dots();
+      el.querySelector('.lk').classList.remove('shake'); void el.offsetWidth; el.querySelector('.lk').classList.add('shake');
+      msg(f.n >= 5 ? `Code incorrect. Patientez ${Math.ceil(waitLeft() / 1000)} s.` : `Code incorrect (${f.n}/5)`, 1);
+    };
+    const key = k => {
+      if (busy) return;
+      if (k === 'del') pin = pin.slice(0, -1);
+      else if (k === 'ok') return submit();
+      else if (/^\d$/.test(k) && pin.length < 8) { pin += k; if (pin.length === (c.len || 0)) { dots(); return submit(); } }
+      dots();
+    };
+    const onKey = e => { if (!LOCKED || (e.target.closest && e.target.closest('.overlock'))) return; if (/^\d$/.test(e.key)) key(e.key); else if (e.key === 'Backspace') key('del'); else if (e.key === 'Enter') key('ok'); else return; e.preventDefault(); e.stopPropagation(); };
+    document.addEventListener('keydown', onKey, true);
+    el.addEventListener('click', e => { const b = e.target.closest('[data-k]'); if (b) key(b.dataset.k); });
+    $('#lkForgot', el).onclick = async () => {
+      const code = await ask('Saisissez le <b>code de secours</b> noté lors de la création du PIN.<br><span class="small muted">Vos données ne sont pas touchées.</span>', { title: 'Code oublié', input: 'Code de secours', ok: 'Valider', cls: 'overlock' });
+      if (!code) return;
+      const cc = lockCfg();
+      if (!cc.rhash || (await pinHash(normRecovery(code), cc.rsalt)) !== cc.rhash) return msg('Code de secours incorrect.', 1);
+      unlock(); toast('Code de secours accepté : définissez un nouveau PIN.'); setTimeout(() => pinDialog(false, true), 200);
+    };
+    dots();
+    const w = waitLeft(); if (w) msg(`Trop d’essais. Réessayez dans ${Math.ceil(w / 1000)} s.`, 1);
+  });
+}
+/* Définir / modifier le PIN */
+function pinDialog(requireCurrent, fromRecovery) {
+  if (!lockAvailable()) return toast('Verrouillage indisponible dans ce navigateur (contexte non sécurisé).', { err: 1, ms: 6000 });
+  const has = !!lockCfg();
+  const ov = openModal(has && !fromRecovery ? 'Modifier le code PIN' : 'Définir un code PIN', `<div class="grid">
+    ${requireCurrent && has ? '<label class="f">PIN actuel<input id="pCur" type="password" inputmode="numeric" autocomplete="off" maxlength="8"></label>' : ''}
+    <label class="f">Nouveau PIN (4 à 8 chiffres)<input id="pNew" type="password" inputmode="numeric" autocomplete="off" maxlength="8"></label>
+    <label class="f">Confirmer le nouveau PIN<input id="pNew2" type="password" inputmode="numeric" autocomplete="off" maxlength="8"></label>
+    <p class="small muted" style="margin:0">Le PIN protège l’accès à l’application sur <b>cet appareil</b> (tous les chantiers). Chaque personne définit le sien sur son propre téléphone.</p></div>`,
+    { small: 1, sticky: 1, focusMobile: 1, foot: '<button class="btn" data-close>Annuler</button><button class="btn pri" id="pOk">Enregistrer</button>' });
+  $('#pOk', ov).onclick = async () => {
+    const cur = $('#pCur', ov), n1 = $('#pNew', ov).value.trim(), n2 = $('#pNew2', ov).value.trim();
+    if (cur && !(await checkPin(cur.value.trim()))) return toast('PIN actuel incorrect.', { err: 1 });
+    if (!/^\d{4,8}$/.test(n1)) return toast('Le PIN doit comporter 4 à 8 chiffres.', { err: 1 });
+    if (weakPin(n1)) return toast('PIN trop facile à deviner (suite ou chiffres identiques).', { err: 1 });
+    if (n1 !== n2) return toast('Les deux saisies ne correspondent pas.', { err: 1 });
+    const old = lockCfg() || {};
+    const salt = randStr(16, 'abcdefghijklmnopqrstuvwxyz0123456789');
+    const rec = randStr(12, 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'); const rsalt = randStr(16, 'abcdefghijklmnopqrstuvwxyz0123456789');
+    LS.set('cd_lock', { salt, hash: await pinHash(n1, salt), len: n1.length, rsalt, rhash: await pinHash(rec, rsalt), timeout: old.timeout ?? 5 });
+    LS.set('cd_lock_fail', { n: 0, until: 0 });
+    closeModal(ov); lastAct = Date.now(); render();
+    const r = rec.match(/.{4}/g).join('-');
+    const ov2 = openModal('Code de secours', `<p>PIN enregistré. Notez ce <b>code de secours</b> et gardez-le hors du téléphone (carnet, autre appareil). Il permet de réinitialiser le PIN en cas d’oubli, sans perdre de données.</p>
+      <p style="font:700 24px/1.3 ui-monospace,Consolas,monospace;text-align:center;letter-spacing:.06em;background:var(--sf2);border:1px dashed var(--bd);border-radius:10px;padding:12px">${r}</p>
+      <p class="small muted">Il ne sera plus affiché. Un nouveau code est généré à chaque changement de PIN.</p>`,
+      { small: 1, sticky: 1, noFocus: 1, foot: `<button class="btn" id="rcCopy">Copier</button><button class="btn pri" data-close>J’ai noté le code</button>` });
+    $('#rcCopy', ov2).onclick = () => { navigator.clipboard?.writeText(r).then(() => toast('Copié'), () => toast('Copie impossible : recopiez-le à la main', { err: 1 })); };
+  };
+}
+async function removePin() {
+  const p = await ask('Saisissez votre PIN actuel pour désactiver le verrouillage.', { title: 'Supprimer le code PIN', input: 'PIN actuel', ok: 'Désactiver', danger: 1 });
+  if (!p) return;
+  if (!(await checkPin(p))) return toast('PIN incorrect.', { err: 1 });
+  LS.set('cd_lock', null); render(); toast('Verrouillage désactivé');
+}
+function setLockTimeout(v) { const c = lockCfg(); if (!c) return; c.timeout = +v; LS.set('cd_lock', c); toast('Délai de verrouillage enregistré'); }
+function lockBlock() {
+  if (!lockAvailable()) return '<p class="small muted">Verrouillage indisponible dans ce navigateur. Il fonctionne dans l’application installée depuis son adresse web.</p>';
+  const c = lockCfg();
+  if (!c) return `<p class="small">Aucun code PIN. Toute personne ayant ce téléphone en main peut ouvrir l’application et voir les dépenses.</p><button class="btn pri" data-act="pinSet">🔒 Définir un code PIN</button>`;
+  return `<p class="small">✔ Verrouillage actif (PIN à ${c.len} chiffres).</p>
+   <label class="f" style="margin-bottom:8px">Verrouiller automatiquement<select id="lockTo">${opts([[0, 'Dès que l’application passe en arrière-plan'], [1, 'Après 1 min sans utilisation'], [5, 'Après 5 min'], [15, 'Après 15 min'], [60, 'Après 1 heure']], c.timeout ?? 5)}</select></label>
+   <div class="row"><button class="btn" data-act="lockNow">🔒 Verrouiller maintenant</button><button class="btn" data-act="pinChange">Modifier le PIN</button><button class="btn dng" data-act="pinRemove">Supprimer le PIN</button></div>
+   <p class="small muted">Protège contre un accès occasionnel (téléphone perdu, prêté). Les données ne sont pas chiffrées sur l’appareil : une personne techniquement outillée ayant le téléphone déverrouillé pourrait y accéder.</p>`;
+}
+/* Surveillance de l'activité */
+['pointerdown', 'keydown', 'touchstart'].forEach(ev => document.addEventListener(ev, () => { if (!LOCKED) lastAct = Date.now(); }, { passive: true, capture: true }));
+document.addEventListener('visibilitychange', () => {
+  const c = lockCfg(); if (!c) return;
+  if (document.hidden) { hiddenAt = Date.now(); return; }
+  const t = (c.timeout ?? 5) * 60000;
+  if (!LOCKED && hiddenAt && (t === 0 || Date.now() - hiddenAt >= t || Date.now() - lastAct >= t)) showLock();
+});
+setInterval(() => { const c = lockCfg(); if (!c || LOCKED) return; const t = (c.timeout ?? 5) * 60000; if (t > 0 && Date.now() - lastAct >= t) showLock(); }, 10000);
+
+/* =====================================================================
+   Bilan / rapport imprimable
+   ===================================================================== */
+const RP = { from: '', to: '', g1: 'lot', g2: 'none', detail: true, funds: true };
+function renderReport() {
+  const xs = live('expenses').map(X).filter(x => (!RP.from || x.d.date >= RP.from) && (!RP.to || x.d.date <= RP.to));
+  const fs = live('funds').map(FX).filter(f => (!RP.from || f.d.date >= RP.from) && (!RP.to || f.d.date <= RP.to));
+  const paid = sum(xs, 'paid'), fee = sum(xs, 'fee'), ffee = sum(fs, 'fee'), due = sum(xs, 'due'), cost = paid + fee;
+  const table = (title, key, nameFn, withBudget) => {
+    const m = {}; xs.forEach(x => { const k = x.d[key] || ''; (m[k] || (m[k] = { v: 0, n: 0, due: 0 })); m[k].v += x.cost; m[k].n++; m[k].due += x.due; });
+    let rows = Object.entries(m);
+    if (withBudget) { lotsSorted().forEach(l => { if (!m[l.id] && num(l.d.budget)) rows.push([l.id, { v: 0, n: 0, due: 0 }]); }); rows.sort((a, b) => num((rec('lots', a[0]) || { d: {} }).d.order) - num((rec('lots', b[0]) || { d: {} }).d.order)); }
+    else rows.sort((a, b) => b[1].v - a[1].v);
+    return `<h2>${title}</h2><div class="tw"><table><thead><tr><th>${title.replace('Par ', '')}</th><th class="num">Nb</th><th class="num">Coût FCFA</th><th class="num">%</th>${withBudget ? '<th class="num">Budget</th><th class="num">Écart</th>' : ''}<th class="num">Reste à payer</th></tr></thead><tbody>${rows.map(([k, o]) => { const b = withBudget ? num((rec('lots', k) || { d: {} }).d.budget) : 0; return `<tr><td>${esc(nameFn(k) || '—')}</td><td class="num">${o.n}</td><td class="num">${mshort(o.v)}</td><td class="num">${cost ? nf2.format(o.v / cost * 100) : 0}</td>${withBudget ? `<td class="num">${b ? mshort(b) : '—'}</td><td class="num" style="color:${b && o.v > b ? 'var(--er)' : 'inherit'}">${b ? mshort(b - o.v) : ''}</td>` : ''}<td class="num">${o.due ? mshort(o.due) : ''}</td></tr>`; }).join('')}</tbody><tfoot><tr><td>Total</td><td class="num">${xs.length}</td><td class="num">${mshort(cost)}</td><td class="num">100</td>${withBudget ? `<td class="num">${mshort(budgetTotal())}</td><td class="num">${mshort(budgetTotal() - cost)}</td>` : ''}<td class="num">${mshort(due)}</td></tr></tfoot></table></div>`;
+  };
+  const cb = cashBook();
+  const levels = [RP.g1, RP.g2].filter(g => g && g !== 'none');
+  const saveF = F; F = Object.assign({}, F, { sort: 'asc' });
+  const detail = RP.detail ? `<h2>Détail des dépenses</h2>${xs.length ? groupRender(xs, levels) : '<p>Aucune</p>'}` : '';
+  F = saveF;
+  return `<div class="card noprint" style="margin-bottom:14px"><div class="row">
+   <label class="f">Du<input type="date" id="rpFrom" value="${RP.from}"></label><label class="f">Au<input type="date" id="rpTo" value="${RP.to}"></label>
+   <label class="f">Période<select id="rpPer">${opts([['', '— choisir —'], ['all', 'Tout le chantier'], ['month', 'Ce mois'], ['prev', 'Mois dernier'], ['year', 'Cette année']], '')}</select></label>
+   <label class="f">Détail groupé par<select id="rpG1">${opts(Object.entries(GROUPS), RP.g1)}</select></label><label class="f">puis<select id="rpG2">${opts(Object.entries(GROUPS), RP.g2)}</select></label>
+   <label class="row small"><input type="checkbox" id="rpDet" ${RP.detail ? 'checked' : ''}> détail</label><label class="row small"><input type="checkbox" id="rpFunds" ${RP.funds ? 'checked' : ''}> fonds & caisses</label>
+   <button class="btn pri" data-act="print">🖨 Imprimer / PDF</button><button class="btn" data-act="csvRep">⬇ CSV</button></div></div>
+  <div class="rep card">
+   <h1>Bilan des dépenses — ${esc(S.P.name)}</h1>
+   <div class="muted small">${S.P.place ? esc(S.P.place) + ' · ' : ''}Période : ${RP.from ? fdate(RP.from) : 'début'} → ${RP.to ? fdate(RP.to) : 'aujourd’hui'} · Édité le ${fdt(Date.now())} par ${esc(USER.name)}</div>
+   <div class="kpis" style="margin-top:12px"><div class="kpi"><div class="l">Payé</div><div class="v">${mshort(paid)}</div></div><div class="kpi"><div class="l">Frais sur dépenses</div><div class="v">${mshort(fee)}</div></div><div class="kpi"><div class="l">Coût total</div><div class="v">${mshort(cost)}</div><div class="s">FCFA${budgetTotal() ? ' · ' + Math.round(cost / budgetTotal() * 100) + ' % du budget' : ''}</div></div><div class="kpi"><div class="l">Reste à payer</div><div class="v">${mshort(due)}</div></div>${RP.funds ? `<div class="kpi"><div class="l">Frais de transfert de fonds</div><div class="v">${mshort(ffee)}</div></div>` : ''}</div>
+   ${table('Par segment du projet', 'lot', lotName, true)}
+   ${table('Par catégorie', 'cat', catName)}
+   ${table('Par moyen de paiement', 'mode', k => k)}
+   ${table('Par payeur', 'payer', pName)}
+   ${table('Par bénéficiaire', 'payee', pName)}
+   ${RP.funds ? `<h2>Mouvements de fonds</h2>${fs.length ? `<div class="tw"><table><thead><tr><th>Date</th><th>De → À</th><th>Moyen / réf.</th><th class="num">Envoyé</th><th class="num">Frais FCFA</th><th class="num">Reçu FCFA</th></tr></thead><tbody>${fs.sort((a, b) => a.d.date.localeCompare(b.d.date)).map(f => `<tr><td>${fdate(f.d.date)}</td><td>${esc(pName(f.d.from))} → ${esc(pName(f.d.to))}</td><td>${esc(f.d.mode || '')} ${esc(f.d.ref || '')}</td><td class="num">${nf2.format(num(f.d.amount))} ${f.d.cur}</td><td class="num">${mshort(f.fee)}</td><td class="num">${mshort(f.recv)}</td></tr>`).join('')}</tbody><tfoot><tr><td colspan="4">Total</td><td class="num">${mshort(ffee)}</td><td class="num">${mshort(sum(fs, 'recv'))}</td></tr></tfoot></table></div>` : '<p class="muted">Aucun</p>'}
+   <h2>Soldes de caisse (tout le chantier, à date)</h2><div class="tw"><table><thead><tr><th>Personne</th><th class="num">Reçu</th><th class="num">Envoyé</th><th class="num">Dépensé</th><th class="num">Solde</th></tr></thead><tbody>${cb.map(b => `<tr><td>${esc(pName(b.id))}</td><td class="num">${mshort(b.recv)}</td><td class="num">${mshort(b.sent)}</td><td class="num">${mshort(b.spent)}</td><td class="num">${b.bal >= 0 ? mshort(b.bal) + ' à justifier' : 'apport ' + mshort(-b.bal)}</td></tr>`).join('')}</tbody></table></div>` : ''}
+   ${detail}
+   <div class="sign"><div>Établi par</div><div>Vérifié / approuvé par</div></div>
+  </div>`;
+}
+function bindReport() {
+  const m = { rpFrom: 'from', rpTo: 'to', rpG1: 'g1', rpG2: 'g2' };
+  for (const id in m) $('#' + id).onchange = e => { RP[m[id]] = e.target.value; render(); };
+  $('#rpDet').onchange = e => { RP.detail = e.target.checked; render(); };
+  $('#rpFunds').onchange = e => { RP.funds = e.target.checked; render(); };
+  $('#rpPer').onchange = e => { const s = [F.from, F.to]; periodPreset(e.target.value); RP.from = F.from; RP.to = F.to; [F.from, F.to] = s; render(); };
+}
+
+/* =====================================================================
+   Référentiels
+   ===================================================================== */
+function renderRef() {
+  const xs = live('expenses');
+  const cnt = (k, id) => xs.filter(x => x.d[k] === id).length;
+  const ad = isAdmin();
+  const lots = lotsSorted(), cats = live('cats').sort((a, b) => a.d.name.localeCompare(b.d.name)), ppl = live('people').sort((a, b) => a.d.name.localeCompare(b.d.name));
+  return `<div class="sec-title"><h2>Référentiels</h2></div>${ad ? '' : '<div class="alert a-in">Segments et catégories sont gérés par l’administrateur. Vous pouvez gérer les intervenants.</div>'}
+  <div class="card" style="margin-bottom:14px"><div class="sec-title"><h3 style="margin:0">Segments du projet (lots) — budget total ${money(sum(lots, l => num(l.d.budget)))}</h3>${ad ? '<button class="btn sm" data-act="newLot">＋ Segment</button>' : ''}</div>
+   <div class="tw"><table><thead><tr><th>Ordre</th><th>Segment</th><th class="num">Budget</th><th class="num">Dépenses</th><th></th></tr></thead><tbody>${lots.map(l => `<tr><td>${esc(l.d.order)}</td><td>${esc(l.d.name)}${l.d.notes ? `<div class="small muted">${esc(l.d.notes)}</div>` : ''}</td><td class="num">${num(l.d.budget) ? mshort(l.d.budget) : '—'}</td><td class="num">${cnt('lot', l.id)}</td><td class="nowrap r"><button class="btn sm" data-edit="lots:${l.id}" ${ad ? '' : 'disabled'}>Modifier</button> <button class="btn sm" data-hist="lots:${l.id}">🕘</button> <button class="btn sm dng" data-del="lots:${l.id}" ${ad ? '' : 'disabled'}>×</button></td></tr>`).join('')}</tbody></table></div></div>
+  <div class="cols">
+  <div class="card"><div class="sec-title"><h3 style="margin:0">Catégories</h3>${ad ? '<button class="btn sm" data-act="newCat">＋ Catégorie</button>' : ''}</div><div class="tw"><table><tbody>${cats.map(c => `<tr><td>${esc(c.d.name)}</td><td class="num small muted">${cnt('cat', c.id)}</td><td class="nowrap r"><button class="btn sm" data-edit="cats:${c.id}" ${ad ? '' : 'disabled'}>Modifier</button> <button class="btn sm dng" data-del="cats:${c.id}" ${ad ? '' : 'disabled'}>×</button></td></tr>`).join('')}</tbody></table></div></div>
+  <div class="card"><div class="sec-title"><h3 style="margin:0">Intervenants</h3>${canWrite() ? '<button class="btn sm" data-act="newPerson">＋ Intervenant</button>' : ''}</div><div class="tw"><table><tbody>${ppl.map(p => `<tr><td><b>${esc(p.d.name)}</b><div class="small muted">${esc(p.d.role || '')}${p.d.phone ? ' · ' + esc(p.d.phone) : ''}</div></td><td class="num small muted" title="payé par / bénéficiaire">${cnt('payer', p.id)}/${cnt('payee', p.id)}</td><td class="nowrap r"><button class="btn sm" data-edit="people:${p.id}" ${canWrite() ? '' : 'disabled'}>Modifier</button> <button class="btn sm dng" data-del="people:${p.id}" ${canWrite() ? '' : 'disabled'}>×</button></td></tr>`).join('')}</tbody></table></div></div>
+  </div>`;
+}
+function refForm(coll, id) {
+  const r = id ? rec(coll, id) : null; const d = r ? r.d : {};
+  if (coll !== 'people' && !isAdmin()) return toast(whyNot(), { err: 1 });
+  const f = coll === 'lots' ? `<label class="f span2">Nom *<input name="name" value="${esc(d.name || '')}"></label><label class="f">Budget (FCFA)<input name="budget" inputmode="decimal" value="${esc(d.budget || '')}"></label><label class="f">Ordre d’affichage<input name="order" inputmode="numeric" value="${esc(d.order ?? (lotsSorted().length + 1) * 10)}"></label><label class="f spanall">Description / notes<input name="notes" value="${esc(d.notes || '')}"></label>`
+    : coll === 'cats' ? `<label class="f spanall">Nom *<input name="name" value="${esc(d.name || '')}"></label>`
+      : `<label class="f span2">Nom *<input name="name" value="${esc(d.name || '')}"></label><label class="f">Rôle<select name="role">${opts(PROLES, d.role || 'Fournisseur')}</select></label><label class="f">Téléphone / n° momo<input name="phone" value="${esc(d.phone || '')}"></label><label class="f spanall">Notes (adresse, RIB, spécialité…)<input name="notes" value="${esc(d.notes || '')}"></label>`;
+  const ov = openModal((r ? 'Modifier — ' : 'Nouveau — ') + COLL_L[coll], `<form id="rf" class="grid g2">${f}</form>`, { small: 1, foot: '<button class="btn" data-close>Annuler</button><button class="btn pri" id="rfOk">Enregistrer</button>' });
+  $('#rfOk', ov).onclick = async () => {
+    const v = Object.fromEntries(new FormData($('#rf', ov))); Object.keys(v).forEach(k => v[k] = v[k].trim());
+    if (!v.name) return toast('Nom requis', { err: 1 });
+    const dup = live(coll).find(x => x.id !== id && norm(x.d.name) === norm(v.name)); if (dup) return toast('Ce nom existe déjà.', { err: 1 });
+    closeModal(ov); await saveRec(coll, id || (coll[0] + uid()), Object.assign({}, d, v));
+  };
+}
+
+/* =====================================================================
+   Journal (audit), conflits, corbeille
+   ===================================================================== */
+let JL = { n: 150, au: '', coll: '' };
+function versionSummary(coll, data) { if (!data) return '<i>supprimé</i>'; const r = { d: data, id: '' }; return esc(recTitle(coll, r)) + (coll === 'expenses' ? `<div class="small muted">${esc(lotName(data.lot))} · ${esc(pName(data.payer))} → ${esc(pName(data.payee))} · ${esc(data.mode || '')} ${data.notes ? '· ' + esc(data.notes) : ''}</div>` : ''); }
+function renderJournal() {
+  const conf = S.conf.map((c, ci) => {
+    const r = rec(c.coll, c.rid);
+    return `<div class="card" style="margin-bottom:10px;border-color:var(--er)"><b>${esc(COLL_L[c.coll])}</b> — ${esc(recTitle(c.coll, r))}<p class="small muted">Modifiée en parallèle sur ${c.evs.length} appareils à partir de la même version. Toutes les versions sont conservées ; choisissez celle qui fait foi.</p>
+     ${c.evs.map((e, vi) => `<div class="ev ${e.op}"><div class="row"><b>${OP_L[e.op]}</b><span class="small muted">par ${esc(e.au)} · ${fdt(e.ts)}</span>${r.head === e.eid ? '<span class="bdg b-ok">actuellement affichée</span>' : ''}</div>${e.op === 'put' ? versionSummary(c.coll, e.data) : ''}${e.op === 'put' ? diffHTML((S.hist[c.rid].find(x => x.eid === c.base) || {}).data, e.data, c.coll) : ''}${isAdmin() ? `<button class="btn sm pri" data-resolve="${ci}:${vi}" style="margin-top:4px">✔ Garder cette version</button>` : ''}</div>`).join('')}
+     ${!isAdmin() ? '<p class="small">Seul un administrateur peut arbitrer.</p>' : ''}<button class="btn sm" data-hist="${c.coll}:${c.rid}">🕘 Historique complet</button></div>`;
+  }).join('');
+  const trash = COLLS.flatMap(c => Object.values(S.R[c]).filter(r => r.del)).sort((a, b) => b.upd - a.upd);
+  const authors = [...new Set(S.events.map(e => e.au))];
+  const evs = S.sorted.filter(e => (!JL.au || e.au === JL.au) && (!JL.coll || e.coll === JL.coll)).slice().reverse();
+  const firstOf = {}; S.sorted.forEach(e => { if (!firstOf[e.rid]) firstOf[e.rid] = e.eid; });
+  return `<div class="sec-title"><h2>Journal & contrôle des modifications</h2></div>
+  <p class="small muted">Toutes les opérations sont enregistrées de façon permanente (qui, quoi, quand, sur quel appareil). Aucune donnée n’est jamais écrasée : une modification crée une nouvelle version, une suppression envoie à la corbeille.</p>
+  ${S.conf.length ? `<h3>⚠ Conflits à arbitrer (${S.conf.length})</h3>${conf}` : '<div class="alert a-ok">✔ Aucun conflit.</div>'}
+  <details class="grp" ${trash.length && trash.length <= 10 ? 'open' : ''}><summary><span>🗑 Corbeille (${trash.length})</span><span class="gm">éléments restaurables</span></summary>${trash.length ? `<div class="tw"><table><tbody>${trash.map(r => `<tr><td class="small">${esc(COLL_L[r.coll])}</td><td>${esc(recTitle(r.coll, r))}</td><td class="small muted">supprimé par ${esc(r.updBy)} le ${fdt(r.upd)}</td><td class="nowrap r"><button class="btn sm" data-hist="${r.coll}:${r.id}">🕘</button> <button class="btn sm" data-restore="${r.coll}:${r.id}">↺ Restaurer</button></td></tr>`).join('')}</tbody></table></div>` : '<div class="empty">Corbeille vide</div>'}</details>
+  <div class="card" style="margin-top:12px"><div class="row" style="margin-bottom:8px"><h3 style="margin:0">Toutes les opérations (${S.events.length})</h3><div class="grow"></div>
+   <select id="jlAu">${opts(authors, JL.au, 'Tous les auteurs')}</select><select id="jlColl">${opts(Object.entries(COLL_L), JL.coll, 'Tous les types')}</select></div>
+   <div class="tw"><table><thead><tr><th>Quand</th><th>Qui</th><th>Opération</th><th>Élément</th></tr></thead><tbody>${evs.slice(0, JL.n).map(e => { const r = rec(e.coll, e.rid); return `<tr class="click" data-hist="${e.coll}:${e.rid}"><td class="nowrap small">${fdt(e.ts)}</td><td class="small">${esc(e.au)}<div class="muted">app. ${esc(e.dev.slice(-5))}</div></td><td class="small"><span class="bdg ${e.op === 'del' ? 'b-er' : e.op === 'restore' ? 'b-ok' : firstOf[e.rid] === e.eid ? 'b-in' : 'b-mu'}">${firstOf[e.rid] === e.eid ? 'Création' : OP_L[e.op]}</span> ${esc(COLL_L[e.coll])}</td><td class="small">${e.op === 'put' ? esc(recTitle(e.coll, { d: e.data })) : esc(recTitle(e.coll, r))}</td></tr>`; }).join('')}</tbody></table></div>
+   ${evs.length > JL.n ? `<button class="btn" data-act="jlMore" style="margin-top:8px">Afficher plus (${evs.length - JL.n})</button>` : ''}</div>`;
+}
+function bindJournal() {
+  $('#jlAu').onchange = e => { JL.au = e.target.value; render(); };
+  $('#jlColl').onchange = e => { JL.coll = e.target.value; render(); };
+}
+async function resolveConflict(ci, vi) {
+  const c = S.conf[ci]; if (!c) return; const e = c.evs[vi]; const r = rec(c.coll, c.rid);
+  if (!await ask(`Garder la version de <b>${esc(e.au)}</b> du ${fdt(e.ts)} ? Les autres versions restent consultables dans l’historique.`)) return;
+  const merged = c.evs.map(x => x.eid);
+  if (e.op === 'del') await commit(c.coll, c.rid, 'del', null, { merged });
+  else { if (r.del && e.op !== 'del') await commit(c.coll, c.rid, 'restore'); await commit(c.coll, c.rid, 'put', e.op === 'put' ? e.data : r.d, { merged }); }
+  render(); toast('Conflit résolu');
+}
+
+/* =====================================================================
+   Sauvegarde & réglages
+   ===================================================================== */
+function renderSettings() {
+  const P = S.P, ad = isAdmin(), fsa = !!window.showSaveFilePicker;
+  return `<div class="sec-title"><h2>Sauvegarde, partage & réglages</h2></div>
+  <div class="cols">
+  <div class="card"><h3>💾 Sauvegarde & synchronisation</h3>
+   <p class="small">Dernier export : <b>${S.lastBackup ? fdt(S.lastBackup) : 'jamais'}</b> · ${unsaved()} modification(s) depuis.</p>
+   <div class="row"><button class="btn pri" data-act="share">📤 Partager le fichier chantier</button><button class="btn" data-act="shareLight">📤 Partage léger (sans photos)</button></div>
+   <div class="row" style="margin-top:8px"><button class="btn" data-act="export">⬇ Télécharger</button><button class="btn" data-act="exportLight">⬇ Télécharger sans justificatifs</button><button class="btn" data-act="openFile">📂 Fusionner un fichier reçu…</button></div>
+   <p class="small muted">« Partager » ouvre le menu d’envoi du téléphone (WhatsApp, Gmail, Drive…). Le partage léger, sans photos de reçus, est bien plus petit pour les échanges fréquents.</p>
+   <hr style="border:0;border-top:1px solid var(--bd);margin:14px 0">
+   <b class="small">Sauvegarde automatique vers un fichier</b>
+   <p class="small muted">${fsa ? 'Chrome/Edge sur ordinateur : chaque modification est écrite dans le fichier choisi (idéalement dans un dossier synchronisé : Google Drive, OneDrive, clé USB…).' : 'Non disponible dans ce navigateur : utilisez l’export manuel régulièrement.'}</p>
+   ${S.fh ? `<div class="row"><span class="bdg ${S.fhOk ? 'b-ok' : 'b-wa'}">${S.fhOk ? 'Active' : 'En pause — autorisation requise'} : ${esc(S.fh.name || '')}</span>${S.fhOk ? '' : '<button class="btn sm pri" data-act="reactivate">Réactiver</button>'}<button class="btn sm" data-act="unlink">Délier</button></div>` : `<button class="btn" data-act="link" ${fsa ? '' : 'disabled'}>🔗 Lier un fichier de sauvegarde</button>`}
+  </div>
+  <div class="card help"><h3>👥 Travailler à plusieurs sans perte de données</h3><ol>
+   <li>L’administrateur crée le chantier puis le <b>partage</b> (bouton 📤 → WhatsApp, e-mail, Drive…).</li>
+   <li>Le destinataire installe l’application depuis la même adresse, s’identifie, puis ouvre le fichier reçu : sur Android, appui long sur le fichier dans WhatsApp → <b>Partager → Chantier</b> ; sinon <b>« 📂 Fusionner un fichier reçu »</b>.</li>
+   <li>Chacun saisit hors-ligne. Régulièrement, chacun partage son fichier avec les autres, qui le <b>fusionnent</b> de la même façon.</li>
+   <li>La fusion <b>ajoute</b> uniquement les opérations manquantes : elle ne supprime et n’écrase jamais rien. Importer deux fois le même fichier est sans effet.</li>
+   <li>Si la même dépense a été modifiée des deux côtés entre deux échanges, un <b>conflit</b> apparaît dans le Journal ; l’administrateur choisit la version qui fait foi — les autres restent dans l’historique.</li>
+   <li>Protection anti-erreur : corbeille avec restauration, historique de chaque fiche avec retour à une version antérieure, « Annuler » après chaque action, validation (🔒) des dépenses contrôlées, clôture de période.</li></ol></div>
+  <div class="card"><h3>🏗 Chantier</h3><form id="pf" class="grid g2">
+   <label class="f span2">Nom<input name="name" value="${esc(P.name || '')}" ${ad ? '' : 'disabled'}></label>
+   <label class="f">Lieu<input name="place" value="${esc(P.place || '')}" ${ad ? '' : 'disabled'}></label><label class="f">Maître d’ouvrage<input name="owner" value="${esc(P.owner || '')}" ${ad ? '' : 'disabled'}></label>
+   <label class="f">Début<input type="date" name="start" value="${esc(P.start || '')}" ${ad ? '' : 'disabled'}></label><label class="f">Fin prévue<input type="date" name="end" value="${esc(P.end || '')}" ${ad ? '' : 'disabled'}></label>
+   <label class="f span2">Budget global (FCFA) <span class="muted">— vide = somme des budgets de segments</span><input name="budget" inputmode="decimal" value="${esc(P.budget || '')}" ${ad ? '' : 'disabled'}></label>
+   <label class="f">Taux EUR → FCFA<input name="rEUR" inputmode="decimal" value="${esc((P.rates || {}).EUR || '')}" ${ad ? '' : 'disabled'}></label><label class="f">Taux USD → FCFA<input name="rUSD" inputmode="decimal" value="${esc((P.rates || {}).USD || '')}" ${ad ? '' : 'disabled'}></label>
+   <label class="f">Taux GBP → FCFA<input name="rGBP" inputmode="decimal" value="${esc((P.rates || {}).GBP || '')}" ${ad ? '' : 'disabled'}></label>
+   <label class="f">Période clôturée jusqu’au<input type="date" name="closedUntil" value="${esc(P.closedUntil || '')}" ${ad ? '' : 'disabled'}></label>
+   <label class="f">Moyens de paiement (un par ligne)<textarea name="modes" rows="6" ${ad ? '' : 'disabled'}>${esc((P.modes || DEF_MODES).join('\n'))}</textarea></label>
+   <label class="f">Unités (une par ligne)<textarea name="units" rows="6" ${ad ? '' : 'disabled'}>${esc((P.units || DEF_UNITS).join('\n'))}</textarea></label>
+   ${ad ? '<div class="spanall row"><button type="button" class="btn pri" data-act="saveProj">Enregistrer</button><button type="button" class="btn" data-hist="project:project">🕘 Historique</button></div>' : '<p class="small muted spanall">Modifiable par l’administrateur.</p>'}</form></div>
+  <div class="card"><h3>🔒 Verrouillage par code PIN</h3>${lockBlock()}</div>
+  <div class="card"><h3>📱 Application</h3>${installBlock()}</div>
+  <div class="card"><h3>👤 Cet appareil</h3><p class="small">Utilisateur : <b>${esc(USER.name)}</b> — ${esc(UROLES[USER.role])}<br>Identifiant d’appareil : <code>${esc(DEV.slice(-5))}</code></p>
+   <div class="row"><button class="btn" data-act="changeUser">Changer d’utilisateur / profil</button><button class="btn" data-act="theme">Thème clair / sombre</button></div>
+   <h3 style="margin-top:16px">📁 Chantiers sur cet appareil</h3><ul class="small">${projects().map(p => `<li>${esc(p.name)} ${p.pid === S.pid ? '<span class="bdg b-ok">ouvert</span>' : `<button class="btn sm" data-openp="${p.pid}">Ouvrir</button>`}</li>`).join('')}</ul>
+   <div class="row"><button class="btn" data-act="newProj">＋ Nouveau chantier</button><button class="btn" data-act="demo">Chantier de démonstration</button></div>
+   <p class="small muted" style="margin-top:12px">Les données sont stockées dans ce navigateur. Effacer les données de navigation les supprime : exportez régulièrement. Carnet de Chantier v${APPV}.</p></div>
+  </div>`;
+}
+async function saveProject() {
+  const v = Object.fromEntries(new FormData($('#pf'))); const P = Object.assign({}, S.R.project.project ? S.R.project.project.d : {});
+  ['name', 'place', 'owner', 'start', 'end', 'budget', 'closedUntil'].forEach(k => P[k] = (v[k] || '').trim());
+  if (!P.name) return toast('Nom requis', { err: 1 });
+  P.rates = { EUR: num(v.rEUR) || 655.957, USD: num(v.rUSD) || 600, GBP: num(v.rGBP) || 760 };
+  P.modes = v.modes.split('\n').map(s => s.trim()).filter(Boolean); P.units = v.units.split('\n').map(s => s.trim()).filter(Boolean);
+  await saveRec('project', 'project', P, 'Paramètres enregistrés'); regProject(S.pid, P.name); renderHeader();
+}
+/* Installation (PWA) */
+let deferredInstall = null;
+const isStandalone = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredInstall = e; if (!S || VIEW === 'settings') render(); });
+window.addEventListener('appinstalled', () => { deferredInstall = null; toast('Application installée sur l’écran d’accueil'); });
+function installBlock() {
+  if (location.protocol === 'file:') return '<p class="small muted">Version fichier local. Pour installer l’application sur un téléphone, ouvrez-la depuis son adresse web (voir le guide d’hébergement).</p>';
+  if (isStandalone()) return '<p class="small">✔ Application installée — fonctionne hors-ligne.</p>';
+  return `<p class="small">Installez l’application sur l’écran d’accueil : elle s’ouvrira comme une application et fonctionnera sans réseau.</p>${deferredInstall ? '<button class="btn pri" data-act="install">📲 Installer l’application</button>' : '<p class="small muted">Dans Chrome : menu ⋮ → « Ajouter à l’écran d’accueil » → « Installer ».</p>'}`;
+}
+/* Service worker : hors-ligne + mises à jour */
+function registerSW() {
+  if (!('serviceWorker' in navigator) || location.protocol === 'file:') return;
+  navigator.serviceWorker.register('sw.js').then(reg => {
+    const prompt = w => toast('Nouvelle version de l’application disponible', { action: 'Mettre à jour', ms: 20000, fn: () => w.postMessage('skipWaiting') });
+    if (reg.waiting && navigator.serviceWorker.controller) prompt(reg.waiting);
+    reg.addEventListener('updatefound', () => { const w = reg.installing; w && w.addEventListener('statechange', () => { if (w.state === 'installed' && navigator.serviceWorker.controller) prompt(w); }); });
+    setInterval(() => reg.update().catch(() => { }), 3600e3);
+  }).catch(() => { });
+  let reloaded = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => { if (!reloaded) { reloaded = true; location.reload(); } });
+}
+function applyTheme() { const t = LS.get('cd_theme', ''); if (t) document.documentElement.dataset.theme = t; else delete document.documentElement.dataset.theme; }
+
+/* =====================================================================
+   Données de démonstration
+   ===================================================================== */
+async function loadDemo() {
+  const me = USER.name;
+  await newProject({ name: 'Démo — Maison R+1', place: 'Limbe (démonstration)', budget: '' }, true);
+  const lots = lotsSorted(), L = n => lots.find(l => l.d.name.startsWith(n)).id, cats = live('cats'), C = n => cats.find(c => c.d.name.startsWith(n)).id;
+  const budgets = { 'Études': 600000, 'Installation': 350000, 'Préparation': 450000, 'Terrassement': 900000, 'Fondations': 3200000, 'Soubassement': 1800000, 'Élévation': 4200000, 'Poteaux': 3500000 };
+  const list = [];
+  for (const k in budgets) { const l = rec('lots', L(k)); list.push(['lots', l.id, 'put', Object.assign({}, l.d, { budget: String(budgets[k]) })]); }
+  const P = {}; const mk = (n, role, phone) => { const id = 'p' + uid(); P[n] = id; list.push(['people', id, 'put', { name: n, role, phone: phone || '', notes: '' }]); };
+  const meId = live('people').find(p => p.d.name === me).id; P.me = meId;
+  mk('Emmanuel (chef de chantier)', 'Chef de chantier', '6xx xx xx xx'); mk('Quincaillerie du Carrefour', 'Fournisseur'); mk('Carrière Sable & Gravier', 'Fournisseur'); mk('Équipe maçons — Paul', 'Tâcheron / ouvrier'); mk('Transport Njoh', 'Transporteur'); mk('Cabinet Plans & Topo', 'Prestataire / bureau d’études'); mk('Mairie', 'Administration'); mk('Ferraillerie Moderne', 'Fournisseur');
+  const E = (date, lot, cat, label, qty, unit, pu, payer, payee, mode, extra) => list.push(['expenses', 'e' + uid(), 'put', Object.assign({ date, lot: L(lot), cat: C(cat), label, qty: qty ? String(qty) : '', unit, pu: pu ? String(pu) : '', amount: String(qty && pu ? qty * pu : extra.amount), cur: 'XAF', rate: '', fees: '', mode, ref: '', status: 'paye', reste: '', notes: '', tags: '', files: [], locked: false, payer: P[payer], payee: P[payee] }, extra || {})]);
+  const F_ = (date, amount, cur, fees, mode, ref) => list.push(['funds', 'm' + uid(), 'put', { date, from: P.me, to: P['Emmanuel (chef de chantier)'], amount: String(amount), cur, rate: cur === 'XAF' ? '' : '655.957', fees: String(fees), received: '', mode, ref, notes: '', locked: false }]);
+  const y = new Date().getFullYear(), m0 = new Date().getMonth(); const dt = (mo, d) => isoD(new Date(y, m0 - mo, d));
+  F_(dt(4, 2), 1500, 'EUR', 4.99, 'WorldRemit', 'WR-48213'); F_(dt(3, 1), 2500, 'EUR', 4.99, 'WorldRemit', 'WR-51877'); F_(dt(2, 3), 3000, 'EUR', 4.99, 'WorldRemit', 'WR-55120'); F_(dt(1, 2), 1000000, 'XAF', 10000, 'MTN Mobile Money', 'MP2409');
+  E(dt(4, 5), 'Études', 'Honoraires', 'Plans architecturaux et implantation', 1, 'forfait', 450000, 'me', 'Cabinet Plans & Topo', 'Virement bancaire', { tags: 'facture' });
+  E(dt(4, 9), 'Études', 'Taxes', 'Permis de bâtir — frais de dossier', 1, 'forfait', 150000, 'Emmanuel (chef de chantier)', 'Mairie', 'Espèces', { ref: 'Quittance 0231' });
+  E(dt(4, 12), 'Préparation', "Main-d'œuvre", 'Débroussaillage et nettoyage du terrain', 4, 'jour', 25000, 'Emmanuel (chef de chantier)', 'Équipe maçons — Paul', 'Espèces', {});
+  E(dt(4, 14), 'Préparation', "Main-d'œuvre", 'Drainage : tranchée et évacuation des eaux', 1, 'forfait', 180000, 'Emmanuel (chef de chantier)', 'Équipe maçons — Paul', 'MTN Mobile Money', { fees: '1800' });
+  E(dt(4, 20), 'Installation', 'Matériaux', 'Planches coffrage', 60, 'pièce', 2500, 'Emmanuel (chef de chantier)', 'Quincaillerie du Carrefour', 'Espèces', {});
+  E(dt(3, 3), 'Terrassement', "Main-d'œuvre", 'Fouilles en rigole', 45, 'm³', 9000, 'Emmanuel (chef de chantier)', 'Équipe maçons — Paul', 'Espèces', {});
+  E(dt(3, 6), 'Fondations', 'Matériaux', 'Ciment CPJ 42,5 (sac 50 kg)', 120, 'sac', 5200, 'Emmanuel (chef de chantier)', 'Quincaillerie du Carrefour', 'Orange Money', { fees: '3100', tags: 'facture' });
+  E(dt(3, 7), 'Fondations', 'Matériaux', 'Sable de rivière', 3, 'voyage', 65000, 'Emmanuel (chef de chantier)', 'Carrière Sable & Gravier', 'Espèces', {});
+  E(dt(3, 7), 'Fondations', 'Matériaux', 'Gravier 15/25', 2, 'voyage', 110000, 'Emmanuel (chef de chantier)', 'Carrière Sable & Gravier', 'Espèces', {});
+  E(dt(3, 10), 'Fondations', 'Matériaux', 'Fer HA 10', 80, 'barre', 4800, 'me', 'Ferraillerie Moderne', 'MTN Mobile Money', { fees: '4000' });
+  E(dt(3, 18), 'Fondations', "Main-d'œuvre", 'Coulage semelles et longrines', 1, 'forfait', 450000, 'Emmanuel (chef de chantier)', 'Équipe maçons — Paul', 'Espèces', { status: 'acompte', reste: '150000', notes: 'Solde à la réception' });
+  E(dt(3, 20), 'Fondations', 'Transport', 'Transport fer et ciment', 2, 'voyage', 25000, 'Emmanuel (chef de chantier)', 'Transport Njoh', 'Espèces', {});
+  E(dt(2, 4), 'Soubassement', 'Matériaux', 'Ciment CPJ 42,5 (sac 50 kg)', 90, 'sac', 5400, 'Emmanuel (chef de chantier)', 'Quincaillerie du Carrefour', 'Espèces', {});
+  E(dt(2, 5), 'Soubassement', 'Matériaux', 'Parpaings pleins 15', 900, 'pièce', 350, 'Emmanuel (chef de chantier)', 'Quincaillerie du Carrefour', 'Espèces', {});
+  E(dt(2, 15), 'Soubassement', "Main-d'œuvre", 'Maçonnerie soubassement + remblai', 1, 'forfait', 380000, 'Emmanuel (chef de chantier)', 'Équipe maçons — Paul', 'Espèces', {});
+  E(dt(1, 5), 'Élévation', 'Matériaux', 'Parpaings creux 15', 2400, 'pièce', 300, 'Emmanuel (chef de chantier)', 'Quincaillerie du Carrefour', 'MTN Mobile Money', { fees: '7200' });
+  E(dt(1, 6), 'Élévation', 'Matériaux', 'Ciment CPJ 42,5 (sac 50 kg)', 150, 'sac', 5300, 'Emmanuel (chef de chantier)', 'Quincaillerie du Carrefour', 'Espèces', {});
+  E(dt(1, 9), 'Élévation', 'Matériaux', 'Sable de rivière', 4, 'voyage', 65000, 'Emmanuel (chef de chantier)', 'Carrière Sable & Gravier', 'Espèces', {});
+  E(dt(1, 20), 'Élévation', "Main-d'œuvre", 'Élévation murs RDC — 1re tranche', 1, 'forfait', 600000, 'me', 'Équipe maçons — Paul', 'WorldRemit', { cur: 'EUR', amount: '915', rate: '655.957', fees: '3.99', qty: '', unit: '', pu: '' });
+  E(dt(0, 2), 'Poteaux', 'Matériaux', 'Fer HA 12', 120, 'barre', 6900, 'Emmanuel (chef de chantier)', 'Ferraillerie Moderne', 'Espèces', { status: 'du', notes: 'Facture reçue, paiement à la livraison' });
+  E(dt(0, 3), 'Frais généraux', 'Gardiennage', 'Gardiennage mensuel', 1, 'forfait', 40000, 'Emmanuel (chef de chantier)', 'Équipe maçons — Paul', 'Espèces', {});
+  await commitMany(list); render(); toast('Chantier de démonstration créé');
+}
+
+/* =====================================================================
+   Délégation d'événements & démarrage
+   ===================================================================== */
+document.addEventListener('click', async e => {
+  const t = e.target.closest('[data-act],[data-tab],[data-exp],[data-fund],[data-hist],[data-edit],[data-del],[data-restore],[data-resolve],[data-go],[data-go2],[data-filt],[data-label],[data-openp]');
+  if (!t) return;
+  const ds = t.dataset;
+  if (ds.tab) return go(ds.tab);
+  if (ds.exp) return expenseDetail(ds.exp);
+  if (ds.fund) return fundDetail(ds.fund);
+  if (ds.hist) { const [c, id] = ds.hist.split(':'); return historyModal(c, id); }
+  if (ds.edit) { const [c, id] = ds.edit.split(':'); return refForm(c, id); }
+  if (ds.del) { const [c, id] = ds.del.split(':'); return delRec(c, id); }
+  if (ds.restore) { const [c, id] = ds.restore.split(':'); return restoreRec(c, id); }
+  if (ds.resolve) { const [a, b] = ds.resolve.split(':').map(Number); return resolveConflict(a, b); }
+  if (ds.go) { const [k, v] = ds.go.split(':'); resetFilters(); F[k] = v; F.g1 = 'month'; F.g2 = 'none'; return go('exp'); }
+  if (ds.go2) return go(ds.go2);
+  if (ds.filt) { resetFilters(); F.nojust = true; return go('exp'); }
+  if (ds.label) { resetFilters(); F.label = ds.label; F.g1 = 'none'; F.g2 = 'none'; return go('exp'); }
+  if (ds.openp) { closeAllModals(); return openProject(ds.openp); }
+  switch (ds.act) {
+    case 'newExp': return expenseForm();
+    case 'newFund': return fundForm();
+    case 'newLot': return refForm('lots');
+    case 'newCat': return refForm('cats');
+    case 'newPerson': return refForm('people');
+    case 'csv': return csvExport(filtered());
+    case 'csvRep': return csvExport(live('expenses').map(X).filter(x => (!RP.from || x.d.date >= RP.from) && (!RP.to || x.d.date <= RP.to)));
+    case 'clearF': { const g = [F.g1, F.g2]; resetFilters();[F.g1, F.g2] = g; return render(); }
+    case 'print': return window.print();
+    case 'export': return exportBackup(true);
+    case 'exportLight': return exportBackup(false);
+    case 'pinSet': return pinDialog(false);
+    case 'pinChange': return pinDialog(true);
+    case 'pinRemove': return removePin();
+    case 'lockNow': closeAllModals(); return showLock();
+    case 'share': return shareBackup(true);
+    case 'shareLight': return shareBackup(false);
+    case 'install': if (deferredInstall) { deferredInstall.prompt(); const r = await deferredInstall.userChoice; deferredInstall = null; if (r.outcome === 'accepted') toast('Application installée'); render(); } return;
+    case 'openFile': return $('#importInput').click();
+    case 'link': return linkFile();
+    case 'reactivate': return reactivateFile();
+    case 'unlink': return unlinkFile();
+    case 'saveProj': return saveProject();
+    case 'changeUser': await askUser(true); return render();
+    case 'theme': { const cur = document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); LS.set('cd_theme', cur === 'dark' ? 'light' : 'dark'); return applyTheme(); }
+    case 'newProj': return newProjectDialog();
+    case 'demo': return loadDemo();
+    case 'jlMore': JL.n += 300; return render();
+  }
+});
+$('#projSel').addEventListener('change', e => {
+  const v = e.target.value;
+  if (v === '__new') { e.target.value = S.pid; return newProjectDialog(); }
+  if (v === '__open') { e.target.value = S.pid; return $('#importInput').click(); }
+  openProject(v);
+});
+$('#importInput').addEventListener('change', async e => { const f = e.target.files[0]; e.target.value = ''; if (f) await importFile(f); });
+$('#bkStatus').addEventListener('click', () => { if (S && S.fh && !S.fhOk) reactivateFile(); else go('settings'); });
+$('#lockBtn').addEventListener('click', () => showLock());
+document.addEventListener('change', e => { if (e.target.id === 'lockTo') setLockTimeout(e.target.value); });
+$('#userBadge').addEventListener('click', async () => { await askUser(true); render(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#modals').lastElementChild) closeModal(); });
+window.addEventListener('beforeunload', e => { if (S && !S.fhOk && unsaved() > 0 && IDB.mem) { e.preventDefault(); e.returnValue = ''; } });
+
+(async function init() {
+  applyTheme();
+  if (lockCfg()) await showLock();
+  if (!USER) await askUser();
+  const ps = projects(), cur = LS.get('cd_current', null);
+  if (cur && ps.find(p => p.pid === cur)) await openProject(cur);
+  else if (ps.length) await openProject(ps[0].pid);
+  else render();
+  registerSW();
+  await consumeSharedFile();
+  if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => { });
+})();
+</script>
+</body>
+</html>

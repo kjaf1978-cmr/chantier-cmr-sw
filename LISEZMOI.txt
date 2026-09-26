@@ -1,0 +1,59 @@
+CARNET DE DÉPENSES CHANTIER — application installable (v1.2)
+=============================================================
+
+Contenu du dossier (les 7 fichiers doivent rester ensemble) :
+  index.html              l'application
+  sw.js                   fonctionnement hors-ligne + réception des fichiers partagés
+  manifest.webmanifest    description pour l'installation sur le téléphone
+  icon-192.png, icon-512.png, icon-maskable-512.png, apple-touch-icon.png   icônes
+
+MISE EN LIGNE GRATUITE AVEC GITHUB PAGES (une seule fois, ~10 min, depuis un ordinateur)
+ 1. Aller sur https://github.com/login
+    - Si vous ne savez pas si vous avez un compte : « Forgot password? » avec votre e-mail.
+      Si un e-mail arrive, le compte existe ; sinon créez-en un sur https://github.com/signup
+ 2. En haut à droite : « + » → « New repository »
+    Nom : chantier     Visibilité : Public     → « Create repository »
+ 3. Sur la page du dépôt vide, cliquer « uploading an existing file »,
+    glisser les 7 fichiers (PAS le dossier, PAS le zip) → « Commit changes »
+ 4. « Settings » → « Pages » (menu de gauche)
+    Source : « Deploy from a branch » ; Branch : « main » et « / (root) » → « Save »
+ 5. Attendre 1 à 2 minutes. L'adresse sera :  https://VOTRE-NOM.github.io/chantier/
+
+   Le code de l'application est public, mais VOS DONNÉES NE SONT JAMAIS EN LIGNE :
+   elles restent dans chaque téléphone/ordinateur et ne circulent que par les fichiers que vous partagez.
+
+INSTALLER SUR LE TÉLÉPHONE (S25 Ultra et tout Android)
+ 1. Ouvrir l'adresse dans Chrome (avec réseau, la première fois).
+ 2. Menu ⋮ → « Ajouter à l'écran d'accueil » → « Installer »
+    (ou bouton « Installer l'application » dans Sauvegarde & réglages).
+ 3. L'icône « Chantier » apparaît. L'application fonctionne ensuite sans réseau.
+ Donner la même adresse aux autres personnes (chef de chantier…).
+
+TRAVAILLER À PLUSIEURS
+ - Envoyer : bouton 📤 « Partager » → WhatsApp / Gmail / Drive. (« Partage léger » = sans photos, plus petit.)
+ - Recevoir : dans WhatsApp, appui long sur le fichier reçu → Partager → « Chantier ».
+   L'application s'ouvre et fusionne automatiquement.
+   Autre méthode : Sauvegarde & réglages → « 📂 Fusionner un fichier reçu ».
+ - La fusion ajoute seulement ce qui manque, n'écrase rien ; les modifications
+   concurrentes d'une même dépense sont signalées dans Journal › Conflits.
+
+REPRENDRE LES DONNÉES DE L'ANCIENNE VERSION (fichier carnet_chantier.html)
+ Ouvrir l'ancienne version → Sauvegarde & réglages → Exporter ;
+ ouvrir la nouvelle adresse → « Ouvrir un fichier chantier reçu » → choisir ce fichier.
+
+CODE PIN (par appareil)
+ Sauvegarde & réglages → « 🔒 Définir un code PIN » (4 à 8 chiffres).
+ - Un CODE DE SECOURS s'affiche une seule fois : notez-le hors du téléphone.
+   Il permet de réinitialiser un PIN oublié sans perdre de données.
+ - Verrouillage automatique réglable : arrière-plan, 1, 5 (défaut), 15 ou 60 min.
+ - 🔒 en haut de l'écran : verrouiller immédiatement.
+ - Après 5 erreurs, attente de 30 s, qui double à chaque nouvel échec.
+ - Chaque personne définit son propre PIN sur son propre appareil.
+ Le PIN empêche un accès occasionnel ; les données ne sont pas chiffrées sur l'appareil.
+
+MISES À JOUR
+ Remplacer les fichiers sur GitHub (Add file → Upload files). Les appareils affichent
+ « Nouvelle version disponible — Mettre à jour ». Les données ne sont pas touchées.
+
+IMPORTANT : les données vivent dans le navigateur de chaque appareil. Ne pas « effacer les
+données du site » dans Chrome, et partager/sauvegarder régulièrement (indicateur en haut).
