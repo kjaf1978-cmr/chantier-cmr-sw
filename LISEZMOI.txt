@@ -1,4 +1,4 @@
-CARNET DE DÉPENSES CHANTIER — application installable (v1.3)
+CARNET DE DÉPENSES CHANTIER — application installable (v1.4)
 =============================================================
 
 Contenu du dossier (les 7 fichiers doivent rester ensemble) :
@@ -40,6 +40,15 @@ TRAVAILLER À PLUSIEURS
 REPRENDRE LES DONNÉES DE L'ANCIENNE VERSION (fichier carnet_chantier.html)
  Ouvrir l'ancienne version → Sauvegarde & réglages → Exporter ;
  ouvrir la nouvelle adresse → « Ouvrir un fichier chantier reçu » → choisir ce fichier.
+
+EXPLORATION GRAPHIQUE (v1.4) — « Dépenses par mois et par segment » (tableau de bord et Analyses)
+ - Double-clic (double-tap sur téléphone) sur une COULEUR d'une barre : zoom sur cette période
+   ET cet élément. Affinage : segment → catégorie → bénéficiaire → article ;
+   temps : année/trimestre → mois → semaine → jour.
+ - Double-clic AU-DESSUS d'une barre : zoom sur toute la période.
+ - Fil d'Ariane cliquable, « ⟵ Retour », « ⤒ Vue globale », ou touche Échap pour revenir.
+ - Sous le graphique : la liste des opérations de la sélection (date, objet, quantité, segment,
+   catégorie, payeur → bénéficiaire, moyen, référence, montant) ; toucher une ligne ouvre la dépense.
 
 ANALYSES & RAPPORTS (v1.3)
  - Onglet « Analyses » : évolution cumulée vs budget, dépenses par période et par segment /
